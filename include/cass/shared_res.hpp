@@ -33,10 +33,10 @@ public:
         catch (...) {}
     }
 
-    shared_res(T res, bool valid_start)
+    shared_res(T res, bool holds_start)
         : res(res)
     {
-        init_cnt(valid_start);
+        init_cnt(holds_start);
     }
 
     shared_res(const shared_res &other)
@@ -98,17 +98,17 @@ public:
             if ((cnt->value -= 2) >= 2)
                 cnt = nullptr;
             else {
-                bool save_valid = cnt->value;
+                bool save_holds = cnt->value;
                 delete cnt;
                 cnt = nullptr;
-                if (save_valid)
+                if (save_holds)
                     static_res_deleter(res);
             }
         }
     }
 
     /** resource shared to this object and not destructed. */
-    bool valid() const
+    bool holds() const
     {
         return cnt && (cnt->value & 1);
     }
@@ -116,7 +116,7 @@ public:
     /** destruct resource and mark it destructed for other shares */
     void kill()
     {
-        if (valid()) {
+        if (holds()) {
             if ((cnt->value -= 2) >= 2)
                 cnt->value ^= 1;
             else
@@ -127,23 +127,27 @@ public:
     }
 
     /** disown old resource and setup new resource */
-    void reset(T new_res, bool valid)
+    void reset(T new_res, bool holds_new)
     {
         detach();
         res = new_res;
-        init_cnt(valid);
+        init_cnt(holds_new);
     }
 
 private:
-    void init_cnt(bool valid_start)
+    void init_cnt(bool holds_start)
     {
-        if ((cnt = new (std::nothrow) detail::counter_type)) {
-            cnt->value = 2 | valid_start;
+        if (holds_start) {
+            if ((cnt = new (std::nothrow) detail::counter_type)) {
+                cnt->value = 2 | holds_start;
+            }
+            else {
+                static_res_deleter(res);
+                throw std::bad_alloc();
+            }
         }
-        else {
-            static_res_deleter(res);
-            throw std::bad_alloc();
-        }
+        else
+            cnt = nullptr;
     }
 
     T res;

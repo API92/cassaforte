@@ -10,11 +10,9 @@
 
 #include <cass/defs.hpp>
 #include <cass/impexp.hpp>
-#include <cass/shared_res.hpp>
+#include <cass/wrapper_ptr.hpp>
 
 namespace cass {
-
-class cluster_ptr;
 
 struct authenticator_callbacks {
     virtual ~authenticator_callbacks() {}
@@ -25,6 +23,9 @@ struct authenticator_callbacks {
             size_t /* token_size */) {}
     virtual void cleanup(authenticator *) {}
 };
+
+typedef wrapper_ptr<cluster> cluster_ptr;
+typedef wrapper_const_ptr<cluster const> cluster_const_ptr;
 
 class cluster {
 public:
@@ -135,27 +136,6 @@ private:
     ::CassCluster *p;
 };
 
-class cluster_const_ptr : public shared_res<cluster const, cluster::free> {
-public:
-    using shared_res::shared_res;
-    cluster const * get() const { return &shared_res::get(); }
-    cluster const * operator -> () const { return &shared_res::get(); }
-    cluster const & operator * () const { return shared_res::get(); }
-};
-
-class cluster_ptr : public shared_res<cluster, cluster::free> {
-public:
-    using shared_res::shared_res;
-    cluster * get() { return &shared_res::get(); }
-    cluster * operator -> () { return &shared_res::get(); }
-    cluster & operator * () { return shared_res::get(); }
-    operator cluster_const_ptr () { return cluster_const_ptr(**this, valid()); }
-};
-
-
-///
-/// cluster
-///
 
 inline cluster_ptr cluster::new_ptr()
 {

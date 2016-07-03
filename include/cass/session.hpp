@@ -10,10 +10,13 @@
 #include <cass/cluster.hpp>
 #include <cass/defs.hpp>
 #include <cass/future.hpp>
-#include <cass/shared_res.hpp>
 #include <cass/statement.hpp>
+#include <cass/wrapper_ptr.hpp>
 
 namespace cass {
+
+typedef wrapper_const_ptr<class session const> session_const_ptr;
+typedef wrapper_ptr<class session> session_ptr;
 
 class session {
 public:
@@ -21,7 +24,7 @@ public:
     ::CassSession * backend() { return p; }
     ::CassSession const * backend() const { return p; }
 
-    inline static class session_ptr new_ptr();
+    inline static session_ptr new_ptr();
     inline static void free(session const);
 
     inline future_ptr connect(cluster const *c);
@@ -48,27 +51,6 @@ private:
     ::CassSession *p;
 };
 
-class session_const_ptr : public shared_res<const session, session::free> {
-public:
-    using shared_res::shared_res;
-    const session * get() { return &shared_res::get(); }
-    const session * operator -> () { return &shared_res::get(); }
-    const session & operator * () { return shared_res::get(); }
-};
-
-class session_ptr : public shared_res<session, session::free> {
-public:
-    using shared_res::shared_res;
-    session * get() { return &shared_res::get(); }
-    session * operator -> () { return &shared_res::get(); }
-    session & operator * () { return shared_res::get(); }
-    operator session_const_ptr() { return session_const_ptr(**this, valid()); }
-};
-
-
-///
-/// session
-///
 
 inline session_ptr session::new_ptr()
 {

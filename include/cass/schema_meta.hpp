@@ -10,9 +10,11 @@
 
 #include <cass/defs.hpp>
 #include <cass/impexp.hpp>
-#include <cass/shared_res.hpp>
+#include <cass/wrapper_ptr.hpp>
 
 namespace cass {
+
+typedef wrapper_const_ptr<class schema_meta const> schema_meta_const_ptr;
 
 class schema_meta {
 public:
@@ -34,19 +36,6 @@ private:
     ::CassSchemaMeta const *p;
 };
 
-class schema_meta_const_ptr :
-    public shared_res<schema_meta, schema_meta::free> {
-public:
-    using shared_res::shared_res;
-    schema_meta const * get() { return &shared_res::get(); }
-    schema_meta const * operator -> () { return &shared_res::get(); }
-    schema_meta const & operator * () { return shared_res::get(); }
-};
-
-
-///
-/// schema_meta
-///
 
 inline void schema_meta::free(const schema_meta s)
 {

@@ -4,14 +4,15 @@
 
 #pragma once
 
-#include <cassert>
-
 #include <cassandra.h>
 
 #include <cass/defs.hpp>
 #include <cass/impexp.hpp>
+#include <cass/wrapper_ptr.hpp>
 
 namespace cass {
+
+typedef dummy_ptr<class keyspace_meta const> keyspace_meta_const_ptr;
 
 class keyspace_meta {
 public:
@@ -30,35 +31,30 @@ public:
     CASSA_IMPEXP materialized_view_meta_const_ptr materialized_view_by_name_n(
             char const *view, size_t view_length) const;
 
+    CASSA_IMPEXP data_type_const_ptr user_type_by_name(char const *type) const;
+    CASSA_IMPEXP data_type_const_ptr user_type_by_name_n(
+            char const *type, size_t type_length) const;
+
+    CASSA_IMPEXP function_meta_const_ptr function_by_name(char const *name,
+            char const *arguments) const;
+    CASSA_IMPEXP function_meta_const_ptr function_by_name_n(
+            char const *name, size_t name_length,
+            char const *arguments, size_t arguments_length) const;
+
+    CASSA_IMPEXP aggregate_meta_const_ptr aggregate_by_name(char const *name,
+            char const *arguments) const;
+    CASSA_IMPEXP aggregate_meta_const_ptr aggregate_by_name_n(
+            char const *name, size_t name_length,
+            char const *arguments, size_t arguments_length) const;
+
+    CASSA_IMPEXP value_const_ptr field_by_name(char const *name) const;
+    CASSA_IMPEXP value_const_ptr field_by_name_n(char const *name,
+            size_t name_length) const;
+
 private:
     ::CassKeyspaceMeta const *p;
 };
 
-
-class keyspace_meta_const_ptr {
-public:
-    keyspace_meta_const_ptr(::CassKeyspaceMeta const *p) : m(p) {}
-    operator bool () const { return m.backend() != nullptr; }
-    keyspace_meta const * get() const { return m.backend() ? &m : nullptr; }
-    keyspace_meta const * operator -> () const
-    {
-        assert(get());
-        return get();
-    }
-    keyspace_meta const & operator * () const
-    {
-        assert(get());
-        return m;
-    }
-
-private:
-    keyspace_meta const m;
-};
-
-
-///
-/// keyspace_meta
-///
 
 inline void keyspace_meta::name(char const **name, size_t *name_length) const
 {

@@ -9,6 +9,8 @@
 
 #include <cassandra.h>
 
+#include <cass/wrapper_ptr.hpp>
+
 namespace cass {
 
 typedef ::CassInet inet;
@@ -36,12 +38,17 @@ class iterator;
 class row;
 
 class value;
+typedef dummy_ptr<class value const> value_const_ptr;
 
 class data_type;
+typedef wrapper_ptr<data_type> data_type_ptr;
+typedef wrapper_const_ptr<data_type const> data_type_const_ptr;
 
 class function_meta;
+typedef dummy_ptr<function_meta const> function_meta_const_ptr;
 
 class aggregate_meta;
+typedef dummy_ptr<class aggregate_meta const> aggregate_meta_const_ptr;
 
 class collection;
 
@@ -54,20 +61,23 @@ class ssl;
 typedef ::CassVersion version;
 
 class schema_meta;
-class schema_meta_const_ptr;
+typedef wrapper_const_ptr<class schema_meta const> schema_meta_const_ptr;
 
 class keyspace_meta;
-class keyspace_meta_const_ptr;
+typedef dummy_ptr<class keyspace_meta const> keyspace_meta_const_ptr;
 
 class table_meta;
-class table_meta_const_ptr;
+typedef dummy_ptr<class table_meta const> table_meta_const_ptr;
 
 class materialized_view_meta;
-class materialized_view_meta_const_ptr;
+typedef dummy_ptr<class materialized_view_meta const>
+    materialized_view_meta_const_ptr;
 
 class column_meta;
+typedef dummy_ptr<class column_meta const> column_meta_const_ptr;
 
 class index_meta;
+typedef dummy_ptr<class index_meta const> index_meta_const_ptr;
 
 class uuid_gen;
 

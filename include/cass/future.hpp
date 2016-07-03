@@ -6,9 +6,11 @@
 
 #include <cassandra.h>
 
-#include <cass/shared_res.hpp>
+#include <cass/wrapper_ptr.hpp>
 
 namespace cass {
+
+typedef wrapper_ptr<class future> future_ptr;
 
 class future {
 public:
@@ -21,19 +23,6 @@ public:
 private:
     ::CassFuture *p;
 };
-
-class future_ptr : shared_res<future, future::free> {
-public:
-    using shared_res::shared_res;
-    future * get() { return &shared_res::get(); }
-    future * operator -> () { return &shared_res::get(); }
-    future & operator * () { return shared_res::get(); }
-};
-
-
-///
-/// future
-///
 
 inline void future::free(const future f)
 {
