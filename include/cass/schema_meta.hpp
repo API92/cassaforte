@@ -25,7 +25,7 @@ public:
 
     inline uint32_t snapshot_version() const;
 
-    inline version get_version() const;
+    inline cass::version version() const;
 
     CASSA_IMPEXP keyspace_meta_const_ptr const keyspace_by_name(
             char const *keyspace);
@@ -47,7 +47,7 @@ inline uint32_t schema_meta::snapshot_version() const
     return ::cass_schema_meta_snapshot_version(p);
 }
 
-inline version schema_meta::get_version() const
+inline version schema_meta::version() const
 {
     return ::cass_schema_meta_version(p);
 }

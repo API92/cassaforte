@@ -13,6 +13,10 @@
 
 namespace cass {
 
+typedef ::cass_byte_t byte_t;
+
+typedef ::cass_duration_t duration_t;
+
 typedef ::CassInet inet;
 
 typedef ::CassUuid uuid;
@@ -28,10 +32,13 @@ class batch;
 class future;
 
 class prepared;
+typedef wrapper_const_ptr<class prepared const> prepared_const_ptr;
 
 class result;
+typedef wrapper_const_ptr<result const> result_const_ptr;
 
 class error_result;
+typedef wrapper_ptr<class error_result const> error_result_const_ptr;
 
 class iterator;
 

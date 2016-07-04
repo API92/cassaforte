@@ -12,15 +12,20 @@ add_library(${PROJECT_NAME}
     include/cass/authenticator.hpp
     include/cass/batch.hpp
     include/cass/cluster.hpp
+    include/cass/collection.hpp
     include/cass/column_meta.hpp
+    include/cass/custom_payload.hpp
     include/cass/data_type.hpp
     include/cass/defs.hpp
+    include/cass/error_result.hpp
     include/cass/function_meta.hpp
     include/cass/future.hpp
     include/cass/impexp.hpp
     include/cass/index_meta.hpp
     include/cass/keyspace_meta.hpp
     include/cass/materialized_view_meta.hpp
+    include/cass/prepared.hpp
+    include/cass/result.hpp
     include/cass/retry_policy.hpp
     include/cass/schema_meta.hpp
     include/cass/session.hpp
@@ -29,15 +34,23 @@ add_library(${PROJECT_NAME}
     include/cass/statement.hpp
     include/cass/table_meta.hpp
     include/cass/timestamp_gen.hpp
+    include/cass/tuple.hpp
+    include/cass/user_type.hpp
     include/cass/value.hpp
     include/cass/wrapper_ptr.hpp
+    src/aggregate_meta.cpp
     src/cluster.cpp
+    src/column_meta.cpp
+    src/function_meta.cpp
+    src/future.cpp
+    src/index_meta.cpp
     src/keyspace_meta.cpp
     src/main.cpp
     src/materialized_view_meta.cpp
     src/schema_meta.cpp
     src/session.cpp
     src/shared_res.cpp
+    src/statement.cpp
     src/table_meta.cpp
 )
 

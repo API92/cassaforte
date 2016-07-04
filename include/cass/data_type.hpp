@@ -23,6 +23,9 @@ public:
     inline static void free(data_type const);
 
 private:
+    friend class aggregate_meta;
+    friend class column_meta;
+    friend class function_meta;
     friend class keyspace_meta;
     friend data_type_ptr;
     friend data_type_const_ptr;
@@ -33,10 +36,11 @@ private:
     data_type(data_type &&) = default;
     void operator = (const data_type &) = delete;
     void operator = (data_type &&) = delete;
+    void set_backend(::CassDataType const *pc_new) const { pc = pc_new; }
 
     union {
         ::CassDataType *p;
-        ::CassDataType const *pc;
+        mutable ::CassDataType const *pc;
     };
 };
 
