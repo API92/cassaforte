@@ -26,6 +26,7 @@ class cluster;
 class session;
 
 class statement;
+typedef wrapper_ptr<class statement> statement_ptr;
 
 class batch;
 
@@ -43,6 +44,7 @@ typedef wrapper_ptr<class error_result const> error_result_const_ptr;
 class iterator;
 
 class row;
+typedef dummy_ptr<class row const> row_const_ptr;
 
 class value;
 typedef dummy_ptr<class value const> value_const_ptr;

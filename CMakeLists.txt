@@ -22,11 +22,13 @@ add_library(${PROJECT_NAME}
     include/cass/future.hpp
     include/cass/impexp.hpp
     include/cass/index_meta.hpp
+    include/cass/iterator.hpp
     include/cass/keyspace_meta.hpp
     include/cass/materialized_view_meta.hpp
     include/cass/prepared.hpp
     include/cass/result.hpp
     include/cass/retry_policy.hpp
+    include/cass/row.hpp
     include/cass/schema_meta.hpp
     include/cass/session.hpp
     include/cass/shared_res.hpp
@@ -39,19 +41,26 @@ add_library(${PROJECT_NAME}
     include/cass/value.hpp
     include/cass/wrapper_ptr.hpp
     src/aggregate_meta.cpp
+    src/batch.cpp
     src/cluster.cpp
+    src/collection.cpp
     src/column_meta.cpp
     src/function_meta.cpp
     src/future.cpp
     src/index_meta.cpp
+    src/iterator.cpp
     src/keyspace_meta.cpp
     src/main.cpp
     src/materialized_view_meta.cpp
+    src/prepared.cpp
+    src/result.cpp
     src/schema_meta.cpp
     src/session.cpp
     src/shared_res.cpp
     src/statement.cpp
     src/table_meta.cpp
+    src/tuple.cpp
+    src/user_type.cpp
 )
 
 include_directories(include)
