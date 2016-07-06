@@ -4,6 +4,10 @@
 
 #include <cass/iterator.hpp>
 
+#include <cass/aggregate_meta.hpp>
+#include <cass/data_type.hpp>
+#include <cass/function_meta.hpp>
+#include <cass/index_meta.hpp>
 #include <cass/keyspace_meta.hpp>
 #include <cass/materialized_view_meta.hpp>
 #include <cass/result.hpp>
@@ -146,11 +150,109 @@ iterator_ptr iterator::fields_from_materialized_view_meta(
                     view_meta->backend())), true);
 }
 
-iterator_ptr iterator::cass_iterator_fields_from_column_meta(
+iterator_ptr iterator::fields_from_column_meta(
         cass::column_meta const *column_meta)
 {
     return iterator_ptr(iterator(::cass_iterator_fields_from_column_meta(
                     column_meta->backend())), true);
+}
+
+iterator_ptr iterator::fields_from_index_meta(
+        cass::index_meta const *index_meta)
+{
+    return iterator_ptr(iterator(::cass_iterator_fields_from_index_meta(
+                    index_meta->backend())), true);
+}
+
+iterator_ptr iterator::fields_from_function_meta(
+        cass::function_meta const *function_meta)
+{
+    return iterator_ptr(iterator(::cass_iterator_fields_from_function_meta(
+                    function_meta->backend())), true);
+}
+
+iterator_ptr iterator::fields_from_aggregate_meta(
+        cass::aggregate_meta const *aggregate_meta)
+{
+    return iterator_ptr(iterator(::cass_iterator_fields_from_aggregate_meta(
+                    aggregate_meta->backend())), true);
+}
+
+row_const_ptr iterator::get_row() const
+{
+    return row_const_ptr(::cass_iterator_get_row(p));
+}
+
+value_const_ptr iterator::get_column() const
+{
+    return value_const_ptr(::cass_iterator_get_column(p));
+}
+
+value_const_ptr iterator::get_value() const
+{
+    return value_const_ptr(::cass_iterator_get_value(p));
+}
+
+value_const_ptr iterator::get_map_key() const
+{
+    return value_const_ptr(::cass_iterator_get_map_key(p));
+}
+
+value_const_ptr iterator::get_map_value() const
+{
+    return value_const_ptr(::cass_iterator_get_map_value(p));
+}
+
+value_const_ptr iterator::get_user_type_field_value()
+{
+    return value_const_ptr(::cass_iterator_get_user_type_field_value(p));
+}
+
+keyspace_meta_const_ptr iterator::get_keyspace_meta() const
+{
+    return keyspace_meta_const_ptr(::cass_iterator_get_keyspace_meta(p));
+}
+
+table_meta_const_ptr iterator::get_table_meta() const
+{
+    return table_meta_const_ptr(::cass_iterator_get_table_meta(p));
+}
+
+materialized_view_meta_const_ptr iterator::get_materialized_view_meta() const
+{
+    return materialized_view_meta_const_ptr(
+            ::cass_iterator_get_materialized_view_meta(p));
+}
+
+data_type_const_ptr iterator::get_user_type() const
+{
+    return data_type_const_ptr(data_type(::cass_iterator_get_user_type(p)),
+            false);
+}
+
+function_meta_const_ptr iterator::get_function_meta() const
+{
+    return function_meta_const_ptr(::cass_iterator_get_function_meta(p));
+}
+
+aggregate_meta_const_ptr iterator::get_aggregate_meta() const
+{
+    return aggregate_meta_const_ptr(::cass_iterator_get_aggregate_meta(p));
+}
+
+column_meta_const_ptr iterator::get_column_meta() const
+{
+    return column_meta_const_ptr(::cass_iterator_get_column_meta(p));
+}
+
+index_meta_const_ptr iterator::get_index_meta() const
+{
+    return index_meta_const_ptr(::cass_iterator_get_index_meta(p));
+}
+
+value_const_ptr iterator::get_meta_field_value() const
+{
+    return value_const_ptr(::cass_iterator_get_meta_field_value(p));
 }
 
 } // namespace cass

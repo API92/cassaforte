@@ -80,11 +80,13 @@ private:
     friend class collection;
     friend class column_meta;
     friend class function_meta;
+    friend class iterator;
     friend class keyspace_meta;
     friend class prepared;
     friend class result;
     friend class tuple;
     friend class user_type;
+    friend class value;
     template<typename T>
     friend class wrapper_ptr;
     template<typename T>

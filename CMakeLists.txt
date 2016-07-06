@@ -22,9 +22,11 @@ add_library(${PROJECT_NAME}
     include/cass/future.hpp
     include/cass/impexp.hpp
     include/cass/index_meta.hpp
+    include/cass/inet.hpp
     include/cass/iterator.hpp
     include/cass/keyspace_meta.hpp
     include/cass/materialized_view_meta.hpp
+    include/cass/misc.hpp
     include/cass/prepared.hpp
     include/cass/result.hpp
     include/cass/retry_policy.hpp
@@ -37,6 +39,8 @@ add_library(${PROJECT_NAME}
     include/cass/table_meta.hpp
     include/cass/timestamp_gen.hpp
     include/cass/tuple.hpp
+    include/cass/uuid.hpp
+    include/cass/uuid_gen.hpp
     include/cass/user_type.hpp
     include/cass/value.hpp
     include/cass/wrapper_ptr.hpp
@@ -54,6 +58,7 @@ add_library(${PROJECT_NAME}
     src/materialized_view_meta.cpp
     src/prepared.cpp
     src/result.cpp
+    src/row.cpp
     src/schema_meta.cpp
     src/session.cpp
     src/shared_res.cpp
@@ -61,6 +66,7 @@ add_library(${PROJECT_NAME}
     src/table_meta.cpp
     src/tuple.cpp
     src/user_type.cpp
+    src/value.cpp
 )
 
 include_directories(include)

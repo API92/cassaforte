@@ -7,6 +7,7 @@
 #include <cassandra.h>
 
 #include <cass/defs.hpp>
+#include <cass/inet.hpp>
 
 namespace cass {
 

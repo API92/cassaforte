@@ -8,6 +8,8 @@
 
 #include <cass/defs.hpp>
 #include <cass/impexp.hpp>
+#include <cass/inet.hpp>
+#include <cass/uuid.hpp>
 #include <cass/wrapper_ptr.hpp>
 
 namespace cass {

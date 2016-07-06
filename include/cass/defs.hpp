@@ -17,9 +17,9 @@ typedef ::cass_byte_t byte_t;
 
 typedef ::cass_duration_t duration_t;
 
-typedef ::CassInet inet;
+class inet;
 
-typedef ::CassUuid uuid;
+class uuid;
 
 class cluster;
 
@@ -127,5 +127,7 @@ typedef ::CassError error;
 typedef ::CassLogMessage log_message;
 
 class authenticator;
+
+typedef ::CassLogCallback log_callback;
 
 } // namespace cass

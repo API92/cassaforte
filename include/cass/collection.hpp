@@ -8,6 +8,8 @@
 
 #include <cass/defs.hpp>
 #include <cass/impexp.hpp>
+#include <cass/inet.hpp>
+#include <cass/uuid.hpp>
 #include <cass/wrapper_ptr.hpp>
 
 namespace cass {
@@ -30,7 +32,7 @@ public:
     CASSA_IMPEXP data_type_const_ptr data_type() const;
 
     inline error append_int8(int8_t value);
-    
+
     inline error append_int16(int16_t value);
 
     inline error append_int32(int32_t value);
