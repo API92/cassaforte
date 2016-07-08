@@ -12,7 +12,8 @@ namespace cass {
 
 result_const_ptr future::get_result()
 {
-    return result_const_ptr(result(::cass_future_get_result(p)), true);
+    result res(::cass_future_get_result(p));
+    return result_const_ptr(res, res.backend() ? true : false);
 }
 
 error_result_const_ptr future::get_error_result()
@@ -23,7 +24,8 @@ error_result_const_ptr future::get_error_result()
 
 prepared_const_ptr future::get_prepared()
 {
-    return prepared_const_ptr(prepared(::cass_future_get_prepared(p)), true);
+    prepared pr(::cass_future_get_prepared(p));
+    return prepared_const_ptr(pr, pr.backend() ? true : false);
 }
 
 } // namespace cass

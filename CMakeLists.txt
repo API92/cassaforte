@@ -9,6 +9,8 @@ if (${BUILD_SHARED_LIBS})
     set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 endif()
 
+add_definitions(-DCASSA_EXPORTS)
+
 add_library(${PROJECT_NAME}
     include/cass/aggregate_meta.hpp
     include/cass/authenticator.hpp
