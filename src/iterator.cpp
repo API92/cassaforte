@@ -32,27 +32,27 @@ iterator_ptr iterator::from_row(cass::row const *row)
 
 iterator_ptr iterator::from_collection(cass::value const *value)
 {
-    return iterator_ptr(iterator(::cass_iterator_from_collection(
-                    value->backend())), true);
+    iterator it(::cass_iterator_from_collection(value->backend()));
+    return iterator_ptr(it, it.backend() != nullptr);
 }
 
 iterator_ptr iterator::from_map(cass::value const *value)
 {
-    return iterator_ptr(iterator(::cass_iterator_from_map(
-                    value->backend())), true);
+    iterator it(::cass_iterator_from_map(value->backend()));
+    return iterator_ptr(it, it.backend() != nullptr);
 }
 
 iterator_ptr iterator::from_tuple(cass::value const *value)
 {
-    return iterator_ptr(iterator(::cass_iterator_from_tuple(
-                    value->backend())), true);
+    iterator it(::cass_iterator_from_tuple(value->backend()));
+    return iterator_ptr(it, it.backend() != nullptr);
 }
 
 iterator_ptr iterator::fields_from_user_type(
         cass::value const *value)
 {
-    return iterator_ptr(iterator(::cass_iterator_fields_from_user_type(
-                    value->backend())), true);
+    iterator it(::cass_iterator_fields_from_user_type(value->backend()));
+    return iterator_ptr(it, it.backend() != nullptr);
 }
 
 iterator_ptr iterator::keyspaces_from_schema_meta(

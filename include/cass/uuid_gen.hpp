@@ -18,6 +18,8 @@ typedef wrapper_ptr<class uuid_gen> uuid_gen_ptr;
 class uuid_gen {
 public:
     explicit uuid_gen(::CassUuidGen *p) : p(p) {}
+    ::CassUuidGen * backend() { return p; }
+    ::CassUuidGen const * backend() const { return p; }
 
     inline static void free(uuid_gen const g);
 

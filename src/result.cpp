@@ -12,7 +12,7 @@ namespace cass {
 data_type_const_ptr result::column_data_type(size_t index)
 {
     return data_type_const_ptr(data_type(::cass_result_column_data_type(
-                    p, index)), true);
+                    p, index)), false);
 }
 
 row_const_ptr result::firw_row() const

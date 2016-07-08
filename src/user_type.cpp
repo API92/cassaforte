@@ -12,8 +12,8 @@ namespace cass {
 
 user_type_ptr user_type::new_from_data_type(cass::data_type const *data_type)
 {
-    return user_type_ptr(user_type(::cass_user_type_new_from_data_type(
-                    data_type->backend())), true);
+    user_type t(::cass_user_type_new_from_data_type(data_type->backend()));
+    return user_type_ptr(t, t.backend() != nullptr);
 }
 
 data_type_const_ptr user_type::data_type() const
