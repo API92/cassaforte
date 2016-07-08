@@ -13,12 +13,14 @@ namespace cass {
 
 namespace detail {
 
+#pragma GCC visibility push(default)
 struct CASSA_IMPEXP counter_type {
     static void * operator new(std::size_t sz, std::nothrow_t) noexcept;
     static void operator delete(void *p);
 
     size_t value;
 };
+#pragma GCC visibility pop
 
 } // namespace detail
 
