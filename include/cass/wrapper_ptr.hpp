@@ -28,7 +28,7 @@ public:
     T & operator * ()
     {
         assert(*this);
-        return T::get();
+        return parent_type::get();
     }
 };
 
