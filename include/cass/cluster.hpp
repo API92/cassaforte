@@ -149,47 +149,49 @@ inline void cluster::free(cluster const c)
 
 inline error cluster::set_contact_points(char const *cp)
 {
-    return ::cass_cluster_set_contact_points(p, cp);
+    return error(::cass_cluster_set_contact_points(p, cp));
 }
 
 inline error cluster::set_contact_points_n(char const *cp, size_t len)
 {
-    return ::cass_cluster_set_contact_points_n(p, cp, len);
+    return error(::cass_cluster_set_contact_points_n(p, cp, len));
 }
 
 inline error cluster::set_port(int port)
 {
-    return ::cass_cluster_set_port(p, port);
+    return error(::cass_cluster_set_port(p, port));
 }
 
 inline error cluster::set_num_threads_io(unsigned num_threads)
 {
-    return ::cass_cluster_set_num_threads_io(p, num_threads);
+    return error(::cass_cluster_set_num_threads_io(p, num_threads));
 }
 
 inline error cluster::set_queue_size_io(unsigned queue_size)
 {
-    return ::cass_cluster_set_queue_size_io(p, queue_size);
+    return error(::cass_cluster_set_queue_size_io(p, queue_size));
 }
 
 inline error cluster::set_queue_size_event(unsigned queue_size)
 {
-    return ::cass_cluster_set_queue_size_event(p, queue_size);
+    return error(::cass_cluster_set_queue_size_event(p, queue_size));
 }
 
 inline error cluster::set_queue_size_log(unsigned queue_size)
 {
-    return ::cass_cluster_set_queue_size_log(p, queue_size);
+    return error(::cass_cluster_set_queue_size_log(p, queue_size));
 }
 
 inline error cluster::set_core_connections_per_host(unsigned num_connections)
 {
-    return ::cass_cluster_set_core_connections_per_host(p, num_connections);
+    return error(::cass_cluster_set_core_connections_per_host(
+                p, num_connections));
 }
 
 inline error cluster::set_max_connections_per_host(unsigned num_connections)
 {
-    return ::cass_cluster_set_max_connections_per_host(p, num_connections);
+    return error(::cass_cluster_set_max_connections_per_host(
+                p, num_connections));
 }
 
 inline void cluster::set_reconnect_wait_time(unsigned wait_time)
@@ -199,37 +201,42 @@ inline void cluster::set_reconnect_wait_time(unsigned wait_time)
 
 inline error cluster::set_max_concurrent_creation(unsigned num_connections)
 {
-    return ::cass_cluster_set_max_concurrent_creation(p, num_connections);
+    return error(::cass_cluster_set_max_concurrent_creation(
+                p, num_connections));
 }
 
 inline error cluster::set_max_concurrent_requests_threshold(unsigned num_req)
 {
-    return ::cass_cluster_set_max_concurrent_requests_threshold(p, num_req);
+    return error(::cass_cluster_set_max_concurrent_requests_threshold(
+                p, num_req));
 }
 
 inline error cluster::set_max_requests_per_flush(unsigned num_requests)
 {
-    return ::cass_cluster_set_max_requests_per_flush(p, num_requests);
+    return error(::cass_cluster_set_max_requests_per_flush(p, num_requests));
 }
 
 inline error cluster::set_write_bytes_high_water_mark(unsigned num_bytes)
 {
-    return ::cass_cluster_set_write_bytes_high_water_mark(p, num_bytes);
+    return error(::cass_cluster_set_write_bytes_high_water_mark(
+                p, num_bytes));
 }
 
 inline error cluster::set_write_bytes_low_water_mark(unsigned num_bytes)
 {
-    return ::cass_cluster_set_write_bytes_low_water_mark(p, num_bytes);
+    return error(::cass_cluster_set_write_bytes_low_water_mark(p, num_bytes));
 }
 
 inline error cluster::set_pending_requests_high_water_mark(unsigned num_req)
 {
-    return ::cass_cluster_set_pending_requests_high_water_mark(p, num_req);
+    return error(::cass_cluster_set_pending_requests_high_water_mark(
+                p, num_req));
 }
 
 inline error cluster::set_pending_requests_low_water_mark(unsigned num_requests)
 {
-    return ::cass_cluster_set_pending_requests_low_water_mark(p, num_requests);
+    return error(::cass_cluster_set_pending_requests_low_water_mark(
+                p, num_requests));
 }
 
 inline void cluster::set_connect_timeout(unsigned timeout_ms)
@@ -269,18 +276,18 @@ inline error cluster::set_load_balance_dc_aware(char const *local_dc,
         unsigned used_hosts_per_remote_dc,
         bool allow_remote_dcs_for_local_cl)
 {
-    return ::cass_cluster_set_load_balance_dc_aware(p, local_dc,
+    return error(::cass_cluster_set_load_balance_dc_aware(p, local_dc,
             used_hosts_per_remote_dc,
-            (allow_remote_dcs_for_local_cl ? cass_true : cass_false));
+            (allow_remote_dcs_for_local_cl ? cass_true : cass_false)));
 }
 
 inline error cluster::set_load_balance_dc_aware_n(char const *local_dc,
         size_t local_dc_length, unsigned used_hosts_per_remote_dc,
         bool allow_remote_dcs_for_local_cl)
 {
-    return ::cass_cluster_set_load_balance_dc_aware_n(p, local_dc,
+    return error(::cass_cluster_set_load_balance_dc_aware_n(p, local_dc,
             local_dc_length, used_hosts_per_remote_dc,
-            (allow_remote_dcs_for_local_cl ? cass_true : cass_false));
+            (allow_remote_dcs_for_local_cl ? cass_true : cass_false)));
 }
 
 inline void cluster::set_token_aware_routing(bool enabled)
@@ -372,8 +379,8 @@ inline void cluster::set_use_schema(bool enabled)
 
 inline error cluster::set_use_hostname_resolution(bool enabled)
 {
-    return ::cass_cluster_set_use_hostname_resolution(p,
-            (enabled ? cass_true : cass_false));
+    return error(::cass_cluster_set_use_hostname_resolution(p,
+            (enabled ? cass_true : cass_false)));
 }
 
 } // namespace cass

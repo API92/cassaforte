@@ -22,7 +22,7 @@ inline char const * write_type_string(write_type type)
 
 inline char const * error_desc(cass::error error)
 {
-    return ::cass_error_desc(error);
+    return ::cass_error_desc(static_cast<::CassError>(error));
 }
 
 inline void log_set_level(cass::log_level log_level)

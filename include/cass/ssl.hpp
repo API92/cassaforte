@@ -51,12 +51,12 @@ inline void ssl::free(ssl const s)
 
 inline error ssl::add_trusted_cert(char const *cert)
 {
-    return ::cass_ssl_add_trusted_cert(p, cert);
+    return error(::cass_ssl_add_trusted_cert(p, cert));
 }
 
 inline error ssl::add_trusted_cert_n(char const *cert, size_t cert_length)
 {
-    return ::cass_ssl_add_trusted_cert_n(p, cert, cert_length);
+    return error(::cass_ssl_add_trusted_cert_n(p, cert, cert_length));
 }
 
 inline void ssl::set_verify_flags(int flags)
@@ -66,24 +66,24 @@ inline void ssl::set_verify_flags(int flags)
 
 inline error ssl::set_cert(char const *cert)
 {
-    return ::cass_ssl_set_cert(p, cert);
+    return error(::cass_ssl_set_cert(p, cert));
 }
 
 inline error ssl::set_cert_n(char const *cert, size_t cert_length)
 {
-    return ::cass_ssl_set_cert_n(p, cert, cert_length);
+    return error(::cass_ssl_set_cert_n(p, cert, cert_length));
 }
 
 inline error ssl::set_private_key(char const *key, char const *password)
 {
-    return ::cass_ssl_set_private_key(p, key, password);
+    return error(::cass_ssl_set_private_key(p, key, password));
 }
 
 inline error ssl::set_private_key_n(char const *key, size_t key_length,
         char const *password, size_t password_length)
 {
-    return ::cass_ssl_set_private_key_n(p, key, key_length,
-            password, password_length);
+    return error(::cass_ssl_set_private_key_n(p, key, key_length,
+            password, password_length));
 }
 
 } // namespace cass

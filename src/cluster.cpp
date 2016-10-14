@@ -64,8 +64,8 @@ error cluster::set_authenticator_callbacks(
     // deleted.
     // If no exception, then pointer to exchange_cbs saved and cb::data_cleanup
     // will be called. Therefore exchange_cbs.release() needed.
-    error er = ::cass_cluster_set_authenticator_callbacks(p, &cbs,
-            cb::data_cleanup, exchange_cbs.get());
+    error er = error(::cass_cluster_set_authenticator_callbacks(p, &cbs,
+            cb::data_cleanup, exchange_cbs.get()));
     exchange_cbs.release();
     return er;
 }

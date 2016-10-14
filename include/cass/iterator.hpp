@@ -148,13 +148,14 @@ inline bool iterator::next()
 inline error iterator::get_user_type_field_name(char const **name,
         size_t *name_length)
 {
-    return ::cass_iterator_get_user_type_field_name(p, name, name_length);
+    return (error)::cass_iterator_get_user_type_field_name(
+            p, name, name_length);
 }
 
 inline error iterator::get_meta_field_name(char const **name,
         size_t *name_length)
 {
-    return ::cass_iterator_get_meta_field_name(p, name, name_length);
+    return (error)::cass_iterator_get_meta_field_name(p, name, name_length);
 }
 
 } // namespace cass

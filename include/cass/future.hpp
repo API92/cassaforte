@@ -58,7 +58,7 @@ inline void future::free(const future f)
 
 inline error future::set_callback(future::callback callback, void *data)
 {
-    return ::cass_future_set_callback(p, callback, data);
+    return (error)::cass_future_set_callback(p, callback, data);
 }
 
 inline bool future::ready()
@@ -78,7 +78,7 @@ inline bool future::wait_timed(duration_t timeout_us)
 
 inline error future::error_code()
 {
-    return ::cass_future_error_code(p);
+    return (error)::cass_future_error_code(p);
 }
 
 inline void future::error_message(char const **message, size_t *message_length)
@@ -94,7 +94,7 @@ inline size_t future::custom_payload_item_count()
 inline error future::custom_payload_item(size_t index, char const **name,
         size_t *name_length, byte_t const **value, size_t *value_size)
 {
-    return ::cass_future_custom_payload_item(p, index, name, name_length,
+    return (error)::cass_future_custom_payload_item(p, index, name, name_length,
             value, value_size);
 }
 

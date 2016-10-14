@@ -44,7 +44,7 @@ inline void prepared::free(prepared const p)
 inline error prepared::parameter_name(size_t index, char const **name,
         size_t *name_length)
 {
-    return ::cass_prepared_parameter_name(p, index, name, name_length);
+    return (error)::cass_prepared_parameter_name(p, index, name, name_length);
 }
 
 } // namespace cass

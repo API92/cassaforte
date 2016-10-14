@@ -62,7 +62,7 @@ public:
 
     inline error sub_type_name(size_t index, char const **name,
             size_t *name_length) const;
-    
+
     inline error add_sub_type(data_type const *sub_data_type);
     inline error add_sub_type_by_name(char const *name,
             data_type const *sub_data_type);
@@ -148,52 +148,55 @@ inline bool data_type::is_frozen() const
 inline error data_type::type_name(char const **type_name,
         size_t *type_name_length) const
 {
-    return ::cass_data_type_type_name(pc, type_name, type_name_length);
+    return error(::cass_data_type_type_name(pc, type_name, type_name_length));
 }
 
 inline error data_type::set_type_name(char const *type_name)
 {
-    return ::cass_data_type_set_type_name(p, type_name);
+    return error(::cass_data_type_set_type_name(p, type_name));
 }
 
 inline error data_type::data_type::set_type_name_n(char const *type_name,
         size_t type_name_length)
 {
-    return ::cass_data_type_set_type_name_n(p, type_name, type_name_length);
+    return error(::cass_data_type_set_type_name_n(
+                p, type_name, type_name_length));
 }
 
 inline error data_type::keyspace(char const **keyspace,
         size_t *keyspace_length) const
 {
-    return ::cass_data_type_keyspace(pc, keyspace, keyspace_length);
+    return error(::cass_data_type_keyspace(pc, keyspace, keyspace_length));
 }
 
 inline error data_type::set_keyspace(char const *keyspace)
 {
-    return ::cass_data_type_set_keyspace(p, keyspace);
+    return error(::cass_data_type_set_keyspace(p, keyspace));
 }
 
 inline error data_type::set_keyspace_n(char const *keyspace,
         size_t keyspace_length)
 {
-    return ::cass_data_type_set_keyspace_n(p, keyspace, keyspace_length);
+    return error(::cass_data_type_set_keyspace_n(p, keyspace, keyspace_length));
 }
 
 inline error data_type::class_name(char const **class_name,
         size_t *class_name_length) const
 {
-    return ::cass_data_type_class_name(pc, class_name, class_name_length);
+    return error(::cass_data_type_class_name(
+                pc, class_name, class_name_length));
 }
 
 inline error data_type::set_class_name(char const *class_name)
 {
-    return ::cass_data_type_set_class_name(p, class_name);
+    return error(::cass_data_type_set_class_name(p, class_name));
 }
 
 inline error data_type::set_class_name_n(char const *class_name,
         size_t class_name_length)
 {
-    return ::cass_data_type_set_class_name_n(p, class_name, class_name_length);
+    return error(::cass_data_type_set_class_name_n(
+                p, class_name, class_name_length));
 }
 
 inline size_t data_type::sub_type_count() const
@@ -225,44 +228,45 @@ inline data_type_const_ptr data_type::sub_data_type_by_name_n(char const *name,
 inline error data_type::sub_type_name(size_t index, char const **name,
         size_t *name_length) const
 {
-    return ::cass_data_type_sub_type_name(pc, index, name, name_length);
+    return error(::cass_data_type_sub_type_name(pc, index, name, name_length));
 }
 
 inline error data_type::add_sub_type(data_type const *sub_data_type)
 {
-    return ::cass_data_type_add_sub_type(p, sub_data_type->backend());
+    return error(::cass_data_type_add_sub_type(p, sub_data_type->backend()));
 }
 
 inline error data_type::add_sub_type_by_name(char const *name,
         data_type const *sub_data_type)
 {
-    return ::cass_data_type_add_sub_type_by_name(p, name,
-            sub_data_type->backend());
+    return error(::cass_data_type_add_sub_type_by_name(p, name,
+            sub_data_type->backend()));
 }
 
 inline error data_type::add_sub_type_by_name_n(char const *name,
         size_t name_length, data_type const *sub_data_type)
 {
-    return ::cass_data_type_add_sub_type_by_name_n(p, name, name_length,
-            sub_data_type->backend());
+    return error(::cass_data_type_add_sub_type_by_name_n(p, name, name_length,
+            sub_data_type->backend()));
 }
 
 inline error data_type::add_sub_value_type(value_type sub_value_type)
 {
-    return ::cass_data_type_add_sub_value_type(p, sub_value_type);
+    return error(::cass_data_type_add_sub_value_type(p, sub_value_type));
 }
 
 inline error data_type::add_sub_value_type_by_name(char const *name,
         value_type sub_value_type)
 {
-    return ::cass_data_type_add_sub_value_type_by_name(p, name, sub_value_type);
+    return error(::cass_data_type_add_sub_value_type_by_name(
+                p, name, sub_value_type));
 }
 
 inline error data_type::add_sub_value_type_by_name_n(char const *name,
         size_t name_length, value_type sub_value_type)
 {
-    return ::cass_data_type_add_sub_value_type_by_name_n(p, name, name_length,
-            sub_value_type);
+    return error(::cass_data_type_add_sub_value_type_by_name_n(
+                p, name, name_length, sub_value_type));
 }
 
 } // namespace cass

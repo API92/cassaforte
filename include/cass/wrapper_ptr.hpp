@@ -47,7 +47,23 @@ template<typename T>
 class dummy_ptr {
 public:
     template<typename ... Args>
-    dummy_ptr(Args ... args) : m(args...) {}
+    dummy_ptr(Args && ... args) : m(std::forward<Args &&>(args)...) {}
+
+    dummy_ptr(dummy_ptr const &rhs) : m(rhs.m) {}
+    dummy_ptr(dummy_ptr &&rhs) : m(std::move(rhs.m)) {}
+
+    dummy_ptr & operator = (dummy_ptr const &rhs)
+    {
+        m = rhs.m;
+        return *this;
+    }
+
+    dummy_ptr & operator = (dummy_ptr &&rhs)
+    {
+        m = std::move(rhs.m);
+        return *this;
+    }
+
     operator bool () const { return m.backend() != nullptr; }
     T * get() const { return m.backend() ? &m : nullptr; }
     T * operator -> () const
@@ -62,7 +78,7 @@ public:
     }
 
 private:
-    T m;
+    typename std::remove_const<T>::type m;
 };
 
 } // namespace cass

@@ -13,7 +13,8 @@ error function_meta::argument(size_t index, char const **name,
         size_t *name_length, data_type_const_ptr *type) const
 {
     ::CassDataType const *t = nullptr;
-    error res = ::cass_function_meta_argument(p, index, name, name_length, &t);
+    error res = (error)::cass_function_meta_argument(
+            p, index, name, name_length, &t);
     type->detach();
     type->get()->set_backend(t);
     return res;

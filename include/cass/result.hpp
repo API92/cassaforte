@@ -60,7 +60,7 @@ inline size_t result::column_count() const
 inline error result::column_name(size_t index, char const **name,
         size_t *name_length) const
 {
-    return ::cass_result_column_name(p, index, name, name_length);
+    return (error)::cass_result_column_name(p, index, name, name_length);
 }
 
 inline value_type result::column_type(size_t index) const
@@ -76,7 +76,8 @@ inline bool result::has_more_pages() const
 inline error result::paging_state_token(char const **paging_state,
         size_t *paging_state_size) const
 {
-    return ::cass_result_paging_state_token(p, paging_state, paging_state_size);
+    return (error)::cass_result_paging_state_token(
+            p, paging_state, paging_state_size);
 }
 
 } // namespace cass

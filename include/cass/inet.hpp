@@ -44,12 +44,12 @@ inline void inet::string(char *output) const
 
 inline error inet::from_string(char const *str)
 {
-    return ::cass_inet_from_string(str, this);
+    return error(::cass_inet_from_string(str, this));
 }
 
 inline error inet::from_string_n(char const *str, size_t str_length)
 {
-    return ::cass_inet_from_string_n(str, str_length, this);
+    return error(::cass_inet_from_string_n(str, str_length, this));
 }
 
 } // namespace cass

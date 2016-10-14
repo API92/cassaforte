@@ -53,12 +53,12 @@ inline void uuid::string(char *output) const
 
 inline error uuid::from_string(char const *str)
 {
-    return ::cass_uuid_from_string(str, this);
+    return error(::cass_uuid_from_string(str, this));
 }
 
 inline error uuid::from_string_n(char const *str, size_t str_length)
 {
-    return ::cass_uuid_from_string_n(str, str_length, this);
+    return error(::cass_uuid_from_string_n(str, str_length, this));
 }
 
 } // namespace cass

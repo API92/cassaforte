@@ -68,71 +68,71 @@ private:
 
 inline error value::get_int8(int8_t *output) const
 {
-    return ::cass_value_get_int8(p, output);
+    return error(::cass_value_get_int8(p, output));
 }
 
 inline error value::get_int16(int16_t *output) const
 {
-    return ::cass_value_get_int16(p, output);
+    return error(::cass_value_get_int16(p, output));
 }
 
 inline error value::get_int32(int32_t *output) const
 {
-    return ::cass_value_get_int32(p, output);
+    return error(::cass_value_get_int32(p, output));
 }
 
 inline error value::get_uint32(uint32_t *output) const
 {
-    return ::cass_value_get_uint32(p, output);
+    return error(::cass_value_get_uint32(p, output));
 }
 
 inline error value::get_int64(int64_t *output) const
 {
-    return ::cass_value_get_int64(p, output);
+    return error(::cass_value_get_int64(p, output));
 }
 
 inline error value::get_float(float *output) const
 {
-    return ::cass_value_get_float(p, output);
+    return error(::cass_value_get_float(p, output));
 }
 
 inline error value::get_double(double *output) const
 {
-    return ::cass_value_get_double(p, output);
+    return error(::cass_value_get_double(p, output));
 }
 
 inline error value::get_bool(bool *output) const
 {
     cass_bool_t out;
-    error res = ::cass_value_get_bool(p, &out);
+    error res = error(::cass_value_get_bool(p, &out));
     *output = out == cass_true;
     return res;
 }
 
 inline error value::get_uuid(uuid *output) const
 {
-    return ::cass_value_get_uuid(p, output);
+    return error(::cass_value_get_uuid(p, output));
 }
 
 inline error value::get_inet(inet *output) const
 {
-    return ::cass_value_get_inet(p, output);
+    return error(::cass_value_get_inet(p, output));
 }
 
 inline error value::get_string(char const **output, size_t *output_size) const
 {
-    return ::cass_value_get_string(p, output, output_size);
+    return error(::cass_value_get_string(p, output, output_size));
 }
 
 inline error value::get_bytes(byte_t const **output, size_t *output_size) const
 {
-    return ::cass_value_get_bytes(p, output, output_size);
+    return error(::cass_value_get_bytes(p, output, output_size));
 }
 
 inline error value::get_decimal(byte_t const **varint, size_t *varint_size,
             int32_t *scale) const
 {
-    return ::cass_value_get_decimal(p, varint, varint_size, scale);
+    return error(::cass_value_get_decimal(p, varint, varint_size, scale));
 }
 
 inline value_type value::type() const

@@ -6,6 +6,7 @@
 
 #include <cstddef>
 #include <new>
+#include <type_traits>
 
 #include <cass/impexp.hpp>
 
@@ -150,7 +151,7 @@ private:
             cnt = nullptr;
     }
 
-    T res;
+    typename std::remove_const<T>::type res;
     /* cnt == nullptr means resource not shared to this object (but this object
      *     still may contain old resource value in res).
      * (cnt->value & 1) == 0 means resource destructed (but this object

@@ -53,22 +53,22 @@ inline batch_ptr batch::new_ptr(batch_type type)
 
 inline error batch::set_consistency(cass::consistency consistency)
 {
-    return ::cass_batch_set_consistency(p, consistency);
+    return error(::cass_batch_set_consistency(p, consistency));
 }
 
 inline error batch::set_serial_consistency(consistency serial_consistency)
 {
-    return ::cass_batch_set_serial_consistency(p, serial_consistency);
+    return error(::cass_batch_set_serial_consistency(p, serial_consistency));
 }
 
 inline error batch::set_timestamp(int64_t timestamp)
 {
-    return ::cass_batch_set_timestamp(p, timestamp);
+    return error(::cass_batch_set_timestamp(p, timestamp));
 }
 
 inline error batch::set_request_timeout(uint64_t timeout_ms)
 {
-    return ::cass_batch_set_request_timeout(p, timeout_ms);
+    return error(::cass_batch_set_request_timeout(p, timeout_ms));
 }
 
 } // namespace cass
