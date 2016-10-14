@@ -19,6 +19,7 @@ class iterator {
 public:
     explicit iterator(::CassIterator *p) : p(p) {}
     ::CassIterator * backend() { return p; }
+    ::CassIterator const * backend() const { return p; }
 
     inline static void free(iterator const i);
 
