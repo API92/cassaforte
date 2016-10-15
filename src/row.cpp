@@ -8,21 +8,21 @@
 
 namespace cass {
 
-value_const_ptr row::get_column(size_t index) const
+value const * row::get_column(size_t index) const
 {
-    return value_const_ptr(::cass_row_get_column(p, index));
+    return value::ptr(::cass_row_get_column(backend(), index));
 }
 
-value_const_ptr row::get_column_by_name(char const *name) const
+value const * row::get_column_by_name(char const *name) const
 {
-    return value_const_ptr(::cass_row_get_column_by_name(p, name));
+    return value::ptr(::cass_row_get_column_by_name(backend(), name));
 }
 
-value_const_ptr row::get_column_by_name_n(char const *name,
+value const * row::get_column_by_name_n(char const *name,
         size_t name_length) const
 {
-    return value_const_ptr(::cass_row_get_column_by_name_n(p, name,
-                name_length));
+    return value::ptr(::cass_row_get_column_by_name_n(
+                backend(), name, name_length));
 }
 
 } // namespace cass

@@ -27,9 +27,9 @@ public:
 
     inline cass::version version() const;
 
-    CASSA_IMPEXP keyspace_meta_const_ptr const keyspace_by_name(
+    CASSA_IMPEXP keyspace_meta const * const keyspace_by_name(
             char const *keyspace);
-    CASSA_IMPEXP keyspace_meta_const_ptr const keyspace_by_name_n(
+    CASSA_IMPEXP keyspace_meta const * const keyspace_by_name_n(
             char const *keyspace, size_t keyspace_length);
 
 private:

@@ -15,9 +15,9 @@ data_type_const_ptr result::column_data_type(size_t index)
                     p, index)), false);
 }
 
-row_const_ptr result::first_row() const
+row const * result::first_row() const
 {
-    return row_const_ptr(::cass_result_first_row(p));
+    return row::ptr(::cass_result_first_row(p));
 }
 
 } // namespace cass

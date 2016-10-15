@@ -11,20 +11,20 @@ namespace cass {
 
 data_type_const_ptr column_meta::data_type() const
 {
-    return data_type_const_ptr(cass::data_type(::cass_column_meta_data_type(p)),
-            false);
+    return data_type_const_ptr(cass::data_type(::cass_column_meta_data_type(
+                    backend())), false);
 }
 
-value_const_ptr column_meta::field_by_name(char const *name) const
+value const * column_meta::field_by_name(char const *name) const
 {
-    return value_const_ptr(::cass_column_meta_field_by_name(p, name));
+    return value::ptr(::cass_column_meta_field_by_name(backend(), name));
 }
 
-value_const_ptr column_meta::field_by_name_n(char const *name,
+value const * column_meta::field_by_name_n(char const *name,
         size_t name_length) const
 {
-    return value_const_ptr(::cass_column_meta_field_by_name_n(
-                p, name, name_length));
+    return value::ptr(::cass_column_meta_field_by_name_n(
+                backend(), name, name_length));
 }
 
 } // namespace cass

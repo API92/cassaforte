@@ -8,21 +8,21 @@
 
 namespace cass {
 
-value_const_ptr index_meta::options() const
+value const * index_meta::options() const
 {
-    return value_const_ptr(::cass_index_meta_options(p));
+    return value::ptr(::cass_index_meta_options(backend()));
 }
 
-value_const_ptr index_meta::field_by_name(char const *name) const
+value const * index_meta::field_by_name(char const *name) const
 {
-    return value_const_ptr(::cass_index_meta_field_by_name(p, name));
+    return value::ptr(::cass_index_meta_field_by_name(backend(), name));
 }
 
-value_const_ptr index_meta::field_by_name_n(
+value const * index_meta::field_by_name_n(
         char const *name, size_t name_length) const
 {
-    return value_const_ptr(::cass_index_meta_field_by_name_n(
-                p, name, name_length));
+    return value::ptr(::cass_index_meta_field_by_name_n(
+                backend(), name, name_length));
 }
 
 } // namespace cass

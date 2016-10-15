@@ -10,8 +10,8 @@ namespace cass {
 
 data_type_const_ptr value::data_type() const
 {
-    return data_type_const_ptr(cass::data_type(::cass_value_data_type(p)),
-            false);
+    return data_type_const_ptr(cass::data_type(
+                ::cass_value_data_type(backend())), false);
 }
 
 } // namespace cass

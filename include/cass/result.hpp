@@ -31,7 +31,7 @@ public:
 
     CASSA_IMPEXP data_type_const_ptr column_data_type(size_t index);
 
-    CASSA_IMPEXP row_const_ptr first_row() const;
+    CASSA_IMPEXP row const * first_row() const;
 
     inline bool has_more_pages() const;
 

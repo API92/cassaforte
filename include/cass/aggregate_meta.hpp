@@ -11,12 +11,17 @@
 
 namespace cass {
 
-typedef dummy_ptr<class aggregate_meta const> aggregate_meta_const_ptr;
-
 class aggregate_meta {
 public:
-    explicit aggregate_meta(::CassAggregateMeta const *p) : p(p) {}
-    ::CassAggregateMeta const * backend() const { return p; }
+    static aggregate_meta const * ptr(::CassAggregateMeta const *p)
+    {
+        return reinterpret_cast<aggregate_meta const *>(p);
+    }
+
+    ::CassAggregateMeta const * backend() const
+    {
+        return reinterpret_cast<::CassAggregateMeta const *>(this);
+    }
 
     inline void name(char const **name, size_t *name_length) const;
 
@@ -31,34 +36,31 @@ public:
 
     CASSA_IMPEXP data_type_const_ptr state_type() const;
 
-    CASSA_IMPEXP function_meta_const_ptr state_func() const;
+    CASSA_IMPEXP function_meta const * state_func() const;
 
-    CASSA_IMPEXP function_meta_const_ptr final_func() const;
+    CASSA_IMPEXP function_meta const * final_func() const;
 
-    CASSA_IMPEXP value_const_ptr init_cond() const;
+    CASSA_IMPEXP value const * init_cond() const;
 
-    CASSA_IMPEXP value_const_ptr field_by_name(char const *name) const;
-    CASSA_IMPEXP value_const_ptr field_by_name_n(char const *name,
+    CASSA_IMPEXP value const * field_by_name(char const *name) const;
+    CASSA_IMPEXP value const * field_by_name_n(char const *name,
             size_t name_length) const;
-
-private:
-    ::CassAggregateMeta const *p;
 };
 
 inline void aggregate_meta::name(char const **name, size_t *name_length) const
 {
-    ::cass_aggregate_meta_name(p, name, name_length);
+    ::cass_aggregate_meta_name(backend(), name, name_length);
 }
 
 inline void aggregate_meta::full_name(char const **full_name,
         size_t *full_name_length) const
 {
-    ::cass_aggregate_meta_full_name(p, full_name, full_name_length);
+    ::cass_aggregate_meta_full_name(backend(), full_name, full_name_length);
 }
 
 inline size_t aggregate_meta::argument_count() const
 {
-    return ::cass_aggregate_meta_argument_count(p);
+    return ::cass_aggregate_meta_argument_count(backend());
 }
 
 } // namespace cass

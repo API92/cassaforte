@@ -91,41 +91,41 @@ public:
 
     inline bool next();
 
-    CASSA_IMPEXP row_const_ptr get_row() const;
+    CASSA_IMPEXP row const * get_row() const;
 
-    CASSA_IMPEXP value_const_ptr get_column() const;
+    CASSA_IMPEXP value const * get_column() const;
 
-    CASSA_IMPEXP value_const_ptr get_value() const;
+    CASSA_IMPEXP value const * get_value() const;
 
-    CASSA_IMPEXP value_const_ptr get_map_key() const;
+    CASSA_IMPEXP value const * get_map_key() const;
 
-    CASSA_IMPEXP value_const_ptr get_map_value() const;
+    CASSA_IMPEXP value const * get_map_value() const;
 
     inline error get_user_type_field_name(char const **name,
             size_t *name_length);
 
-    CASSA_IMPEXP value_const_ptr get_user_type_field_value();
+    CASSA_IMPEXP value const * get_user_type_field_value();
 
-    CASSA_IMPEXP keyspace_meta_const_ptr get_keyspace_meta() const;
+    CASSA_IMPEXP keyspace_meta const * get_keyspace_meta() const;
 
-    CASSA_IMPEXP table_meta_const_ptr get_table_meta() const;
+    CASSA_IMPEXP table_meta const * get_table_meta() const;
 
-    CASSA_IMPEXP materialized_view_meta_const_ptr get_materialized_view_meta()
+    CASSA_IMPEXP materialized_view_meta const * get_materialized_view_meta()
         const;
 
     CASSA_IMPEXP data_type_const_ptr get_user_type() const;
 
-    CASSA_IMPEXP function_meta_const_ptr get_function_meta() const;
+    CASSA_IMPEXP function_meta const * get_function_meta() const;
 
-    CASSA_IMPEXP aggregate_meta_const_ptr get_aggregate_meta() const;
+    CASSA_IMPEXP aggregate_meta const * get_aggregate_meta() const;
 
-    CASSA_IMPEXP column_meta_const_ptr get_column_meta() const;
+    CASSA_IMPEXP column_meta const * get_column_meta() const;
 
-    CASSA_IMPEXP index_meta_const_ptr get_index_meta() const;
+    CASSA_IMPEXP index_meta const * get_index_meta() const;
 
     inline error get_meta_field_name(char const **name, size_t *name_length);
 
-    CASSA_IMPEXP value_const_ptr get_meta_field_value() const;
+    CASSA_IMPEXP value const * get_meta_field_value() const;
 
 private:
     ::CassIterator *p;

@@ -12,12 +12,17 @@
 
 namespace cass {
 
-typedef dummy_ptr<class function_meta const> function_meta_const_ptr;
-
 class function_meta {
 public:
-    explicit function_meta(::CassFunctionMeta const *p) : p(p) {}
-    ::CassFunctionMeta const * backend() const { return p; }
+    static function_meta const * ptr(::CassFunctionMeta const *p)
+    {
+        return reinterpret_cast<function_meta const *>(p);
+    }
+
+    ::CassFunctionMeta const * backend() const
+    {
+        return reinterpret_cast<::CassFunctionMeta const *>(this);
+    }
 
     inline void name(char const **name, size_t *name_length) const;
 
@@ -42,44 +47,41 @@ public:
 
     CASSA_IMPEXP data_type_const_ptr return_type() const;
 
-    CASSA_IMPEXP value_const_ptr field_by_name(char const *name) const;
-    CASSA_IMPEXP value_const_ptr field_by_name_n(char const *name,
+    CASSA_IMPEXP value const * field_by_name(char const *name) const;
+    CASSA_IMPEXP value const * field_by_name_n(char const *name,
             size_t name_length) const;
-
-private:
-    ::CassFunctionMeta const *p;
 };
 
 inline void function_meta::name(char const **name, size_t *name_length) const
 {
-    ::cass_function_meta_name(p, name, name_length);
+    ::cass_function_meta_name(backend(), name, name_length);
 }
 
 inline void function_meta::full_name(char const **full_name,
         size_t *full_name_length) const
 {
-    ::cass_function_meta_full_name(p, full_name, full_name_length);
+    ::cass_function_meta_full_name(backend(), full_name, full_name_length);
 }
 
 inline void function_meta::body(char const **body, size_t *body_length) const
 {
-    ::cass_function_meta_body(p, body, body_length);
+    ::cass_function_meta_body(backend(), body, body_length);
 }
 
 inline void function_meta::language(char const **language,
         size_t *language_length) const
 {
-    ::cass_function_meta_language(p, language, language_length);
+    ::cass_function_meta_language(backend(), language, language_length);
 }
 
 inline bool function_meta::called_on_null_input() const
 {
-    return ::cass_function_meta_called_on_null_input(p) == cass_true;
+    return ::cass_function_meta_called_on_null_input(backend()) == cass_true;
 }
 
 inline size_t function_meta::argument_count() const
 {
-    return ::cass_function_meta_argument_count(p);
+    return ::cass_function_meta_argument_count(backend());
 }
 
 } // namespace cass

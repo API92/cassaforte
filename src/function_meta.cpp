@@ -14,7 +14,7 @@ error function_meta::argument(size_t index, char const **name,
 {
     ::CassDataType const *t = nullptr;
     error res = (error)::cass_function_meta_argument(
-            p, index, name, name_length, &t);
+            backend(), index, name, name_length, &t);
     type->detach();
     type->get()->set_backend(t);
     return res;
@@ -24,7 +24,8 @@ data_type_const_ptr function_meta::argument_type_by_name(
         char const *name) const
 {
     return data_type_const_ptr(data_type(
-                ::cass_function_meta_argument_type_by_name(p, name)), false);
+                ::cass_function_meta_argument_type_by_name(backend(), name)),
+            false);
 }
 
 data_type_const_ptr function_meta::argument_type_by_name_n(
@@ -32,24 +33,26 @@ data_type_const_ptr function_meta::argument_type_by_name_n(
 {
     return data_type_const_ptr(data_type(
                 ::cass_function_meta_argument_type_by_name_n(
-                    p, name, name_length)), false);
+                    backend(), name, name_length)), false);
 }
 
 data_type_const_ptr function_meta::return_type() const
 {
-    return data_type_const_ptr(data_type(::cass_function_meta_return_type(p)),
+    return data_type_const_ptr(data_type(
+                ::cass_function_meta_return_type(backend())),
             false);
 }
 
-value_const_ptr function_meta::field_by_name(char const *name) const
+value const * function_meta::field_by_name(char const *name) const
 {
-    return value_const_ptr(::cass_function_meta_field_by_name(p, name));
+    return value::ptr(
+            ::cass_function_meta_field_by_name(backend(), name));
 }
 
-value_const_ptr function_meta::field_by_name_n(char const *name,
+value const * function_meta::field_by_name_n(char const *name,
         size_t name_length) const
 {
-    return value_const_ptr(::cass_function_meta_field_by_name_n(p, name,
+    return value::ptr(::cass_function_meta_field_by_name_n(backend(), name,
                 name_length));
 }
 

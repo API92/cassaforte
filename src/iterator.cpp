@@ -178,49 +178,49 @@ iterator_ptr iterator::fields_from_aggregate_meta(
                     aggregate_meta->backend())), true);
 }
 
-row_const_ptr iterator::get_row() const
+row const * iterator::get_row() const
 {
-    return row_const_ptr(::cass_iterator_get_row(p));
+    return row::ptr(::cass_iterator_get_row(p));
 }
 
-value_const_ptr iterator::get_column() const
+value const * iterator::get_column() const
 {
-    return value_const_ptr(::cass_iterator_get_column(p));
+    return value::ptr(::cass_iterator_get_column(p));
 }
 
-value_const_ptr iterator::get_value() const
+value const * iterator::get_value() const
 {
-    return value_const_ptr(::cass_iterator_get_value(p));
+    return value::ptr(::cass_iterator_get_value(p));
 }
 
-value_const_ptr iterator::get_map_key() const
+value const * iterator::get_map_key() const
 {
-    return value_const_ptr(::cass_iterator_get_map_key(p));
+    return value::ptr(::cass_iterator_get_map_key(p));
 }
 
-value_const_ptr iterator::get_map_value() const
+value const * iterator::get_map_value() const
 {
-    return value_const_ptr(::cass_iterator_get_map_value(p));
+    return value::ptr(::cass_iterator_get_map_value(p));
 }
 
-value_const_ptr iterator::get_user_type_field_value()
+value const * iterator::get_user_type_field_value()
 {
-    return value_const_ptr(::cass_iterator_get_user_type_field_value(p));
+    return value::ptr(::cass_iterator_get_user_type_field_value(p));
 }
 
-keyspace_meta_const_ptr iterator::get_keyspace_meta() const
+keyspace_meta const * iterator::get_keyspace_meta() const
 {
-    return keyspace_meta_const_ptr(::cass_iterator_get_keyspace_meta(p));
+    return keyspace_meta::ptr(::cass_iterator_get_keyspace_meta(p));
 }
 
-table_meta_const_ptr iterator::get_table_meta() const
+table_meta const * iterator::get_table_meta() const
 {
-    return table_meta_const_ptr(::cass_iterator_get_table_meta(p));
+    return table_meta::ptr(::cass_iterator_get_table_meta(p));
 }
 
-materialized_view_meta_const_ptr iterator::get_materialized_view_meta() const
+materialized_view_meta const * iterator::get_materialized_view_meta() const
 {
-    return materialized_view_meta_const_ptr(
+    return materialized_view_meta::ptr(
             ::cass_iterator_get_materialized_view_meta(p));
 }
 
@@ -230,29 +230,29 @@ data_type_const_ptr iterator::get_user_type() const
             false);
 }
 
-function_meta_const_ptr iterator::get_function_meta() const
+function_meta const * iterator::get_function_meta() const
 {
-    return function_meta_const_ptr(::cass_iterator_get_function_meta(p));
+    return function_meta::ptr(::cass_iterator_get_function_meta(p));
 }
 
-aggregate_meta_const_ptr iterator::get_aggregate_meta() const
+aggregate_meta const * iterator::get_aggregate_meta() const
 {
-    return aggregate_meta_const_ptr(::cass_iterator_get_aggregate_meta(p));
+    return aggregate_meta::ptr(::cass_iterator_get_aggregate_meta(p));
 }
 
-column_meta_const_ptr iterator::get_column_meta() const
+column_meta const * iterator::get_column_meta() const
 {
-    return column_meta_const_ptr(::cass_iterator_get_column_meta(p));
+    return column_meta::ptr(::cass_iterator_get_column_meta(p));
 }
 
-index_meta_const_ptr iterator::get_index_meta() const
+index_meta const * iterator::get_index_meta() const
 {
-    return index_meta_const_ptr(::cass_iterator_get_index_meta(p));
+    return index_meta::ptr(::cass_iterator_get_index_meta(p));
 }
 
-value_const_ptr iterator::get_meta_field_value() const
+value const * iterator::get_meta_field_value() const
 {
-    return value_const_ptr(::cass_iterator_get_meta_field_value(p));
+    return value::ptr(::cass_iterator_get_meta_field_value(p));
 }
 
 } // namespace cass
