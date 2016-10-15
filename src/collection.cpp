@@ -23,12 +23,14 @@ data_type_const_ptr collection::data_type() const
             false);
 }
 
-error collection::append_tuple(tuple const *value)
+template<>
+error collection::append(tuple const *value)
 {
     return (error)::cass_collection_append_tuple(p, value->backend());
 }
 
-error collection::append_user_type(user_type const *value)
+template<>
+error collection::append(user_type const *value)
 {
     return (error)::cass_collection_append_user_type(p, value->backend());
 }

@@ -22,12 +22,14 @@ data_type_const_ptr tuple::data_type() const
             false);
 }
 
-error tuple::set_collection(size_t index, collection const *value)
+template<>
+error tuple::set(size_t index, collection const *value)
 {
     return (error)::cass_tuple_set_collection(p, index, value->backend());
 }
 
-error tuple::set_user_type(size_t index, user_type const *value)
+template<>
+error tuple::set(size_t index, user_type const *value)
 {
     return (error)::cass_tuple_set_user_type(p, index, value->backend());
 }

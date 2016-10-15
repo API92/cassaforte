@@ -22,36 +22,42 @@ data_type_const_ptr user_type::data_type() const
             false);
 }
 
-error user_type::set_collection(size_t index, collection const *value)
+template<>
+error user_type::set(size_t index, collection const *value)
 {
     return (error)::cass_user_type_set_collection(p, index, value->backend());
 }
 
-error user_type::set_collection_by_name(char const *name,
+template<>
+error user_type::set_by_name(char const *name,
         collection const *value)
 {
     return (error)::cass_user_type_set_collection_by_name(
             p, name, value->backend());
 }
 
-error user_type::set_collection_by_name_n(char const *name,
+template<>
+error user_type::set_by_name_n(char const *name,
         size_t name_length, collection const *value)
 {
     return (error)::cass_user_type_set_collection_by_name_n(
             p, name, name_length, value->backend());
 }
 
-error user_type::set_tuple(size_t index, tuple const *value)
+template<>
+error user_type::set(size_t index, tuple const *value)
 {
     return (error)::cass_user_type_set_tuple(p, index, value->backend());
 }
 
-error user_type::set_tuple_by_name(char const *name, tuple const *value)
+template<>
+error user_type::set_by_name(char const *name, tuple const *value)
 {
     return (error)::cass_user_type_set_tuple_by_name(p, name, value->backend());
 }
 
-error user_type::set_tuple_by_name_n(char const *name, size_t name_length,
+template<>
+error user_type::set_by_name_n(char const *name, size_t name_length,
         tuple const *value)
 {
     return (error)::cass_user_type_set_tuple_by_name_n(p, name, name_length,

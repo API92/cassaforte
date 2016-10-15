@@ -28,32 +28,8 @@ public:
 
     CASSA_IMPEXP data_type_const_ptr data_type() const;
 
-    inline error get_int8(int8_t *output) const;
-
-    inline error get_int16(int16_t *output) const;
-
-    inline error get_int32(int32_t *output) const;
-
-    inline error get_uint32(uint32_t *output) const;
-
-    inline error get_int64(int64_t *output) const;
-
-    inline error get_float(float *output) const;
-
-    inline error get_double(double *output) const;
-
-    inline error get_bool(bool *output) const;
-
-    inline error get_uuid(uuid *output) const;
-
-    inline error get_inet(inet *output) const;
-
-    inline error get_string(char const **output, size_t *output_size) const;
-
-    inline error get_bytes(byte_t const **output, size_t *output_size) const;
-
-    inline error get_decimal(byte_t const **varint, size_t *varint_size,
-            int32_t *scale) const;
+    template<typename T>
+    error get(T *output) const;
 
     inline value_type type() const;
 
@@ -68,42 +44,50 @@ public:
     inline value_type secondary_sub_type() const;
 };
 
-inline error value::get_int8(int8_t *output) const
+template<>
+inline error value::get(int8_t *output) const
 {
     return error(::cass_value_get_int8(backend(), output));
 }
 
-inline error value::get_int16(int16_t *output) const
+template<>
+inline error value::get(int16_t *output) const
 {
     return error(::cass_value_get_int16(backend(), output));
 }
 
-inline error value::get_int32(int32_t *output) const
+template<>
+inline error value::get(int32_t *output) const
 {
     return error(::cass_value_get_int32(backend(), output));
 }
 
-inline error value::get_uint32(uint32_t *output) const
+template<>
+inline error value::get(uint32_t *output) const
 {
     return error(::cass_value_get_uint32(backend(), output));
 }
 
-inline error value::get_int64(int64_t *output) const
+template<>
+inline error value::get(int64_t *output) const
 {
     return error(::cass_value_get_int64(backend(), output));
 }
 
-inline error value::get_float(float *output) const
+template<>
+inline error value::get(float *output) const
 {
     return error(::cass_value_get_float(backend(), output));
 }
 
-inline error value::get_double(double *output) const
+template<>
+inline error value::get(double *output) const
 {
     return error(::cass_value_get_double(backend(), output));
 }
 
-inline error value::get_bool(bool *output) const
+template<>
+inline error value::get(bool *output) const
 {
     cass_bool_t out;
     error res = error(::cass_value_get_bool(backend(), &out));
@@ -111,30 +95,45 @@ inline error value::get_bool(bool *output) const
     return res;
 }
 
-inline error value::get_uuid(uuid *output) const
+template<>
+inline error value::get(uuid *output) const
 {
     return error(::cass_value_get_uuid(backend(), output));
 }
 
-inline error value::get_inet(inet *output) const
+template<>
+inline error value::get(inet *output) const
 {
     return error(::cass_value_get_inet(backend(), output));
 }
 
-inline error value::get_string(char const **output, size_t *output_size) const
+template<>
+inline error value::get(std::experimental::string_view *output) const
 {
-    return error(::cass_value_get_string(backend(), output, output_size));
+    char const *output_s = nullptr;
+    size_t size = 0;
+    error res = error(::cass_value_get_string(backend(), &output_s, &size));
+    if (res == OK)
+        *output = std::experimental::string_view(output_s, size);
+    return res;
 }
 
-inline error value::get_bytes(byte_t const **output, size_t *output_size) const
+template<>
+inline error value::get(bytes_view *output) const
 {
-    return error(::cass_value_get_bytes(backend(), output, output_size));
+    byte_t const *output_s = nullptr;
+    size_t size = 0;
+    error res = error(::cass_value_get_bytes(backend(), &output_s, &size));
+    if (res == OK)
+        *output = bytes_view(output_s, size);
+    return res;
 }
 
-inline error value::get_decimal(byte_t const **varint, size_t *varint_size,
-            int32_t *scale) const
+template<>
+inline error value::get(decimal *output) const
 {
-    return error(::cass_value_get_decimal(backend(), varint, varint_size, scale));
+    return error(::cass_value_get_decimal(
+            backend(), &output->varint, &output->varint_size, &output->scale));
 }
 
 inline value_type value::type() const
