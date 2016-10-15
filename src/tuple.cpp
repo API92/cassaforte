@@ -12,26 +12,27 @@ namespace cass {
 
 tuple_ptr tuple::new_from_data_type(cass::data_type const *data_type)
 {
-    return tuple_ptr(tuple(::cass_tuple_new_from_data_type(
+    return tuple_ptr(ptr(::cass_tuple_new_from_data_type(
                     data_type->backend())), true);
 }
 
-data_type_const_ptr tuple::data_type() const
+data_type const * tuple::data_type() const
 {
-    return data_type_const_ptr(cass::data_type(::cass_tuple_data_type(p)),
-            false);
+    return cass::data_type::ptr(::cass_tuple_data_type(backend()));
 }
 
 template<>
 error tuple::set(size_t index, collection const *value)
 {
-    return (error)::cass_tuple_set_collection(p, index, value->backend());
+    return (error)::cass_tuple_set_collection(
+                backend(), index, value->backend());
 }
 
 template<>
 error tuple::set(size_t index, user_type const *value)
 {
-    return (error)::cass_tuple_set_user_type(p, index, value->backend());
+    return (error)::cass_tuple_set_user_type(
+                backend(), index, value->backend());
 }
 
 } // namespace cass

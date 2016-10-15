@@ -12,17 +12,28 @@
 
 namespace cass {
 
-typedef wrapper_ptr<class future> future_ptr;
+typedef wrapper_ptr<future> future_ptr;
 
 class future {
 public:
     typedef ::CassFutureCallback callback;
 
-    explicit future(::CassFuture *p) : p(p) {}
-    ::CassFuture * backend() { return p; }
-    ::CassFuture const * backend() const { return p; }
+    static future * ptr(::CassFuture *p)
+    {
+        return reinterpret_cast<future *>(p);
+    }
 
-    inline static void free(const future);
+    ::CassFuture * backend()
+    {
+        return reinterpret_cast<::CassFuture *>(this);
+    }
+
+    ::CassFuture const * backend() const
+    {
+        return reinterpret_cast<::CassFuture const *>(this);
+    }
+
+    inline void free();
 
     inline error set_callback(future::callback callback, void *data);
 
@@ -46,56 +57,53 @@ public:
 
     inline error custom_payload_item(size_t index, char const **name,
             size_t *name_length, byte_t const **value, size_t *value_size);
-
-private:
-    ::CassFuture *p;
 };
 
-inline void future::free(const future f)
+inline void future::free()
 {
-    ::cass_future_free(f.p);
+    ::cass_future_free(backend());
 }
 
 inline error future::set_callback(future::callback callback, void *data)
 {
-    return (error)::cass_future_set_callback(p, callback, data);
+    return (error)::cass_future_set_callback(backend(), callback, data);
 }
 
 inline bool future::ready()
 {
-    return ::cass_future_ready(p) == cass_true;
+    return ::cass_future_ready(backend()) == cass_true;
 }
 
 inline void future::wait()
 {
-    ::cass_future_wait(p);
+    ::cass_future_wait(backend());
 }
 
 inline bool future::wait_timed(duration_t timeout_us)
 {
-    return ::cass_future_wait_timed(p, timeout_us) == cass_true;
+    return ::cass_future_wait_timed(backend(), timeout_us) == cass_true;
 }
 
 inline error future::error_code()
 {
-    return (error)::cass_future_error_code(p);
+    return (error)::cass_future_error_code(backend());
 }
 
 inline void future::error_message(char const **message, size_t *message_length)
 {
-    return ::cass_future_error_message(p, message, message_length);
+    return ::cass_future_error_message(backend(), message, message_length);
 }
 
 inline size_t future::custom_payload_item_count()
 {
-    return ::cass_future_custom_payload_item_count(p);
+    return ::cass_future_custom_payload_item_count(backend());
 }
 
 inline error future::custom_payload_item(size_t index, char const **name,
         size_t *name_length, byte_t const **value, size_t *value_size)
 {
-    return (error)::cass_future_custom_payload_item(p, index, name, name_length,
-            value, value_size);
+    return (error)::cass_future_custom_payload_item(
+            backend(), index, name, name_length, value, value_size);
 }
 
 } // namespace cass

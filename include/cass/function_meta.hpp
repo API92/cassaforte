@@ -37,15 +37,15 @@ public:
 
     inline size_t argument_count() const;
 
-    CASSA_IMPEXP error argument(size_t index, char const **name,
-            size_t *name_length, data_type_const_ptr *type) const;
+    inline error argument(size_t index, char const **name,
+            size_t *name_length, data_type const **type) const;
 
-    CASSA_IMPEXP data_type_const_ptr argument_type_by_name(
+    CASSA_IMPEXP data_type const * argument_type_by_name(
             char const *name) const;
-    CASSA_IMPEXP data_type_const_ptr argument_type_by_name_n(
+    CASSA_IMPEXP data_type const * argument_type_by_name_n(
             char const *name, size_t name_length) const;
 
-    CASSA_IMPEXP data_type_const_ptr return_type() const;
+    CASSA_IMPEXP data_type const * return_type() const;
 
     CASSA_IMPEXP value const * field_by_name(char const *name) const;
     CASSA_IMPEXP value const * field_by_name_n(char const *name,
@@ -82,6 +82,14 @@ inline bool function_meta::called_on_null_input() const
 inline size_t function_meta::argument_count() const
 {
     return ::cass_function_meta_argument_count(backend());
+}
+
+error function_meta::argument(size_t index, char const **name,
+        size_t *name_length, data_type const **type) const
+{
+    return error(::cass_function_meta_argument(
+            backend(), index, name, name_length,
+            reinterpret_cast<::CassDataType const **>(type)));
 }
 
 } // namespace cass

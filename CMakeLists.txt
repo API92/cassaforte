@@ -37,7 +37,6 @@ add_library(${PROJECT_NAME}
     include/cass/row.hpp
     include/cass/schema_meta.hpp
     include/cass/session.hpp
-    include/cass/shared_res.hpp
     include/cass/ssl.hpp
     include/cass/statement.hpp
     include/cass/table_meta.hpp
@@ -65,12 +64,12 @@ add_library(${PROJECT_NAME}
     src/row.cpp
     src/schema_meta.cpp
     src/session.cpp
-    src/shared_res.cpp
     src/statement.cpp
     src/table_meta.cpp
     src/tuple.cpp
     src/user_type.cpp
     src/value.cpp
+    src/wrapper_ptr.cpp
 )
 
 include_directories(include)

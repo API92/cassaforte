@@ -11,28 +11,27 @@ namespace cass {
 
 statement_ptr prepared::bind() const
 {
-    return statement_ptr(statement(::cass_prepared_bind(p)), true);
+    return statement_ptr(statement::ptr(::cass_prepared_bind(backend())), true);
 }
 
-data_type_const_ptr prepared::parameter_data_type(size_t index) const
+data_type const * prepared::parameter_data_type(size_t index) const
 {
-    return data_type_const_ptr(data_type(::cass_prepared_parameter_data_type(
-                    p, index)), false);
+    return data_type::ptr(::cass_prepared_parameter_data_type(
+                    backend(), index));
 }
 
-data_type_const_ptr prepared::parameter_data_type_by_name(
-        char const *name)
+data_type const * prepared::parameter_data_type_by_name(
+        char const *name) const
 {
-    return data_type_const_ptr(data_type(
-                ::cass_prepared_parameter_data_type_by_name(p, name)), false);
+    return data_type::ptr(
+                ::cass_prepared_parameter_data_type_by_name(backend(), name));
 }
 
-data_type_const_ptr prepared::parameter_data_type_by_name_n(
-        char const *name, size_t name_length)
+data_type const * prepared::parameter_data_type_by_name_n(
+        char const *name, size_t name_length) const
 {
-    return data_type_const_ptr(data_type(
-                ::cass_prepared_parameter_data_type_by_name_n(
-                    p, name, name_length)), false);
+    return data_type::ptr(::cass_prepared_parameter_data_type_by_name_n(
+                backend(), name, name_length));
 }
 
 } // namespace cass

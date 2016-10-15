@@ -30,11 +30,11 @@ public:
 
     inline size_t argument_count() const;
 
-    CASSA_IMPEXP data_type_const_ptr argument_type(size_t index) const;
+    CASSA_IMPEXP data_type const * argument_type(size_t index) const;
 
-    CASSA_IMPEXP data_type_const_ptr return_type() const;
+    CASSA_IMPEXP data_type const * return_type() const;
 
-    CASSA_IMPEXP data_type_const_ptr state_type() const;
+    CASSA_IMPEXP data_type const * state_type() const;
 
     CASSA_IMPEXP function_meta const * state_func() const;
 

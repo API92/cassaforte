@@ -28,20 +28,20 @@ class cluster;
 class session;
 
 class statement;
-typedef wrapper_ptr<class statement> statement_ptr;
+typedef wrapper_ptr<statement> statement_ptr;
 
 class batch;
 
 class future;
 
 class prepared;
-typedef wrapper_const_ptr<class prepared const> prepared_const_ptr;
+typedef wrapper_ptr<prepared const> prepared_const_ptr;
 
 class result;
-typedef wrapper_const_ptr<result const> result_const_ptr;
+typedef wrapper_ptr<result const> result_const_ptr;
 
 class error_result;
-typedef wrapper_ptr<class error_result const> error_result_const_ptr;
+typedef wrapper_ptr<error_result const> error_result_const_ptr;
 
 class iterator;
 
@@ -51,7 +51,6 @@ class value;
 
 class data_type;
 typedef wrapper_ptr<data_type> data_type_ptr;
-typedef wrapper_const_ptr<data_type const> data_type_const_ptr;
 
 class function_meta;
 
@@ -68,7 +67,7 @@ class ssl;
 typedef ::CassVersion version;
 
 class schema_meta;
-typedef wrapper_const_ptr<class schema_meta const> schema_meta_const_ptr;
+typedef wrapper_ptr<schema_meta const> schema_meta_const_ptr;
 
 class keyspace_meta;
 

@@ -28,7 +28,7 @@ public:
 
     inline column_type type() const;
 
-    CASSA_IMPEXP data_type_const_ptr data_type() const;
+    CASSA_IMPEXP cass::data_type const * data_type() const;
 
     CASSA_IMPEXP value const * field_by_name(char const *name) const;
     CASSA_IMPEXP value const * field_by_name_n(char const *name,

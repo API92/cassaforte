@@ -13,15 +13,26 @@
 
 namespace cass {
 
-typedef wrapper_ptr<class iterator> iterator_ptr;
+typedef wrapper_ptr<iterator> iterator_ptr;
 
 class iterator {
 public:
-    explicit iterator(::CassIterator *p) : p(p) {}
-    ::CassIterator * backend() { return p; }
-    ::CassIterator const * backend() const { return p; }
+    static iterator * ptr(::CassIterator *p)
+    {
+        return reinterpret_cast<iterator *>(p);
+    }
 
-    inline static void free(iterator const i);
+    ::CassIterator * backend()
+    {
+        return reinterpret_cast<::CassIterator *>(this);
+    }
+
+    ::CassIterator const * backend() const
+    {
+        return reinterpret_cast<::CassIterator const *>(this);
+    }
+
+    inline void free();
 
     CASSA_IMPEXP static iterator_ptr from_result(cass::result const *result);
 
@@ -113,7 +124,7 @@ public:
     CASSA_IMPEXP materialized_view_meta const * get_materialized_view_meta()
         const;
 
-    CASSA_IMPEXP data_type_const_ptr get_user_type() const;
+    CASSA_IMPEXP data_type const * get_user_type() const;
 
     CASSA_IMPEXP function_meta const * get_function_meta() const;
 
@@ -126,37 +137,35 @@ public:
     inline error get_meta_field_name(char const **name, size_t *name_length);
 
     CASSA_IMPEXP value const * get_meta_field_value() const;
-
-private:
-    ::CassIterator *p;
 };
 
-inline void iterator::free(iterator const i)
+inline void iterator::free()
 {
-    ::cass_iterator_free(i.p);
+    ::cass_iterator_free(backend());
 }
 
 inline iterator_type iterator::type()
 {
-    return ::cass_iterator_type(p);
+    return ::cass_iterator_type(backend());
 }
 
 inline bool iterator::next()
 {
-    return ::cass_iterator_next(p) == cass_true;
+    return ::cass_iterator_next(backend()) == cass_true;
 }
 
 inline error iterator::get_user_type_field_name(char const **name,
         size_t *name_length)
 {
     return (error)::cass_iterator_get_user_type_field_name(
-            p, name, name_length);
+            backend(), name, name_length);
 }
 
 inline error iterator::get_meta_field_name(char const **name,
         size_t *name_length)
 {
-    return (error)::cass_iterator_get_meta_field_name(p, name, name_length);
+    return (error)::cass_iterator_get_meta_field_name(
+            backend(), name, name_length);
 }
 
 } // namespace cass

@@ -9,15 +9,15 @@
 
 namespace cass {
 
-data_type_const_ptr result::column_data_type(size_t index)
+data_type const * result::column_data_type(size_t index) const
 {
-    return data_type_const_ptr(data_type(::cass_result_column_data_type(
-                    p, index)), false);
+    return data_type::ptr(::cass_result_column_data_type(
+                    backend(), index));
 }
 
 row const * result::first_row() const
 {
-    return row::ptr(::cass_result_first_row(p));
+    return row::ptr(::cass_result_first_row(backend()));
 }
 
 } // namespace cass

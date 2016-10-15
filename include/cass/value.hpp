@@ -26,7 +26,7 @@ public:
         return reinterpret_cast<::CassValue const *>(this);
     }
 
-    CASSA_IMPEXP data_type_const_ptr data_type() const;
+    CASSA_IMPEXP cass::data_type const * data_type() const;
 
     template<typename T>
     error get(T *output) const;

@@ -10,22 +10,22 @@
 
 namespace cass {
 
-data_type_const_ptr aggregate_meta::argument_type(size_t index) const
+data_type const * aggregate_meta::argument_type(size_t index) const
 {
-    return data_type_const_ptr(data_type(::cass_aggregate_meta_argument_type(
-                    backend(), index)), false);
+    return data_type::ptr(
+                ::cass_aggregate_meta_argument_type(backend(), index));
 }
 
-data_type_const_ptr aggregate_meta::return_type() const
+data_type const * aggregate_meta::return_type() const
 {
-    return data_type_const_ptr(data_type(
-                ::cass_aggregate_meta_return_type(backend())), false);
+    return data_type::ptr(
+                ::cass_aggregate_meta_return_type(backend()));
 }
 
-data_type_const_ptr aggregate_meta::state_type() const
+data_type const * aggregate_meta::state_type() const
 {
-    return data_type_const_ptr(data_type(
-                ::cass_aggregate_meta_state_type(backend())), false);
+    return data_type::ptr(
+                ::cass_aggregate_meta_state_type(backend()));
 }
 
 function_meta const * aggregate_meta::state_func() const

@@ -8,17 +8,17 @@
 namespace cass {
 
 keyspace_meta const * const schema_meta::keyspace_by_name(
-        char const *keyspace)
+        char const *keyspace) const
 {
     return keyspace_meta::ptr(::cass_schema_meta_keyspace_by_name(
-                p, keyspace));
+                backend(), keyspace));
 }
 
 keyspace_meta const * const schema_meta::keyspace_by_name_n(
-        char const *keyspace, size_t keyspace_length)
+        char const *keyspace, size_t keyspace_length) const
 {
     return keyspace_meta::ptr(::cass_schema_meta_keyspace_by_name_n(
-                p, keyspace, keyspace_length));
+                backend(), keyspace, keyspace_length));
 }
 
 } // namespace cass

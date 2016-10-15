@@ -15,7 +15,7 @@ namespace cass {
 void cluster::set_ssl(ssl *ssl_context)
 {
     assert(ssl_context);
-    ::cass_cluster_set_ssl(p, ssl_context->backend());
+    ::cass_cluster_set_ssl(backend(), ssl_context->backend());
 }
 
 error cluster::set_authenticator_callbacks(
@@ -25,27 +25,25 @@ error cluster::set_authenticator_callbacks(
 
     struct cb {
         static void init(::CassAuthenticator *auth, void *data) {
-            authenticator w(auth);
-            reinterpret_cast<authenticator_callbacks *>(data)->init(&w);
+            reinterpret_cast<authenticator_callbacks *>(data)->init(
+                    authenticator::ptr(auth));
         }
 
         static void challenge(::CassAuthenticator *auth, void *data,
                 char const *token, size_t token_size) {
-            authenticator w(auth);
             reinterpret_cast<authenticator_callbacks *>(data)->challenge(
-                    &w, token, token_size);
+                    authenticator::ptr(auth), token, token_size);
         }
 
         static void success(::CassAuthenticator *auth, void *data,
                 char const *token, size_t token_size) {
-            authenticator w(auth);
             reinterpret_cast<authenticator_callbacks *>(data)->success(
-                    &w, token, token_size);
+                    authenticator::ptr(auth), token, token_size);
         }
 
         static void cleanup(::CassAuthenticator *auth, void *data) {
-            authenticator w(auth);
-            reinterpret_cast<authenticator_callbacks *>(data)->cleanup(&w);
+            reinterpret_cast<authenticator_callbacks *>(data)->cleanup(
+                    authenticator::ptr(auth));
         }
 
         static void data_cleanup(void *data) {
@@ -64,7 +62,7 @@ error cluster::set_authenticator_callbacks(
     // deleted.
     // If no exception, then pointer to exchange_cbs saved and cb::data_cleanup
     // will be called. Therefore exchange_cbs.release() needed.
-    error er = error(::cass_cluster_set_authenticator_callbacks(p, &cbs,
+    error er = error(::cass_cluster_set_authenticator_callbacks(backend(), &cbs,
             cb::data_cleanup, exchange_cbs.get()));
     exchange_cbs.release();
     return er;
@@ -73,13 +71,13 @@ error cluster::set_authenticator_callbacks(
 void cluster::set_timestamp_gen(timestamp_gen *gen)
 {
     assert(gen);
-    ::cass_cluster_set_timestamp_gen(p, gen->backend());
+    ::cass_cluster_set_timestamp_gen(backend(), gen->backend());
 }
 
 void cluster::set_retry_policy(retry_policy *policy)
 {
     assert(policy);
-    ::cass_cluster_set_retry_policy(p, policy->backend());
+    ::cass_cluster_set_retry_policy(backend(), policy->backend());
 }
 
 } // namespace cass

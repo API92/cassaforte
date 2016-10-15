@@ -12,11 +12,17 @@ typedef wrapper_ptr<class retry_policy> retry_policy_ptr;
 
 class retry_policy {
 public:
-    explicit retry_policy(::CassRetryPolicy *p) : p(p) {}
-    ::CassRetryPolicy * backend() { return p; }
-    ::CassRetryPolicy const * backend() const { return p; }
+    static retry_policy * ptr(::CassRetryPolicy *p)
+    {
+        return reinterpret_cast<retry_policy *>(p);
+    }
 
-    inline static void free(retry_policy const p);
+    ::CassRetryPolicy * backend()
+    {
+        return reinterpret_cast<::CassRetryPolicy *>(this);
+    }
+
+    inline void free();
 
     inline static retry_policy_ptr default_new();
 
@@ -26,39 +32,37 @@ public:
 
     inline static retry_policy_ptr logging_new(
             retry_policy *child_retry_policy);
-
-private:
-    ::CassRetryPolicy *p;
 };
 
-inline void retry_policy::free(retry_policy const p)
+inline void retry_policy::free()
 {
-    ::cass_retry_policy_free(p.p);
+    ::cass_retry_policy_free(backend());
 }
 
 inline retry_policy_ptr retry_policy::default_new()
 {
-    return retry_policy_ptr(retry_policy(::cass_retry_policy_default_new()),
-            true);
+    return retry_policy_ptr(retry_policy::ptr(
+                ::cass_retry_policy_default_new()), true);
 }
 
 inline retry_policy_ptr retry_policy::downgrading_consistency_new()
 {
-    return retry_policy_ptr(retry_policy(
+    return retry_policy_ptr(retry_policy::ptr(
                 ::cass_retry_policy_downgrading_consistency_new()), true);
 }
 
 inline retry_policy_ptr retry_policy::fallthrough_new()
 {
-    return retry_policy_ptr(retry_policy(::cass_retry_policy_fallthrough_new()),
-            true);
+    return retry_policy_ptr(retry_policy::ptr(
+                ::cass_retry_policy_fallthrough_new()), true);
 }
 
 inline retry_policy_ptr retry_policy::logging_new(
         retry_policy *child_retry_policy)
 {
-    retry_policy p(::cass_retry_policy_logging_new(child_retry_policy->p));
-    return retry_policy_ptr(p, p.p != nullptr);
+    ::CassRetryPolicy *p = ::cass_retry_policy_logging_new(
+            child_retry_policy->backend());
+    return retry_policy_ptr(retry_policy::ptr(p), p != nullptr);
 }
 
 } // namespace cass

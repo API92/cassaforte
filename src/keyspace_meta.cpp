@@ -39,10 +39,10 @@ materialized_view_meta const * keyspace_meta::materialized_view_by_name_n(
         ::cass_keyspace_meta_materialized_view_by_name_n(backend(), view, view_length));
 }
 
-data_type_const_ptr keyspace_meta::user_type_by_name(char const *type) const
+data_type const * keyspace_meta::user_type_by_name(char const *type) const
 {
-    return data_type_const_ptr(data_type(::cass_keyspace_meta_user_type_by_name(
-                    backend(), type)), false);
+    return data_type::ptr(::cass_keyspace_meta_user_type_by_name(
+                backend(), type));
 }
 
 function_meta const * keyspace_meta::function_by_name(char const *name,

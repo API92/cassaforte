@@ -36,8 +36,8 @@ public:
     CASSA_IMPEXP materialized_view_meta const * materialized_view_by_name_n(
             char const *view, size_t view_length) const;
 
-    CASSA_IMPEXP data_type_const_ptr user_type_by_name(char const *type) const;
-    CASSA_IMPEXP data_type_const_ptr user_type_by_name_n(
+    CASSA_IMPEXP data_type const * user_type_by_name(char const *type) const;
+    CASSA_IMPEXP data_type const * user_type_by_name_n(
             char const *type, size_t type_length) const;
 
     CASSA_IMPEXP function_meta const * function_by_name(char const *name,

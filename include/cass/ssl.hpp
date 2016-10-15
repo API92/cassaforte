@@ -12,16 +12,25 @@
 namespace cass {
 
 typedef wrapper_ptr<class ssl> ssl_ptr;
-typedef wrapper_const_ptr<class ssl const> ssl_const_ptr;
 
 class ssl {
 public:
-    explicit ssl(::CassSsl *p) : p(p) {}
-    ::CassSsl * backend() { return p; }
-    ::CassSsl const * backend() const { return p; }
+    static ssl * ptr(::CassSsl *p)
+    {
+        return reinterpret_cast<ssl *>(p);
+    }
+
+    ::CassSsl * backend()
+    {
+        return reinterpret_cast<::CassSsl *>(this);
+    }
+    ::CassSsl const * backend() const
+    {
+        return reinterpret_cast<::CassSsl const *>(this);
+    }
 
     inline static ssl_ptr new_ptr();
-    inline static void free(ssl const);
+    inline void free();
 
     inline error add_trusted_cert(char const *cert);
     inline error add_trusted_cert_n(char const *cert, size_t cert_length);
@@ -34,55 +43,52 @@ public:
     inline error set_private_key(char const *key, char const *password);
     inline error set_private_key_n(char const *key, size_t key_length,
             char const *password, size_t password_length);
-
-private:
-    ::CassSsl *p;
 };
 
 inline ssl_ptr ssl::new_ptr()
 {
-    return ssl_ptr(ssl(::cass_ssl_new()), true);
+    return ssl_ptr(ssl::ptr(::cass_ssl_new()), true);
 }
 
-inline void ssl::free(ssl const s)
+inline void ssl::free()
 {
-    ::cass_ssl_free(s.p);
+    ::cass_ssl_free(backend());
 }
 
 inline error ssl::add_trusted_cert(char const *cert)
 {
-    return error(::cass_ssl_add_trusted_cert(p, cert));
+    return error(::cass_ssl_add_trusted_cert(backend(), cert));
 }
 
 inline error ssl::add_trusted_cert_n(char const *cert, size_t cert_length)
 {
-    return error(::cass_ssl_add_trusted_cert_n(p, cert, cert_length));
+    return error(::cass_ssl_add_trusted_cert_n(backend(), cert, cert_length));
 }
 
 inline void ssl::set_verify_flags(int flags)
 {
-    ::cass_ssl_set_verify_flags(p, flags);
+    ::cass_ssl_set_verify_flags(backend(), flags);
 }
 
 inline error ssl::set_cert(char const *cert)
 {
-    return error(::cass_ssl_set_cert(p, cert));
+    return error(::cass_ssl_set_cert(backend(), cert));
 }
 
 inline error ssl::set_cert_n(char const *cert, size_t cert_length)
 {
-    return error(::cass_ssl_set_cert_n(p, cert, cert_length));
+    return error(::cass_ssl_set_cert_n(backend(), cert, cert_length));
 }
 
 inline error ssl::set_private_key(char const *key, char const *password)
 {
-    return error(::cass_ssl_set_private_key(p, key, password));
+    return error(::cass_ssl_set_private_key(backend(), key, password));
 }
 
 inline error ssl::set_private_key_n(char const *key, size_t key_length,
         char const *password, size_t password_length)
 {
-    return error(::cass_ssl_set_private_key_n(p, key, key_length,
+    return error(::cass_ssl_set_private_key_n(backend(), key, key_length,
             password, password_length));
 }
 

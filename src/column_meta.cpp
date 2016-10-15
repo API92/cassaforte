@@ -9,10 +9,10 @@
 
 namespace cass {
 
-data_type_const_ptr column_meta::data_type() const
+data_type const * column_meta::data_type() const
 {
-    return data_type_const_ptr(cass::data_type(::cass_column_meta_data_type(
-                    backend())), false);
+    return cass::data_type::ptr(::cass_column_meta_data_type(
+                    backend()));
 }
 
 value const * column_meta::field_by_name(char const *name) const

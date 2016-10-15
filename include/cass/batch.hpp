@@ -12,15 +12,26 @@
 
 namespace cass {
 
-typedef wrapper_ptr<class batch> batch_ptr;
+typedef wrapper_ptr<batch> batch_ptr;
 
 class batch {
 public:
-    explicit batch(::CassBatch *p) : p(p) {}
-    ::CassBatch * backend() { return p; }
-    ::CassBatch const * backend() const { return p; }
+    static batch * ptr(::CassBatch *p)
+    {
+        return reinterpret_cast<batch *>(p);
+    }
 
-    inline static void free(batch const b);
+    ::CassBatch * backend()
+    {
+        return reinterpret_cast<::CassBatch *>(this);
+    }
+
+    ::CassBatch const * backend() const
+    {
+        return reinterpret_cast<::CassBatch const *>(this);
+    }
+
+    inline void free();
     inline static batch_ptr new_ptr(batch_type type);
 
     inline error set_consistency(cass::consistency consistency);
@@ -36,39 +47,37 @@ public:
     CASSA_IMPEXP error set_custom_payload(custom_payload const *payload);
 
     CASSA_IMPEXP error add_statement(cass::statement *statement);
-
-private:
-    ::CassBatch *p;
 };
 
-inline void batch::free(batch const b)
+inline void batch::free()
 {
-    ::cass_batch_free(b.p);
+    ::cass_batch_free(backend());
 }
 
 inline batch_ptr batch::new_ptr(batch_type type)
 {
-    return batch_ptr(batch(::cass_batch_new(type)), true);
+    return batch_ptr(batch::ptr(::cass_batch_new(type)), true);
 }
 
 inline error batch::set_consistency(cass::consistency consistency)
 {
-    return error(::cass_batch_set_consistency(p, consistency));
+    return error(::cass_batch_set_consistency(backend(), consistency));
 }
 
 inline error batch::set_serial_consistency(consistency serial_consistency)
 {
-    return error(::cass_batch_set_serial_consistency(p, serial_consistency));
+    return error(::cass_batch_set_serial_consistency(
+                backend(), serial_consistency));
 }
 
 inline error batch::set_timestamp(int64_t timestamp)
 {
-    return error(::cass_batch_set_timestamp(p, timestamp));
+    return error(::cass_batch_set_timestamp(backend(), timestamp));
 }
 
 inline error batch::set_request_timeout(uint64_t timeout_ms)
 {
-    return error(::cass_batch_set_request_timeout(p, timeout_ms));
+    return error(::cass_batch_set_request_timeout(backend(), timeout_ms));
 }
 
 } // namespace cass

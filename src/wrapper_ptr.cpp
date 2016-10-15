@@ -2,7 +2,7 @@
  * Copyright (C) Andrey Pikas
  */
 
-#include <cass/shared_res.hpp>
+#include <cass/wrapper_ptr.hpp>
 
 #include <cassert>
 
