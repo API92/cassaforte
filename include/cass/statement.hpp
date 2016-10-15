@@ -55,111 +55,25 @@ public:
 
     CASSA_IMPEXP error set_custom_payload(custom_payload const *payload);
 
-    inline error bind_null(size_t index);
+    template<typename T>
+    error bind(size_t index, T value);
 
-    inline error bind_null_by_name(char const *name);
-    inline error bind_null_by_name_n(char const *name, size_t name_length);
+    template<typename T>
+    error bind_by_name(char const *name, T value);
 
-    inline error bind_int8(size_t index, int8_t value);
-    inline error bind_int8_by_name(char const *name, int8_t value);
-    inline error bind_int8_by_name_n(char const *name, size_t name_length,
-            int8_t value);
+    template<typename T>
+    error bind_by_name_n(char const *name, size_t name_length, T value);
 
-    inline error bind_int16(size_t index, int16_t value);
-    inline error bind_int16_by_name(char const *name, int16_t value);
-    inline error bind_int16_by_name_n(char const *name, size_t name_length,
-            int16_t value);
-
-    inline error bind_int32(size_t index, int32_t value);
-    inline error bind_int32_by_name(char const *name, int32_t value);
-    inline error bind_int32_by_name_n(char const *name, size_t name_length,
-            int32_t value);
-
-    inline error bind_uint32(size_t index, uint32_t value);
-    inline error bind_uint32_by_name(char const *name, uint32_t value);
-    inline error bind_uint32_by_name_n(char const *name, size_t name_length,
-            uint32_t value);
-
-    inline error bind_int64(size_t index, int64_t value);
-    inline error bind_int64_by_name(char const *name, int64_t value);
-    inline error bind_int64_by_name_n(char const *name, size_t name_length,
-            int64_t value);
-
-    inline error bind_float(size_t index, float value);
-    inline error bind_float_by_name(char const *name, float value);
-    inline error bind_float_by_name_n(char const *name, size_t name_length,
-            float value);
-
-    inline error bind_double(size_t index, double value);
-    inline error bind_double_by_name(char const *name, double value);
-    inline error bind_double_by_name_n(char const *name, size_t name_length,
-            double value);
-
-    inline error bind_bool(size_t index, bool value);
-    inline error bind_bool_by_name(char const *name, bool value);
-    inline error bind_bool_by_name_n(char const *name, size_t name_length,
-            bool value);
-
-    inline error bind_string(size_t index, char const *value);
-    inline error bind_string_n(size_t index, char const *value,
-            size_t value_length);
-    inline error bind_string_by_name(char const *name, char const *value);
-    inline error bind_string_by_name_n(char const *name, size_t name_length,
-            char const *value, size_t value_length);
-
-    inline error bind_bytes(size_t index, byte_t const *value,
-            size_t value_size);
-    inline error bind_bytes_by_name(char const *name, byte_t const *value,
-            size_t value_size);
-    inline error bind_bytes_by_name_n(char const *name, size_t name_length,
-            byte_t const *value, size_t value_size);
+    template<typename T>
+    error bind_by_name(std::experimental::string_view name, T value)
+    {
+        return bind_by_name_n(name.data(), name.size(), value);
+    }
 
     inline error bind_custom(size_t index, char const *class_name,
             byte_t const *value, size_t value_size);
-    inline error bind_custom_n(size_t index, char const *class_name,
-            size_t class_name_length, byte_t const *value, size_t value_size);
     inline error bind_custom_by_name(char const *name, char const *class_name,
             byte_t const *value, size_t value_size);
-    inline error bind_custom_by_name_n(char const *name, size_t name_length,
-            char const *class_name, size_t class_name_length,
-            byte_t const *value, size_t value_size);
-
-    inline error bind_uuid(size_t index, uuid value);
-    inline error bind_uuid_by_name(char const *name, uuid value);
-    inline error bind_uuid_by_name_n(char const *name, size_t name_length,
-            uuid value);
-
-    inline error bind_inet(size_t index, inet value);
-    inline error bind_inet_by_name(char const *name, inet value);
-    inline error bind_inet_by_name_n(char const *name, size_t name_length,
-            inet value);
-
-    inline error bind_decimal(size_t index, byte_t const *varint,
-            size_t varint_size, int32_t scale);
-    inline error bind_decimal_by_name(char const *name, byte_t const * varint,
-            size_t varint_size, int32_t scale);
-    inline error bind_decimal_by_name_n(char const *name, size_t name_length,
-            byte_t const * varint, size_t varint_size, int32_t scale);
-
-    CASSA_IMPEXP error bind_collection(size_t index,
-            cass::collection const *collection);
-    CASSA_IMPEXP error bind_collection_by_name(char const *name,
-            cass::collection const *collection);
-    CASSA_IMPEXP error bind_collection_by_name_n(char const *name,
-            size_t name_length, cass::collection const *collection);
-
-    CASSA_IMPEXP error bind_tuple(size_t index, cass::tuple const *tuple);
-    CASSA_IMPEXP error bind_tuple_by_name(char const *name,
-            cass::tuple const *tuple);
-    CASSA_IMPEXP error bind_tuple_by_name_n(char const *name,
-            size_t name_length, cass::tuple const *tuple);
-
-    CASSA_IMPEXP error bind_user_type(size_t index,
-            cass::user_type const *user_type);
-    CASSA_IMPEXP error bind_user_type_by_name(char const *name,
-            cass::user_type const *user_type);
-    CASSA_IMPEXP error bind_user_type_by_name_n(char const *name,
-            size_t name_length, cass::user_type const *user_type);
 
 private:
     ::CassStatement *p;
@@ -239,201 +153,233 @@ inline error statement::set_request_timeout(uint64_t timeout_ms)
     return error(::cass_statement_set_request_timeout(p, timeout_ms));
 }
 
-inline error statement::bind_null(size_t index)
+template<>
+inline error statement::bind(size_t index, nullptr_t)
 {
     return error(::cass_statement_bind_null(p, index));
 }
 
-inline error statement::bind_null_by_name(char const *name)
+template<>
+inline error statement::bind_by_name(char const *name, nullptr_t)
 {
     return error(::cass_statement_bind_null_by_name(p, name));
 }
 
-inline error statement::bind_null_by_name_n(
-        char const *name, size_t name_length)
+template<>
+inline error statement::bind_by_name_n(
+        char const *name, size_t name_length, nullptr_t)
 {
     return error(::cass_statement_bind_null_by_name_n(p, name, name_length));
 }
 
-inline error statement::bind_int8(size_t index, int8_t value)
+template<>
+inline error statement::bind(size_t index, int8_t value)
 {
     return error(::cass_statement_bind_int8(p, index, value));
 }
 
-inline error statement::bind_int8_by_name(char const *name, int8_t value)
+template<>
+inline error statement::bind_by_name(char const *name, int8_t value)
 {
     return error(::cass_statement_bind_int8_by_name(p, name, value));
 }
 
-inline error statement::bind_int8_by_name_n(char const *name,
+template<>
+inline error statement::bind_by_name_n(char const *name,
         size_t name_length, int8_t value)
 {
     return error(::cass_statement_bind_int8_by_name_n(
                 p, name, name_length, value));
 }
 
-inline error statement::bind_int16(size_t index, int16_t value)
+template<>
+inline error statement::bind(size_t index, int16_t value)
 {
     return error(::cass_statement_bind_int16(p, index, value));
 }
 
-inline error statement::bind_int16_by_name(char const *name, int16_t value)
+template<>
+inline error statement::bind_by_name(char const *name, int16_t value)
 {
     return error(::cass_statement_bind_int16_by_name(p, name, value));
 }
 
-inline error statement::bind_int16_by_name_n(char const *name,
+template<>
+inline error statement::bind_by_name_n(char const *name,
         size_t name_length, int16_t value)
 {
     return error(::cass_statement_bind_int16_by_name_n(
                 p, name, name_length, value));
 }
 
-inline error statement::bind_int32(size_t index, int32_t value)
+template<>
+inline error statement::bind(size_t index, int32_t value)
 {
     return error(::cass_statement_bind_int32(p, index, value));
 }
 
-inline error statement::bind_int32_by_name(char const *name, int32_t value)
+template<>
+inline error statement::bind_by_name(char const *name, int32_t value)
 {
     return error(::cass_statement_bind_int32_by_name(p, name, value));
 }
 
-inline error statement::bind_int32_by_name_n(char const *name,
+template<>
+inline error statement::bind_by_name_n(char const *name,
         size_t name_length, int32_t value)
 {
     return error(::cass_statement_bind_int32_by_name_n(
                 p, name, name_length, value));
 }
 
-inline error statement::bind_uint32(size_t index, uint32_t value)
+template<>
+inline error statement::bind(size_t index, uint32_t value)
 {
     return error(::cass_statement_bind_uint32(p, index, value));
 }
 
-inline error statement::bind_uint32_by_name(char const *name, uint32_t value)
+template<>
+inline error statement::bind_by_name(char const *name, uint32_t value)
 {
     return error(::cass_statement_bind_uint32_by_name(p, name, value));
 }
 
-inline error statement::bind_uint32_by_name_n(char const *name,
+template<>
+inline error statement::bind_by_name_n(char const *name,
         size_t name_length, uint32_t value)
 {
     return error(::cass_statement_bind_uint32_by_name_n(
                 p, name, name_length, value));
 }
 
-inline error statement::bind_int64(size_t index, int64_t value)
+template<>
+inline error statement::bind(size_t index, int64_t value)
 {
     return error(::cass_statement_bind_int64(p, index, value));
 }
 
-inline error statement::bind_int64_by_name(char const *name, int64_t value)
+template<>
+inline error statement::bind_by_name(char const *name, int64_t value)
 {
     return error(::cass_statement_bind_int64_by_name(p, name, value));
 }
 
-inline error statement::bind_int64_by_name_n(char const *name,
+template<>
+inline error statement::bind_by_name_n(char const *name,
         size_t name_length, int64_t value)
 {
     return error(::cass_statement_bind_int64_by_name_n(
                 p, name, name_length, value));
 }
 
-inline error statement::bind_float(size_t index, float value)
+template<>
+inline error statement::bind(size_t index, float value)
 {
     return error(::cass_statement_bind_float(p, index, value));
 }
 
-inline error statement::bind_float_by_name(char const *name, float value)
+template<>
+inline error statement::bind_by_name(char const *name, float value)
 {
     return error(::cass_statement_bind_float_by_name(p, name, value));
 }
 
-inline error statement::bind_float_by_name_n(char const *name,
+template<>
+inline error statement::bind_by_name_n(char const *name,
         size_t name_length, float value)
 {
     return error(::cass_statement_bind_float_by_name_n(
                 p, name, name_length, value));
 }
 
-inline error statement::bind_double(size_t index, double value)
+template<>
+inline error statement::bind(size_t index, double value)
 {
     return error(::cass_statement_bind_double(p, index, value));
 }
 
-inline error statement::bind_double_by_name(char const *name, double value)
+template<>
+inline error statement::bind_by_name(char const *name, double value)
 {
     return error(::cass_statement_bind_double_by_name(p, name, value));
 }
 
-inline error statement::bind_double_by_name_n(char const *name,
+template<>
+inline error statement::bind_by_name_n(char const *name,
         size_t name_length, double value)
 {
     return error(::cass_statement_bind_double_by_name_n(
                 p, name, name_length, value));
 }
 
-inline error statement::bind_bool(size_t index, bool value)
+template<>
+inline error statement::bind(size_t index, bool value)
 {
     return error(::cass_statement_bind_bool(
                 p, index, value ? cass_true : cass_false));
 }
 
-inline error statement::bind_bool_by_name(char const *name, bool value)
+template<>
+inline error statement::bind_by_name(char const *name, bool value)
 {
     return error(::cass_statement_bind_bool_by_name(p, name,
             value ? cass_true : cass_false));
 }
 
-inline error statement::bind_bool_by_name_n(char const *name,
+template<>
+inline error statement::bind_by_name_n(char const *name,
         size_t name_length, bool value)
 {
     return error(::cass_statement_bind_bool_by_name_n(p, name, name_length,
             value ? cass_true : cass_false));
 }
 
-inline error statement::bind_string(size_t index, char const *value)
+template<>
+inline error statement::bind(size_t index, char const *value)
 {
     return error(::cass_statement_bind_string(p, index, value));
 }
 
-inline error statement::bind_string_n(size_t index, char const *value,
-        size_t value_length)
+template<>
+inline error statement::bind(size_t index, std::experimental::string_view s)
 {
-    return error(::cass_statement_bind_string_n(p, index, value, value_length));
+    return error(::cass_statement_bind_string_n(p, index, s.data(), s.size()));
 }
 
-inline error statement::bind_string_by_name(char const *name, char const *value)
+template<>
+inline error statement::bind_by_name(char const *name, char const *value)
 {
     return error(::cass_statement_bind_string_by_name(p, name, value));
 }
 
-inline error statement::bind_string_by_name_n(char const *name,
-        size_t name_length, char const *value, size_t value_length)
+template<>
+inline error statement::bind_by_name_n(char const *name, size_t name_length,
+        std::experimental::string_view value)
 {
     return error(::cass_statement_bind_string_by_name_n(
-                p, name, name_length, value, value_length));
+                p, name, name_length, value.data(), value.size()));
 }
 
-inline error statement::bind_bytes(size_t index, byte_t const *value,
-        size_t value_size)
+template<>
+inline error statement::bind(size_t index, bytes_view value)
 {
-    return error(::cass_statement_bind_bytes(p, index, value, value_size));
+    return error(::cass_statement_bind_bytes(
+                p, index, value.data(), value.size()));
 }
 
-inline error statement::bind_bytes_by_name(char const *name,
-        byte_t const *value, size_t value_size)
+template<>
+inline error statement::bind_by_name(char const *name, bytes_view value)
 {
     return error(::cass_statement_bind_bytes_by_name(
-                p, name, value, value_size));
+                p, name, value.data(), value.size()));
 }
 
-inline error statement::bind_bytes_by_name_n(char const *name,
-        size_t name_length, byte_t const *value, size_t value_size)
+template<>
+inline error statement::bind_by_name_n(char const *name,
+        size_t name_length, bytes_view value)
 {
     return error(::cass_statement_bind_bytes_by_name_n(p, name, name_length,
-            value, value_size));
+            value.data(), value.size()));
 }
 
 inline error statement::bind_custom(size_t index, char const *class_name,
@@ -443,11 +389,12 @@ inline error statement::bind_custom(size_t index, char const *class_name,
             value_size));
 }
 
-inline error statement::bind_custom_n(size_t index, char const *class_name,
-        size_t class_name_length, byte_t const *value, size_t value_size)
+template<>
+inline error statement::bind(size_t index, custom c)
 {
-    return error(::cass_statement_bind_custom_n(p, index, class_name,
-            class_name_length, value, value_size));
+    return error(::cass_statement_bind_custom_n(p, index,
+                c.class_name.data(), c.class_name.size(),
+                c.value.data(), c.value.size()));
 }
 
 inline error statement::bind_custom_by_name(char const *name,
@@ -457,68 +404,111 @@ inline error statement::bind_custom_by_name(char const *name,
                 p, name, class_name, value, value_size));
 }
 
-inline error statement::bind_custom_by_name_n(char const *name,
-        size_t name_length, char const *class_name, size_t class_name_length,
-        byte_t const *value, size_t value_size)
+template<>
+inline error statement::bind_by_name_n(char const *name, size_t name_length,
+        custom c)
 {
     return error(::cass_statement_bind_custom_by_name_n(p, name, name_length,
-            class_name, class_name_length, value, value_size));
+            c.class_name.data(), c.class_name.size(),
+            c.value.data(), c.value.size()));
 }
 
-inline error statement::bind_uuid(size_t index, uuid value)
+template<>
+inline error statement::bind(size_t index, uuid value)
 {
     return error(::cass_statement_bind_uuid(p, index, value));
 }
 
-inline error statement::bind_uuid_by_name(char const *name, uuid value)
+template<>
+inline error statement::bind_by_name(char const *name, uuid value)
 {
     return error(::cass_statement_bind_uuid_by_name(p, name, value));
 }
 
-inline error statement::bind_uuid_by_name_n(char const *name,
-        size_t name_length, uuid value)
+template<>
+inline error statement::bind_by_name_n(char const *name, size_t name_length,
+        uuid value)
 {
     return error(::cass_statement_bind_uuid_by_name_n(
                 p, name, name_length, value));
 }
 
-inline error statement::bind_inet(size_t index, inet value)
+template<>
+inline error statement::bind(size_t index, inet value)
 {
     return error(::cass_statement_bind_inet(p, index, value));
 }
 
-inline error statement::bind_inet_by_name(char const *name, inet value)
+template<>
+inline error statement::bind_by_name(char const *name, inet value)
 {
     return error(::cass_statement_bind_inet_by_name(p, name, value));
 }
 
-inline error statement::bind_inet_by_name_n(char const *name,
+template<>
+inline error statement::bind_by_name_n(char const *name,
         size_t name_length, inet value)
 {
     return error(::cass_statement_bind_inet_by_name_n(
                 p, name, name_length, value));
 }
 
-inline error statement::bind_decimal(size_t index, byte_t const *varint,
-        size_t varint_size, int32_t scale)
+template<>
+inline error statement::bind(size_t index, decimal d)
 {
     return error(::cass_statement_bind_decimal(
-                p, index, varint, varint_size, scale));
+                p, index, d.varint, d.varint_size, d.scale));
 }
 
-inline error statement::bind_decimal_by_name(char const *name,
-        byte_t const * varint, size_t varint_size, int32_t scale)
+template<>
+inline error statement::bind_by_name(char const *name, decimal d)
 {
     return error(::cass_statement_bind_decimal_by_name(
-                p, name, varint, varint_size, scale));
+                p, name, d.varint, d.varint_size, d.scale));
 }
 
-inline error statement::bind_decimal_by_name_n(char const *name,
-        size_t name_length, byte_t const * varint, size_t varint_size,
-        int32_t scale)
+template<>
+inline error statement::bind_by_name_n(char const *name, size_t name_length,
+        decimal d)
 {
     return error(::cass_statement_bind_decimal_by_name_n(p, name, name_length,
-            varint, varint_size, scale));
+            d.varint, d.varint_size, d.scale));
 }
+
+template<>
+CASSA_IMPEXP error statement::bind(size_t index,
+        cass::collection const *collection);
+
+template<>
+CASSA_IMPEXP error statement::bind_by_name(char const *name,
+        cass::collection const *collection);
+
+template<>
+CASSA_IMPEXP error statement::bind_by_name_n(char const *name,
+        size_t name_length, cass::collection const *collection);
+
+
+template<>
+CASSA_IMPEXP error statement::bind(size_t index, cass::tuple const *tuple);
+
+template<>
+CASSA_IMPEXP error statement::bind_by_name(char const *name,
+        cass::tuple const *tuple);
+
+template<>
+CASSA_IMPEXP error statement::bind_by_name_n(char const *name,
+        size_t name_length, cass::tuple const *tuple);
+
+template<>
+CASSA_IMPEXP error statement::bind(size_t index,
+        cass::user_type const *user_type);
+
+template<>
+CASSA_IMPEXP error statement::bind_by_name(char const *name,
+        cass::user_type const *user_type);
+
+template<>
+CASSA_IMPEXP error statement::bind_by_name_n(char const *name,
+        size_t name_length, cass::user_type const *user_type);
 
 } // namespace cass

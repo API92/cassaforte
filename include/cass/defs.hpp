@@ -6,6 +6,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <experimental/string_view>
 
 #include <cassandra.h>
 
@@ -14,6 +15,7 @@
 namespace cass {
 
 typedef ::cass_byte_t byte_t;
+typedef std::experimental::basic_string_view<byte_t> bytes_view;
 
 typedef ::cass_duration_t duration_t;
 
@@ -179,5 +181,20 @@ typedef ::CassLogMessage log_message;
 class authenticator;
 
 typedef ::CassLogCallback log_callback;
+
+struct custom {
+    std::experimental::string_view class_name;
+    bytes_view value;
+    custom(std::experimental::string_view class_name, bytes_view value) :
+            class_name(class_name), value(value) {}
+};
+
+struct decimal {
+    byte_t const *varint;
+    size_t varint_size;
+    int32_t scale;
+    decimal(byte_t const *varint, size_t varint_size, int32_t scale) :
+        varint(varint), varint_size(varint_size), scale(scale) {}
+};
 
 } // namespace cass
