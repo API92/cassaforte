@@ -12,7 +12,7 @@
 
 namespace cass {
 
-class index_meta {
+class index_meta : wrapper {
 public:
     static index_meta const * ptr(::CassIndexMeta const *p)
     {

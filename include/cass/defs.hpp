@@ -14,6 +14,24 @@
 
 namespace cass {
 
+class nocopy {
+    nocopy(nocopy const &) = delete;
+    void operator = (nocopy const &) = delete;
+};
+
+class nomove {
+    nomove(nomove &&) = delete;
+    void operator = (nomove &&) = delete;
+};
+
+class noraii {
+    noraii() = delete;
+    ~noraii() = delete;
+};
+
+class wrapper : nocopy, nomove, noraii {};
+
+
 typedef ::cass_byte_t byte_t;
 typedef std::experimental::basic_string_view<byte_t> bytes_view;
 

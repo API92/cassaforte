@@ -16,7 +16,7 @@ namespace cass {
 
 typedef wrapper_ptr<statement> statement_ptr;
 
-class statement {
+class statement : wrapper {
 public:
     static statement * ptr(::CassStatement *p)
     {

@@ -12,7 +12,7 @@
 
 namespace cass {
 
-class table_meta {
+class table_meta : wrapper {
 public:
     static table_meta const * ptr(::CassTableMeta const *p)
     {

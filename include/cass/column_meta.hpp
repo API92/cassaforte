@@ -12,7 +12,7 @@
 
 namespace cass {
 
-class column_meta {
+class column_meta : wrapper {
 public:
     static column_meta const * ptr(::CassColumnMeta const *p)
     {

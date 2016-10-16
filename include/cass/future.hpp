@@ -14,7 +14,7 @@ namespace cass {
 
 typedef wrapper_ptr<future> future_ptr;
 
-class future {
+class future : wrapper {
 public:
     typedef ::CassFutureCallback callback;
 

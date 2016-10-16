@@ -12,7 +12,7 @@
 
 namespace cass {
 
-class materialized_view_meta {
+class materialized_view_meta : wrapper {
 public:
     static materialized_view_meta const * ptr(
             ::CassMaterializedViewMeta const *p)

@@ -16,7 +16,7 @@ namespace cass {
 
 typedef wrapper_ptr<schema_meta const> schema_meta_const_ptr;
 
-class schema_meta {
+class schema_meta : wrapper {
 public:
     static schema_meta const * ptr(::CassSchemaMeta const *p)
     {

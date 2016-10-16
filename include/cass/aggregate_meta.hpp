@@ -11,7 +11,7 @@
 
 namespace cass {
 
-class aggregate_meta {
+class aggregate_meta : wrapper {
 public:
     static aggregate_meta const * ptr(::CassAggregateMeta const *p)
     {

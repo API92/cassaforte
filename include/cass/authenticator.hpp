@@ -11,7 +11,7 @@
 
 namespace cass {
 
-class authenticator {
+class authenticator : wrapper {
 public:
     static authenticator * ptr(::CassAuthenticator *p)
     {

@@ -12,7 +12,7 @@
 
 namespace cass {
 
-class function_meta {
+class function_meta : wrapper {
 public:
     static function_meta const * ptr(::CassFunctionMeta const *p)
     {

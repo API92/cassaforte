@@ -16,7 +16,7 @@ namespace cass {
 
 typedef wrapper_ptr<class collection> collection_ptr;
 
-class collection {
+class collection : wrapper {
 public:
     static collection * ptr(::CassCollection *p)
     {

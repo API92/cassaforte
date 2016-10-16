@@ -6,13 +6,14 @@
 
 #include <cassandra.h>
 
+#include <cass/defs.hpp>
 #include <cass/wrapper_ptr.hpp>
 
 namespace cass {
 
-typedef wrapper_ptr<class timestamp_gen> timestamp_gen_ptr;
+typedef wrapper_ptr<timestamp_gen> timestamp_gen_ptr;
 
-class timestamp_gen {
+class timestamp_gen : wrapper {
 public:
     static timestamp_gen * ptr(::CassTimestampGen *p)
     {

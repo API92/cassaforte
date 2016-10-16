@@ -13,7 +13,7 @@ namespace cass {
 
 typedef wrapper_ptr<result const> result_const_ptr;
 
-class result {
+class result : wrapper {
 public:
     static result const * ptr(::CassResult const *p)
     {

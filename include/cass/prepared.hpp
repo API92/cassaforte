@@ -14,7 +14,7 @@ namespace cass {
 
 typedef wrapper_ptr<prepared const> prepared_const_ptr;
 
-class prepared {
+class prepared : wrapper {
 public:
     static prepared const * ptr(::CassPrepared const *p)
     {

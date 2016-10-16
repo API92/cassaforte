@@ -15,7 +15,7 @@ namespace cass {
 
 typedef wrapper_ptr<iterator> iterator_ptr;
 
-class iterator {
+class iterator : wrapper {
 public:
     static iterator * ptr(::CassIterator *p)
     {

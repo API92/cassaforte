@@ -11,7 +11,7 @@
 
 namespace cass {
 
-class row {
+class row : wrapper {
 public:
     static row const * ptr(::CassRow const *p)
     {

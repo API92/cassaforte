@@ -4,13 +4,14 @@
 
 #include <cassandra.h>
 
+#include <cass/defs.hpp>
 #include <cass/wrapper_ptr.hpp>
 
 namespace cass {
 
 typedef wrapper_ptr<class retry_policy> retry_policy_ptr;
 
-class retry_policy {
+class retry_policy : wrapper {
 public:
     static retry_policy * ptr(::CassRetryPolicy *p)
     {

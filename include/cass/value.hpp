@@ -14,7 +14,7 @@
 
 namespace cass {
 
-class value {
+class value : wrapper {
 public:
     static value const * ptr(::CassValue const *p)
     {

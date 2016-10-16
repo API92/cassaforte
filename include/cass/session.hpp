@@ -17,7 +17,7 @@ namespace cass {
 
 typedef wrapper_ptr<class session> session_ptr;
 
-class session {
+class session : wrapper {
 public:
     static session * ptr(::CassSession *p)
     {

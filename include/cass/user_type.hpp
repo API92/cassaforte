@@ -16,7 +16,7 @@ namespace cass {
 
 typedef wrapper_ptr<user_type> user_type_ptr;
 
-class user_type {
+class user_type : wrapper {
 public:
     static user_type * ptr(::CassUserType *p)
     {

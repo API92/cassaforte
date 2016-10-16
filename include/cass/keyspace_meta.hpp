@@ -12,7 +12,7 @@
 
 namespace cass {
 
-class keyspace_meta {
+class keyspace_meta : wrapper {
 public:
     static keyspace_meta const * ptr(::CassKeyspaceMeta const *p)
     {

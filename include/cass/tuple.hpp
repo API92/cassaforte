@@ -14,9 +14,9 @@
 
 namespace cass {
 
-typedef wrapper_ptr<class tuple> tuple_ptr;
+typedef wrapper_ptr<tuple> tuple_ptr;
 
-class tuple {
+class tuple : wrapper {
 public:
     static tuple * ptr(::CassTuple *p)
     {

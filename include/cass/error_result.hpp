@@ -13,7 +13,7 @@ namespace cass {
 
 typedef wrapper_ptr<error_result const> error_result_const_ptr;
 
-class error_result {
+class error_result : wrapper {
 public:
     static error_result const * ptr(::CassErrorResult const *p)
     {

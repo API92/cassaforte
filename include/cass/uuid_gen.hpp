@@ -15,7 +15,7 @@ namespace cass {
 
 typedef wrapper_ptr<uuid_gen> uuid_gen_ptr;
 
-class uuid_gen {
+class uuid_gen : wrapper {
 public:
     static uuid_gen * ptr(::CassUuidGen *p)
     {

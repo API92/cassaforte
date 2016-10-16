@@ -26,7 +26,7 @@ struct authenticator_callbacks {
 
 typedef wrapper_ptr<cluster> cluster_ptr;
 
-class cluster {
+class cluster : wrapper {
 public:
     static cluster * ptr(::CassCluster *p)
     {

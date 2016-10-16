@@ -14,7 +14,7 @@ namespace cass {
 
 typedef wrapper_ptr<batch> batch_ptr;
 
-class batch {
+class batch : wrapper {
 public:
     static batch * ptr(::CassBatch *p)
     {

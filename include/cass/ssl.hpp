@@ -11,9 +11,9 @@
 
 namespace cass {
 
-typedef wrapper_ptr<class ssl> ssl_ptr;
+typedef wrapper_ptr<ssl> ssl_ptr;
 
-class ssl {
+class ssl : wrapper {
 public:
     static ssl * ptr(::CassSsl *p)
     {

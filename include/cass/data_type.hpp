@@ -13,7 +13,7 @@ namespace cass {
 
 typedef wrapper_ptr<data_type> data_type_ptr;
 
-class data_type {
+class data_type : wrapper {
 public:
     static data_type * ptr(::CassDataType *p)
     {

@@ -11,7 +11,7 @@ namespace cass {
 
 typedef wrapper_ptr<custom_payload> custom_payload_ptr;
 
-class custom_payload {
+class custom_payload : wrapper {
 public:
     static custom_payload * ptr(::CassCustomPayload *p)
     {
