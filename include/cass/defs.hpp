@@ -37,6 +37,8 @@ typedef std::experimental::basic_string_view<byte_t> bytes_view;
 
 typedef ::cass_duration_t duration_t;
 
+typedef int64_t timestamp_t;
+
 class inet;
 
 class uuid;
