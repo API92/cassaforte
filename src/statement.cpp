@@ -30,7 +30,6 @@ error statement::set_custom_payload(custom_payload const *payload)
             backend(), (payload ? payload->backend() : nullptr));
 }
 
-template<>
 error statement::bind(size_t index,
         cass::collection const *collection)
 {
@@ -38,7 +37,6 @@ error statement::bind(size_t index,
             backend(), index, collection->backend());
 }
 
-template<>
 error statement::bind_by_name(char const *name,
         cass::collection const *collection)
 {
@@ -46,7 +44,6 @@ error statement::bind_by_name(char const *name,
             collection->backend());
 }
 
-template<>
 error statement::bind_by_name_n(char const *name,
         size_t name_length, cass::collection const *collection)
 {
@@ -54,21 +51,18 @@ error statement::bind_by_name_n(char const *name,
             backend(), name, name_length, collection->backend());
 }
 
-template<>
 error statement::bind(size_t index, cass::tuple const *tuple)
 {
     return (error)::cass_statement_bind_tuple(
             backend(), index, tuple->backend());
 }
 
-template<>
 error statement::bind_by_name(char const *name, cass::tuple const *tuple)
 {
     return (error)::cass_statement_bind_tuple_by_name(
             backend(), name, tuple->backend());
 }
 
-template<>
 error statement::bind_by_name_n(char const *name, size_t name_length,
         cass::tuple const *tuple)
 {
@@ -76,14 +70,12 @@ error statement::bind_by_name_n(char const *name, size_t name_length,
             backend(), name, name_length, tuple->backend());
 }
 
-template<>
 error statement::bind(size_t index, cass::user_type const *user_type)
 {
     return (error)::cass_statement_bind_user_type(
             backend(), index, user_type->backend());
 }
 
-template<>
 error statement::bind_by_name(char const *name,
         cass::user_type const *user_type)
 {
@@ -91,7 +83,6 @@ error statement::bind_by_name(char const *name,
             user_type->backend());
 }
 
-template<>
 error statement::bind_by_name_n(char const *name, size_t name_length,
         cass::user_type const *user_type)
 {

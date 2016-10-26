@@ -21,14 +21,12 @@ data_type const * tuple::data_type() const
     return cass::data_type::ptr(::cass_tuple_data_type(backend()));
 }
 
-template<>
 error tuple::set(size_t index, collection const *value)
 {
     return (error)::cass_tuple_set_collection(
                 backend(), index, value->backend());
 }
 
-template<>
 error tuple::set(size_t index, user_type const *value)
 {
     return (error)::cass_tuple_set_user_type(

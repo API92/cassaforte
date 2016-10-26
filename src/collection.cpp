@@ -22,13 +22,11 @@ data_type const * collection::data_type() const
     return cass::data_type::ptr(::cass_collection_data_type(backend()));
 }
 
-template<>
 error collection::append(tuple const *value)
 {
     return (error)::cass_collection_append_tuple(backend(), value->backend());
 }
 
-template<>
 error collection::append(user_type const *value)
 {
     return (error)::cass_collection_append_user_type(

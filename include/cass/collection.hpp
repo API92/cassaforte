@@ -42,8 +42,24 @@ public:
 
     CASSA_IMPEXP cass::data_type const * data_type() const;
 
-    template<typename T>
-    error append(T value);
+    inline error append(int8_t value);
+    inline error append(int16_t value);
+    inline error append(int32_t value);
+    inline error append(uint32_t value);
+    inline error append(int64_t value);
+    inline error append(float value);
+    inline error append(double value);
+    inline error append(bool value);
+    inline error append(char const *value);
+    inline error append(std::experimental::string_view value);
+    inline error append(bytes_view value);
+    inline error append(custom c);
+    inline error append(uuid value);
+    inline error append(inet value);
+    inline error append(decimal d);
+    inline error append(collection const *value);
+    CASSA_IMPEXP error append(tuple const *value);
+    CASSA_IMPEXP error append(user_type const *value);
 
     inline error append_custom(char const *class_name, byte_t const *value,
             size_t value_size);
@@ -61,69 +77,58 @@ inline collection_ptr collection::new_ptr(colletion_type type,
                     type, item_count)), true);
 }
 
-template<>
 inline error collection::append(int8_t value)
 {
     return error(::cass_collection_append_int8(backend(), value));
 }
 
-template<>
 inline error collection::append(int16_t value)
 {
     return error(::cass_collection_append_int16(backend(), value));
 }
 
-template<>
 inline error collection::append(int32_t value)
 {
     return error(::cass_collection_append_int32(backend(), value));
 }
 
-template<>
 inline error collection::append(uint32_t value)
 {
     return error(::cass_collection_append_uint32(backend(), value));
 }
 
-template<>
 inline error collection::append(int64_t value)
 {
     return error(::cass_collection_append_int64(backend(), value));
 }
 
-template<>
 inline error collection::append(float value)
 {
     return error(::cass_collection_append_float(backend(), value));
 }
 
-template<>
 inline error collection::append(double value)
 {
     return error(::cass_collection_append_double(backend(), value));
 }
 
-template<>
 inline error collection::append(bool value)
 {
     return error(::cass_collection_append_bool(
                 backend(), value ? cass_true : cass_false));
 }
 
-template<>
 inline error collection::append(char const *value)
 {
     return error(::cass_collection_append_string(backend(), value));
 }
 
-template<>
 inline error collection::append(std::experimental::string_view value)
 {
     return error(::cass_collection_append_string_n(
                 backend(), value.data(), value.size()));
 }
 
-template<>
 inline error collection::append(bytes_view value)
 {
     return error(::cass_collection_append_bytes(
@@ -137,7 +142,6 @@ inline error collection::append_custom(char const *class_name,
                 backend(), class_name, value, value_size));
 }
 
-template<>
 inline error collection::append(custom c)
 {
     return error(::cass_collection_append_custom_n(
@@ -145,36 +149,26 @@ inline error collection::append(custom c)
                 c.value.data(), c.value.size()));
 }
 
-template<>
 inline error collection::append(uuid value)
 {
     return error(::cass_collection_append_uuid(backend(), value));
 }
 
-template<>
 inline error collection::append(inet value)
 {
     return error(::cass_collection_append_inet(backend(), value));
 }
 
-template<>
 inline error collection::append(decimal d)
 {
     return error(::cass_collection_append_decimal(
                 backend(), d.varint, d.varint_size, d.scale));
 }
 
-template<>
 inline error collection::append(collection const *value)
 {
     return error(::cass_collection_append_collection(
                 backend(), value->backend()));
 }
-
-template<>
-CASSA_IMPEXP error collection::append(tuple const *value);
-
-template<>
-CASSA_IMPEXP error collection::append(user_type const *value);
 
 } // namespace cass

@@ -28,8 +28,19 @@ public:
 
     CASSA_IMPEXP cass::data_type const * data_type() const;
 
-    template<typename T>
-    error get(T *output) const;
+    inline error get(int8_t *output) const;
+    inline error get(int16_t *output) const;
+    inline error get(int32_t *output) const;
+    inline error get(uint32_t *output) const;
+    inline error get(int64_t *output) const;
+    inline error get(float *output) const;
+    inline error get(double *output) const;
+    inline error get(bool *output) const;
+    inline error get(uuid *output) const;
+    inline error get(inet *output) const;
+    inline error get(std::experimental::string_view *output) const;
+    inline error get(bytes_view *output) const;
+    inline error get(decimal *output) const;
 
     inline value_type type() const;
 
@@ -44,49 +55,41 @@ public:
     inline value_type secondary_sub_type() const;
 };
 
-template<>
 inline error value::get(int8_t *output) const
 {
     return error(::cass_value_get_int8(backend(), output));
 }
 
-template<>
 inline error value::get(int16_t *output) const
 {
     return error(::cass_value_get_int16(backend(), output));
 }
 
-template<>
 inline error value::get(int32_t *output) const
 {
     return error(::cass_value_get_int32(backend(), output));
 }
 
-template<>
 inline error value::get(uint32_t *output) const
 {
     return error(::cass_value_get_uint32(backend(), output));
 }
 
-template<>
 inline error value::get(int64_t *output) const
 {
     return error(::cass_value_get_int64(backend(), output));
 }
 
-template<>
 inline error value::get(float *output) const
 {
     return error(::cass_value_get_float(backend(), output));
 }
 
-template<>
 inline error value::get(double *output) const
 {
     return error(::cass_value_get_double(backend(), output));
 }
 
-template<>
 inline error value::get(bool *output) const
 {
     cass_bool_t out;
@@ -95,19 +98,16 @@ inline error value::get(bool *output) const
     return res;
 }
 
-template<>
 inline error value::get(uuid *output) const
 {
     return error(::cass_value_get_uuid(backend(), output));
 }
 
-template<>
 inline error value::get(inet *output) const
 {
     return error(::cass_value_get_inet(backend(), output));
 }
 
-template<>
 inline error value::get(std::experimental::string_view *output) const
 {
     char const *output_s = nullptr;
@@ -118,7 +118,6 @@ inline error value::get(std::experimental::string_view *output) const
     return res;
 }
 
-template<>
 inline error value::get(bytes_view *output) const
 {
     byte_t const *output_s = nullptr;
@@ -129,7 +128,6 @@ inline error value::get(bytes_view *output) const
     return res;
 }
 
-template<>
 inline error value::get(decimal *output) const
 {
     return error(::cass_value_get_decimal(
