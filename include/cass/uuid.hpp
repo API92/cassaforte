@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <cstring>
+
 #include <cassandra.h>
 
 #include <cass/defs.hpp>
@@ -59,6 +61,14 @@ inline error uuid::from_string(char const *str)
 inline error uuid::from_string_n(char const *str, size_t str_length)
 {
     return error(::cass_uuid_from_string_n(str, str_length, this));
+}
+
+inline bool operator < (uuid const &lhs, uuid const &rhs)
+{
+    char lhs_data[16], rhs_data[16];
+    lhs.string(lhs_data);
+    rhs.string(rhs_data);
+    return memcmp(lhs_data, rhs_data, sizeof(lhs_data)) < 0;
 }
 
 } // namespace cass
