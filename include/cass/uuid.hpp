@@ -65,7 +65,7 @@ inline error uuid::from_string_n(char const *str, size_t str_length)
 
 inline bool operator < (uuid const &lhs, uuid const &rhs)
 {
-    char lhs_data[16], rhs_data[16];
+    char lhs_data[36], rhs_data[36];
     lhs.string(lhs_data);
     rhs.string(rhs_data);
     return memcmp(lhs_data, rhs_data, sizeof(lhs_data)) < 0;
