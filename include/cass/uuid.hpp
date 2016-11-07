@@ -71,4 +71,10 @@ inline bool operator < (uuid const &lhs, uuid const &rhs)
     return memcmp(lhs_data, rhs_data, sizeof(lhs_data)) < 0;
 }
 
+inline bool operator == (uuid const &lhs, uuid const &rhs)
+{
+    return lhs.time_and_version == rhs.time_and_version &&
+           lhs.clock_seq_and_node == rhs.clock_seq_and_node;
+}
+
 } // namespace cass
