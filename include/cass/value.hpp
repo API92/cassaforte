@@ -136,7 +136,7 @@ inline error value::get(decimal *output) const
 
 inline value_type value::type() const
 {
-    return ::cass_value_type(backend());
+    return (value_type)::cass_value_type(backend());
 }
 
 inline bool value::is_null() const
@@ -156,12 +156,12 @@ inline size_t value::item_count() const
 
 inline value_type value::primary_sub_type() const
 {
-    return ::cass_value_primary_sub_type(backend());
+    return (value_type)::cass_value_primary_sub_type(backend());
 }
 
 inline value_type value::secondary_sub_type() const
 {
-    return ::cass_value_secondary_sub_type(backend());
+    return (value_type)::cass_value_secondary_sub_type(backend());
 }
 
 } // namespace cass

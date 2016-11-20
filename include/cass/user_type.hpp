@@ -35,7 +35,7 @@ public:
 
     inline void free();
 
-    CASSA_IMPEXP user_type_ptr new_from_data_type(
+    CASSA_IMPEXP static user_type_ptr new_from_data_type(
             cass::data_type const *data_type);
 
     CASSA_IMPEXP cass::data_type const * data_type() const;

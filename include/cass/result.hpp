@@ -70,7 +70,7 @@ inline error result::column_name(size_t index, char const **name,
 
 inline value_type result::column_type(size_t index) const
 {
-    return ::cass_result_column_type(backend(), index);
+    return (value_type)::cass_result_column_type(backend(), index);
 }
 
 inline bool result::has_more_pages() const

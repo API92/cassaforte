@@ -98,7 +98,8 @@ inline void data_type::free()
 
 inline data_type_ptr data_type::new_ptr(value_type type)
 {
-    return data_type_ptr(data_type::ptr(::cass_data_type_new(type)), true);
+    return data_type_ptr(data_type::ptr(
+            ::cass_data_type_new((::CassValueType)(type))), true);
 }
 
 inline data_type_ptr data_type::new_from_existing() const
@@ -121,7 +122,7 @@ inline data_type_ptr data_type::new_udt(size_t field_count)
 
 inline value_type data_type::type() const
 {
-    return ::cass_data_type_type(backend());
+    return (value_type)::cass_data_type_type(backend());
 }
 
 inline bool data_type::is_frozen() const
@@ -240,21 +241,21 @@ inline error data_type::add_sub_type_by_name_n(char const *name,
 inline error data_type::add_sub_value_type(value_type sub_value_type)
 {
     return error(::cass_data_type_add_sub_value_type(
-                backend(), sub_value_type));
+                backend(), (::CassValueType)sub_value_type));
 }
 
 inline error data_type::add_sub_value_type_by_name(char const *name,
         value_type sub_value_type)
 {
     return error(::cass_data_type_add_sub_value_type_by_name(
-                backend(), name, sub_value_type));
+                backend(), name, (::CassValueType)sub_value_type));
 }
 
 inline error data_type::add_sub_value_type_by_name_n(char const *name,
         size_t name_length, value_type sub_value_type)
 {
     return error(::cass_data_type_add_sub_value_type_by_name_n(
-                backend(), name, name_length, sub_value_type));
+                backend(), name, name_length, (::CassValueType)sub_value_type));
 }
 
 } // namespace cass

@@ -34,7 +34,7 @@ public:
     }
 
     inline void free();
-    inline static collection_ptr new_ptr(colletion_type type,
+    inline static collection_ptr new_ptr(collection_type type,
             size_t item_count);
 
     CASSA_IMPEXP static collection_ptr new_from_data_type(
@@ -70,11 +70,11 @@ inline void collection::free()
     ::cass_collection_free(backend());
 }
 
-inline collection_ptr collection::new_ptr(colletion_type type,
+inline collection_ptr collection::new_ptr(collection_type type,
         size_t item_count)
 {
     return collection_ptr(collection::ptr(::cass_collection_new(
-                    type, item_count)), true);
+                static_cast<::CassCollectionType>(type), item_count)), true);
 }
 
 inline error collection::append(int8_t value)
