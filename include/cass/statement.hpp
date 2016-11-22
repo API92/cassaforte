@@ -68,10 +68,10 @@ public:
 
     CASSA_IMPEXP error set_custom_payload(custom_payload const *payload);
 
-    inline error bind(size_t index, nullptr_t);
-    inline error bind_by_name(char const *name, nullptr_t);
+    inline error bind(size_t index, std::nullptr_t);
+    inline error bind_by_name(char const *name, std::nullptr_t);
     inline error bind_by_name_n(char const *name, size_t name_length,
-            nullptr_t);
+            std::nullptr_t);
 
     inline error bind(size_t index, int8_t value);
     inline error bind_by_name(char const *name, int8_t value);
@@ -246,18 +246,18 @@ inline error statement::set_request_timeout(uint64_t timeout_ms)
     return error(::cass_statement_set_request_timeout(backend(), timeout_ms));
 }
 
-inline error statement::bind(size_t index, nullptr_t)
+inline error statement::bind(size_t index, std::nullptr_t)
 {
     return error(::cass_statement_bind_null(backend(), index));
 }
 
-inline error statement::bind_by_name(char const *name, nullptr_t)
+inline error statement::bind_by_name(char const *name, std::nullptr_t)
 {
     return error(::cass_statement_bind_null_by_name(backend(), name));
 }
 
 inline error statement::bind_by_name_n(
-        char const *name, size_t name_length, nullptr_t)
+        char const *name, size_t name_length, std::nullptr_t)
 {
     return error(::cass_statement_bind_null_by_name_n(
                 backend(), name, name_length));

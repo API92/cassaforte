@@ -40,9 +40,10 @@ public:
 
     CASSA_IMPEXP cass::data_type const * data_type() const;
 
-    inline error set(size_t index, nullptr_t);
-    inline error set_by_name(char const *name, nullptr_t);
-    inline error set_by_name_n(char const *name, size_t name_length, nullptr_t);
+    inline error set(size_t index, std::nullptr_t);
+    inline error set_by_name(char const *name, std::nullptr_t);
+    inline error set_by_name_n(char const *name, size_t name_length,
+            std::nullptr_t);
 
     inline error set(size_t index, int8_t value);
     inline error set_by_name(char const *name, int8_t value);
@@ -145,18 +146,18 @@ inline void user_type::free()
     ::cass_user_type_free(backend());
 }
 
-inline error user_type::set(size_t index, nullptr_t)
+inline error user_type::set(size_t index, std::nullptr_t)
 {
     return (error)::cass_user_type_set_null(backend(), index);
 }
 
-inline error user_type::set_by_name(char const *name, nullptr_t)
+inline error user_type::set_by_name(char const *name, std::nullptr_t)
 {
     return (error)::cass_user_type_set_null_by_name(backend(), name);
 }
 
 inline error user_type::set_by_name_n(
-        char const *name, size_t name_length, nullptr_t)
+        char const *name, size_t name_length, std::nullptr_t)
 {
     return (error)::cass_user_type_set_null_by_name_n(
             backend(), name, name_length);

@@ -41,7 +41,7 @@ public:
 
     CASSA_IMPEXP cass::data_type const * data_type() const;
 
-    inline error set(size_t index, nullptr_t);
+    inline error set(size_t index, std::nullptr_t);
     inline error set(size_t index, int8_t value);
     inline error set(size_t index, int16_t value);
     inline error set(size_t index, int32_t value);
@@ -75,7 +75,7 @@ inline tuple_ptr tuple::new_ptr(size_t item_count)
     return tuple_ptr(tuple::ptr(::cass_tuple_new(item_count)), true);
 }
 
-inline error tuple::set(size_t index, nullptr_t)
+inline error tuple::set(size_t index, std::nullptr_t)
 {
     return error(::cass_tuple_set_null(backend(), index));
 }
