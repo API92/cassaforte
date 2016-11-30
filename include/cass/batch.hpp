@@ -56,7 +56,7 @@ inline void batch::free()
 
 inline batch_ptr batch::new_ptr(batch_type type)
 {
-    return batch_ptr(batch::ptr(::cass_batch_new(type)), true);
+    return batch_ptr(batch::ptr(::cass_batch_new((::CassBatchType)type)), true);
 }
 
 inline error batch::set_consistency(cass::consistency consistency)

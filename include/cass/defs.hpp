@@ -156,7 +156,11 @@ enum collection_type : int {
     COLLECTION_TYPE_SET = CASS_COLLECTION_TYPE_SET
 };
 
-typedef ::CassBatchType batch_type;
+enum class batch_type {
+  LOGGED   = ::CASS_BATCH_TYPE_LOGGED,
+  UNLOGGED = ::CASS_BATCH_TYPE_UNLOGGED,
+  COUNTER  = ::CASS_BATCH_TYPE_COUNTER
+};
 
 typedef ::CassIteratorType iterator_type;
 
