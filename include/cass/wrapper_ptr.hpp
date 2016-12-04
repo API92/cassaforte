@@ -48,6 +48,13 @@ public:
         init_cnt(holds_start);
     }
 
+    wrapper_ptr(wrapper_ptr const &other) :
+        res(other.res), cnt(other.cnt)
+    {
+        if (cnt)
+            cnt->value += 2;
+    }
+
     template<typename U>
     wrapper_ptr(const wrapper_ptr<U> &other)
         : res(other.res), cnt(other.cnt)
