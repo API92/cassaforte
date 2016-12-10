@@ -10,7 +10,7 @@
 
 #include <cassandra.h>
 
-#include <cass/wrapper_ptr.hpp>
+#include <cass/wrapper_ptr_decl.hpp>
 
 namespace cass {
 
@@ -64,6 +64,7 @@ class error_result;
 typedef wrapper_ptr<error_result const> error_result_const_ptr;
 
 class iterator;
+typedef wrapper_ptr<iterator> iterator_ptr;
 
 class row;
 
@@ -77,10 +78,13 @@ class function_meta;
 class aggregate_meta;
 
 class collection;
+typedef wrapper_ptr<class collection> collection_ptr;
 
 class tuple;
+typedef wrapper_ptr<tuple> tuple_ptr;
 
 class user_type;
+typedef wrapper_ptr<user_type> user_type_ptr;
 
 class ssl;
 
@@ -249,7 +253,8 @@ struct decimal {
     byte_t const *varint;
     size_t varint_size;
     int32_t scale;
-    decimal(byte_t const *varint, size_t varint_size, int32_t scale) :
+    decimal(byte_t const *varint = nullptr, size_t varint_size = 0,\
+            int32_t scale = 0) :
         varint(varint), varint_size(varint_size), scale(scale) {}
 };
 

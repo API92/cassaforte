@@ -46,6 +46,7 @@ add_library(${PROJECT_NAME}
     include/cass/uuid_gen.hpp
     include/cass/user_type.hpp
     include/cass/value.hpp
+    include/cass/wrapper_ptr_decl.hpp
     include/cass/wrapper_ptr.hpp
     src/aggregate_meta.cpp
     src/batch.cpp
