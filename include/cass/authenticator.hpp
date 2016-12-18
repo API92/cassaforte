@@ -4,93 +4,37 @@
 
 #pragma once
 
-#include <cassandra.h>
+#include "delete_defaults.hpp"
+#include "forward.hpp"
+#include "impexp.hpp"
 
-#include <cass/defs.hpp>
-#include <cass/inet.hpp>
+typedef struct CassAuthenticator_ CassAuthenticator;
 
 namespace cass {
 
-class authenticator : wrapper {
+class CASSA_IMPEXP authenticator : delete_defaults {
 public:
-    static authenticator * ptr(::CassAuthenticator *p)
-    {
-        return reinterpret_cast<authenticator *>(p);
-    }
+    static authenticator * ptr(::CassAuthenticator *p);
 
-    ::CassAuthenticator * backend()
-    {
-        return reinterpret_cast<::CassAuthenticator *>(this);
-    }
+    ::CassAuthenticator * backend();
+    ::CassAuthenticator const * backend() const;
 
-    ::CassAuthenticator const * backend() const
-    {
-        return reinterpret_cast<::CassAuthenticator const *>(this);
-    }
+    void address(inet *address) const;
 
-    inline void address(inet *address) const;
+    char const * hostname(size_t *length) const;
 
-    inline char const * hostname(size_t *length) const;
+    char const * class_name(size_t *length) const;
 
-    inline char const * class_name(size_t *length) const;
+    void * exchange_data();
 
-    inline void * exchange_data();
+    void set_exchange_data(void *exchange_data);
 
-    inline void set_exchange_data(void *exchange_data);
+    char * response(size_t size);
 
-    inline char * response(size_t size);
+    void set_response(char const *response, size_t response_size);
 
-    inline void set_response(char const *response, size_t response_size);
-
-    inline void set_error(char const *message);
-    inline void set_error_n(char const *message, size_t message_length);
+    void set_error(char const *message);
+    void set_error_n(char const *message, size_t message_length);
 };
-
-inline void authenticator::address(inet *address) const
-{
-    ::cass_authenticator_address(backend(), address);
-}
-
-inline char const * authenticator::hostname(size_t *length) const
-{
-    return ::cass_authenticator_hostname(backend(), length);
-}
-
-inline char const * authenticator::class_name(size_t *length) const
-{
-    return ::cass_authenticator_class_name(backend(), length);
-}
-
-inline void * authenticator::exchange_data()
-{
-    return ::cass_authenticator_exchange_data(backend());
-}
-
-inline void authenticator::set_exchange_data(void *exchange_data)
-{
-    ::cass_authenticator_set_exchange_data(backend(), exchange_data);
-}
-
-inline char * authenticator::response(size_t size)
-{
-    return ::cass_authenticator_response(backend(), size);
-}
-
-inline void authenticator::set_response(char const *response,
-        size_t response_size)
-{
-    ::cass_authenticator_set_response(backend(), response, response_size);
-}
-
-inline void authenticator::set_error(char const *message)
-{
-    ::cass_authenticator_set_error(backend(), message);
-}
-
-inline void authenticator::set_error_n(char const *message,
-        size_t message_length)
-{
-    ::cass_authenticator_set_error_n(backend(), message, message_length);
-}
 
 } // namespace cass

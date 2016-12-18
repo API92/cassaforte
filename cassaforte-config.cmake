@@ -10,7 +10,7 @@
 #   cassaforte_LIBRARY - the falloc libraries needed for linking
 
 find_path(cassaforte_INCLUDE_DIR
-    NAME cass/defs.hpp
+    NAME cass/forward.hpp
     PATHS ${CMAKE_CURRENT_LIST_DIR}
     PATH_SUFFIXES include)
 

@@ -4,11 +4,23 @@
 
 #include <cass/aggregate_meta.hpp>
 
+#include <cassandra.h>
+
 #include <cass/data_type.hpp>
 #include <cass/function_meta.hpp>
 #include <cass/value.hpp>
 
 namespace cass {
+
+aggregate_meta const * aggregate_meta::ptr(::CassAggregateMeta const *p)
+{
+    return reinterpret_cast<aggregate_meta const *>(p);
+}
+
+::CassAggregateMeta const * aggregate_meta::backend() const
+{
+    return reinterpret_cast<::CassAggregateMeta const *>(this);
+}
 
 data_type const * aggregate_meta::argument_type(size_t index) const
 {
@@ -53,6 +65,22 @@ value const * aggregate_meta::field_by_name_n(char const *name,
 {
     return value::ptr(::cass_aggregate_meta_field_by_name_n(
                 backend(), name, name_length));
+}
+
+void aggregate_meta::name(char const **name, size_t *name_length) const
+{
+    ::cass_aggregate_meta_name(backend(), name, name_length);
+}
+
+void aggregate_meta::full_name(char const **full_name,
+        size_t *full_name_length) const
+{
+    ::cass_aggregate_meta_full_name(backend(), full_name, full_name_length);
+}
+
+size_t aggregate_meta::argument_count() const
+{
+    return ::cass_aggregate_meta_argument_count(backend());
 }
 
 } // namespace cass

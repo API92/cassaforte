@@ -4,77 +4,36 @@
 
 #pragma once
 
-#include <cstring>
+#include "forward.hpp"
+#include "impexp.hpp"
 
-#include <cassandra.h>
-
-#include <cass/defs.hpp>
+typedef struct CassUuid_ CassUuid;
 
 namespace cass {
 
-class uuid : public ::CassUuid {
+class CASSA_IMPEXP uuid {
 public:
-    inline static void min_from_time(uint64_t time, uuid *output);
+    ::CassUuid * backend();
+    ::CassUuid const * backend() const;
 
-    inline static void max_from_time(uint64_t time, uuid *output);
+    static void min_from_time(uint64_t time, uuid *output);
 
-    inline uint64_t timestamp() const;
+    static void max_from_time(uint64_t time, uuid *output);
 
-    inline uint8_t version() const;
+    uint64_t timestamp() const;
 
-    inline void string(char *output) const;
+    uint8_t version() const;
 
-    inline error from_string(char const *str);
-    inline error from_string_n(char const *str, size_t str_length);
+    void string(char *output) const;
+
+    error from_string(char const *str);
+    error from_string_n(char const *str, size_t str_length);
+
+    bool operator == (uuid const &rhs) const;
+
+private:
+    uint64_t time_and_version;
+    uint64_t clock_seq_and_node;
 };
-
-inline void uuid::min_from_time(uint64_t time, uuid *output)
-{
-    ::cass_uuid_min_from_time(time, output);
-}
-
-inline void uuid::max_from_time(uint64_t time, uuid *output)
-{
-    ::cass_uuid_max_from_time(time, output);
-}
-
-inline uint64_t uuid::timestamp() const
-{
-    return ::cass_uuid_timestamp(*this);
-}
-
-inline uint8_t uuid::version() const
-{
-    return ::cass_uuid_version(*this);
-}
-
-inline void uuid::string(char *output) const
-{
-    ::cass_uuid_string(*this, output);
-}
-
-inline error uuid::from_string(char const *str)
-{
-    return error(::cass_uuid_from_string(str, this));
-}
-
-inline error uuid::from_string_n(char const *str, size_t str_length)
-{
-    return error(::cass_uuid_from_string_n(str, str_length, this));
-}
-
-inline bool operator < (uuid const &lhs, uuid const &rhs)
-{
-    char lhs_data[36], rhs_data[36];
-    lhs.string(lhs_data);
-    rhs.string(rhs_data);
-    return memcmp(lhs_data, rhs_data, sizeof(lhs_data)) < 0;
-}
-
-inline bool operator == (uuid const &lhs, uuid const &rhs)
-{
-    return lhs.time_and_version == rhs.time_and_version &&
-           lhs.clock_seq_and_node == rhs.clock_seq_and_node;
-}
 
 } // namespace cass

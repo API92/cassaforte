@@ -11,7 +11,7 @@ include(FindPackageHandleStandardArgs)
 #------------------------
 
 # Setup the paths and hints for cassandra c++ driver
-set(_CASS_ROOT_PATHS ${CASSANDRA_ROOT_DIR} $ENV{CASSANDRA_ROOT_DIR})
+set(_CASS_ROOT_PATHS ${Cassandra_ROOT_DIR} $ENV{Cassandra_ROOT_DIR})
 if(NOT WIN32)
     set(_CASS_ROOT_PATHS "${_CASS_ROOT_PATHS}" "/usr/" "/usr/local/")
 endif()

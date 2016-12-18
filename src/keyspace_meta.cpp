@@ -2,15 +2,34 @@
  * Copyright (C) Andrey Pikas
  */
 
+#include <cass/keyspace_meta.hpp>
+
+#include <cassandra.h>
+
 #include <cass/aggregate_meta.hpp>
 #include <cass/data_type.hpp>
 #include <cass/function_meta.hpp>
-#include <cass/keyspace_meta.hpp>
 #include <cass/materialized_view_meta.hpp>
 #include <cass/table_meta.hpp>
 #include <cass/value.hpp>
+#include <cass/wrapper_ptr_def.hpp>
 
 namespace cass {
+
+keyspace_meta const * keyspace_meta::ptr(::CassKeyspaceMeta const *p)
+{
+    return reinterpret_cast<keyspace_meta const *>(p);
+}
+
+::CassKeyspaceMeta const * keyspace_meta::backend() const
+{
+    return reinterpret_cast<::CassKeyspaceMeta const *>(this);
+}
+
+void keyspace_meta::name(char const **name, size_t *name_length) const
+{
+    ::cass_keyspace_meta_name(backend(), name, name_length);
+}
 
 table_meta const * keyspace_meta::table_by_name(
         char const *table) const

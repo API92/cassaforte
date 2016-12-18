@@ -4,9 +4,21 @@
 
 #include <cass/row.hpp>
 
+#include <cassandra.h>
+
 #include <cass/value.hpp>
 
 namespace cass {
+
+row const * row::ptr(::CassRow const *p)
+{
+    return reinterpret_cast<row const *>(p);
+}
+
+::CassRow const * row::backend() const
+{
+    return reinterpret_cast<::CassRow const *>(this);
+}
 
 value const * row::get_column(size_t index) const
 {

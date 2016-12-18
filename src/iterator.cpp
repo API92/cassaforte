@@ -4,7 +4,10 @@
 
 #include <cass/iterator.hpp>
 
+#include <cassandra.h>
+
 #include <cass/aggregate_meta.hpp>
+#include <cass/column_meta.hpp>
 #include <cass/data_type.hpp>
 #include <cass/function_meta.hpp>
 #include <cass/index_meta.hpp>
@@ -15,8 +18,24 @@
 #include <cass/schema_meta.hpp>
 #include <cass/table_meta.hpp>
 #include <cass/value.hpp>
+#include <cass/wrapper_ptr_def.hpp>
 
 namespace cass {
+
+iterator * iterator::ptr(::CassIterator *p)
+{
+    return reinterpret_cast<iterator *>(p);
+}
+
+::CassIterator * iterator::backend()
+{
+    return reinterpret_cast<::CassIterator *>(this);
+}
+
+::CassIterator const * iterator::backend() const
+{
+    return reinterpret_cast<::CassIterator const *>(this);
+}
 
 iterator_ptr iterator::from_result(cass::result const *result)
 {
@@ -250,5 +269,36 @@ value const * iterator::get_meta_field_value() const
 {
     return value::ptr(::cass_iterator_get_meta_field_value(backend()));
 }
+
+void iterator::free()
+{
+    ::cass_iterator_free(backend());
+}
+
+iterator_type iterator::type()
+{
+    return (iterator_type)::cass_iterator_type(backend());
+}
+
+bool iterator::next()
+{
+    return ::cass_iterator_next(backend()) == cass_true;
+}
+
+error iterator::get_user_type_field_name(char const **name,
+        size_t *name_length)
+{
+    return (error)::cass_iterator_get_user_type_field_name(
+            backend(), name, name_length);
+}
+
+error iterator::get_meta_field_name(char const **name,
+        size_t *name_length)
+{
+    return (error)::cass_iterator_get_meta_field_name(
+            backend(), name, name_length);
+}
+
+template class wrapper_ptr<iterator>;
 
 } // namespace cass

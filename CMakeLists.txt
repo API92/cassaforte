@@ -8,6 +8,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules")
 if (${BUILD_SHARED_LIBS})
     set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 endif()
+set(CMAKE_SHARED_LINKER_FLAGS ${CMAKE_SHARED_LINKER_FLAGS} "-Wl,--no-undefined")
 
 add_definitions(-DCASSA_EXPORTS)
 
@@ -19,9 +20,13 @@ add_library(${PROJECT_NAME}
     include/cass/collection.hpp
     include/cass/column_meta.hpp
     include/cass/custom_payload.hpp
+    include/cass/custom.hpp
     include/cass/data_type.hpp
-    include/cass/defs.hpp
+    include/cass/decimal.hpp
+    include/cass/delete_defaults.hpp
+    include/cass/enums.hpp
     include/cass/error_result.hpp
+    include/cass/forward.hpp
     include/cass/function_meta.hpp
     include/cass/future.hpp
     include/cass/impexp.hpp
@@ -46,29 +51,40 @@ add_library(${PROJECT_NAME}
     include/cass/uuid_gen.hpp
     include/cass/user_type.hpp
     include/cass/value.hpp
-    include/cass/wrapper_ptr_decl.hpp
     include/cass/wrapper_ptr.hpp
+    include/cass/wrapper_ptr_def.hpp
     src/aggregate_meta.cpp
+    src/authenticator.cpp
     src/batch.cpp
     src/cluster.cpp
     src/collection.cpp
     src/column_meta.cpp
+    src/custom_payload.cpp
+    src/data_type.cpp
+    src/enums.cpp
+    src/error_result.cpp
     src/function_meta.cpp
     src/future.cpp
     src/index_meta.cpp
+    src/inet.cpp
     src/iterator.cpp
     src/keyspace_meta.cpp
-    src/main.cpp
     src/materialized_view_meta.cpp
+    src/misc.cpp
     src/prepared.cpp
     src/result.cpp
+    src/retry_policy.cpp
     src/row.cpp
     src/schema_meta.cpp
     src/session.cpp
+    src/ssl.cpp
     src/statement.cpp
     src/table_meta.cpp
+    src/timestamp_gen.cpp
     src/tuple.cpp
     src/user_type.cpp
+    src/uuid.cpp
+    src/uuid_gen.cpp
     src/value.cpp
     src/wrapper_ptr.cpp
 )

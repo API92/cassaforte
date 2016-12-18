@@ -4,92 +4,35 @@
 
 #pragma once
 
-#include <cassandra.h>
+#include "delete_defaults.hpp"
+#include "forward.hpp"
+#include "impexp.hpp"
 
-#include <cass/defs.hpp>
-#include <cass/wrapper_ptr.hpp>
+typedef struct CassSsl_ CassSsl;
 
 namespace cass {
 
-typedef wrapper_ptr<ssl> ssl_ptr;
-
-class ssl : wrapper {
+class CASSA_IMPEXP ssl : delete_defaults {
 public:
-    static ssl * ptr(::CassSsl *p)
-    {
-        return reinterpret_cast<ssl *>(p);
-    }
+    static ssl * ptr(::CassSsl *p);
 
-    ::CassSsl * backend()
-    {
-        return reinterpret_cast<::CassSsl *>(this);
-    }
-    ::CassSsl const * backend() const
-    {
-        return reinterpret_cast<::CassSsl const *>(this);
-    }
+    ::CassSsl * backend();
+    ::CassSsl const * backend() const;
 
-    inline static ssl_ptr new_ptr();
-    inline void free();
+    static ssl_ptr new_ptr();
+    void free();
 
-    inline error add_trusted_cert(char const *cert);
-    inline error add_trusted_cert_n(char const *cert, size_t cert_length);
+    error add_trusted_cert(char const *cert);
+    error add_trusted_cert_n(char const *cert, size_t cert_length);
 
-    inline void set_verify_flags(int flags);
+    void set_verify_flags(int flags);
 
-    inline error set_cert(char const *cert);
-    inline error set_cert_n(char const *cert, size_t cert_length);
+    error set_cert(char const *cert);
+    error set_cert_n(char const *cert, size_t cert_length);
 
-    inline error set_private_key(char const *key, char const *password);
-    inline error set_private_key_n(char const *key, size_t key_length,
+    error set_private_key(char const *key, char const *password);
+    error set_private_key_n(char const *key, size_t key_length,
             char const *password, size_t password_length);
 };
-
-inline ssl_ptr ssl::new_ptr()
-{
-    return ssl_ptr(ssl::ptr(::cass_ssl_new()), true);
-}
-
-inline void ssl::free()
-{
-    ::cass_ssl_free(backend());
-}
-
-inline error ssl::add_trusted_cert(char const *cert)
-{
-    return error(::cass_ssl_add_trusted_cert(backend(), cert));
-}
-
-inline error ssl::add_trusted_cert_n(char const *cert, size_t cert_length)
-{
-    return error(::cass_ssl_add_trusted_cert_n(backend(), cert, cert_length));
-}
-
-inline void ssl::set_verify_flags(int flags)
-{
-    ::cass_ssl_set_verify_flags(backend(), flags);
-}
-
-inline error ssl::set_cert(char const *cert)
-{
-    return error(::cass_ssl_set_cert(backend(), cert));
-}
-
-inline error ssl::set_cert_n(char const *cert, size_t cert_length)
-{
-    return error(::cass_ssl_set_cert_n(backend(), cert, cert_length));
-}
-
-inline error ssl::set_private_key(char const *key, char const *password)
-{
-    return error(::cass_ssl_set_private_key(backend(), key, password));
-}
-
-inline error ssl::set_private_key_n(char const *key, size_t key_length,
-        char const *password, size_t password_length)
-{
-    return error(::cass_ssl_set_private_key_n(backend(), key, key_length,
-            password, password_length));
-}
 
 } // namespace cass

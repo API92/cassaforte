@@ -4,28 +4,23 @@
 
 #pragma once
 
-#include <cassandra.h>
+#include "delete_defaults.hpp"
+#include "forward.hpp"
+#include "impexp.hpp"
 
-#include <cass/defs.hpp>
-#include <cass/wrapper_ptr.hpp>
+typedef struct CassRow_ CassRow;
 
 namespace cass {
 
-class row : wrapper {
+class CASSA_IMPEXP row : delete_defaults {
 public:
-    static row const * ptr(::CassRow const *p)
-    {
-        return reinterpret_cast<row const *>(p);
-    }
+    static row const * ptr(::CassRow const *p);
 
-    ::CassRow const * backend() const
-    {
-        return reinterpret_cast<::CassRow const *>(this);
-    }
+    ::CassRow const * backend() const;
 
-    CASSA_IMPEXP value const * get_column(size_t index) const;
-    CASSA_IMPEXP value const * get_column_by_name(char const *name) const;
-    CASSA_IMPEXP value const * get_column_by_name_n(char const *name,
+    value const * get_column(size_t index) const;
+    value const * get_column_by_name(char const *name) const;
+    value const * get_column_by_name_n(char const *name,
             size_t name_length) const;
 };
 

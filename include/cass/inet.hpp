@@ -4,52 +4,38 @@
 
 #pragma once
 
-#include <cassandra.h>
+#include "forward.hpp"
+#include "impexp.hpp"
 
-#include <cass/defs.hpp>
+typedef struct CassInet_ CassInet;
 
 namespace cass {
 
-class inet : public ::CassInet
+class CASSA_IMPEXP inet
 {
 public:
-    inet() = default;
+    inet();
+    ~inet();
+    inet(inet const &rhs);
+    inet & operator = (inet const &rhs);
+    inet(inet &&rhs);
+    inet & operator = (inet &&rhs);
+    explicit inet(::CassInet const &base);
 
-    explicit inet(::CassInet base) : ::CassInet(base) {}
+    ::CassInet * backend();
+    ::CassInet const * backend() const;
 
-    inline static inet init_v4(uint8_t const *address);
+    static inet init_v4(uint8_t const *address);
 
-    inline static inet init_v6(uint8_t const *address);
+    static inet init_v6(uint8_t const *address);
 
-    inline void string(char *output) const;
+    void string(char *output) const;
 
-    inline error from_string(char const *str);
-    inline error from_string_n(char const *str, size_t str_length);
+    error from_string(char const *str);
+    error from_string_n(char const *str, size_t str_length);
+
+private:
+    void *_impl;
 };
-
-inline inet inet::init_v4(uint8_t const *address)
-{
-    return inet(::cass_inet_init_v4(address));
-}
-
-inline inet inet::init_v6(uint8_t const *address)
-{
-    return inet(::cass_inet_init_v6(address));
-}
-
-inline void inet::string(char *output) const
-{
-    ::cass_inet_string(*this, output);
-}
-
-inline error inet::from_string(char const *str)
-{
-    return error(::cass_inet_from_string(str, this));
-}
-
-inline error inet::from_string_n(char const *str, size_t str_length)
-{
-    return error(::cass_inet_from_string_n(str, str_length, this));
-}
 
 } // namespace cass

@@ -4,31 +4,20 @@
 
 #pragma once
 
-#include <cassandra.h>
+#include "delete_defaults.hpp"
+#include "forward.hpp"
+#include "impexp.hpp"
 
-#include <cass/defs.hpp>
-#include <cass/wrapper_ptr.hpp>
+typedef struct CassTimestampGen_ CassTimestampGen;
 
 namespace cass {
 
-typedef wrapper_ptr<timestamp_gen> timestamp_gen_ptr;
-
-class timestamp_gen : wrapper {
+class timestamp_gen : delete_defaults {
 public:
-    static timestamp_gen * ptr(::CassTimestampGen *p)
-    {
-        return reinterpret_cast<timestamp_gen *>(p);
-    }
+    static timestamp_gen * ptr(::CassTimestampGen *p);
 
-    ::CassTimestampGen * backend()
-    {
-        return reinterpret_cast<::CassTimestampGen *>(this);
-    }
-
-    ::CassTimestampGen const * backend() const
-    {
-        return reinterpret_cast<::CassTimestampGen const *>(this);
-    }
+    ::CassTimestampGen * backend();
+    ::CassTimestampGen const * backend() const;
 
     inline void free();
 
@@ -36,22 +25,5 @@ public:
 
     inline static timestamp_gen_ptr monotonic_new();
 };
-
-inline void timestamp_gen::free()
-{
-    ::cass_timestamp_gen_free(backend());
-}
-
-inline timestamp_gen_ptr timestamp_gen::server_side_new()
-{
-    return timestamp_gen_ptr(timestamp_gen::ptr(
-                ::cass_timestamp_gen_server_side_new()), true);
-}
-
-inline timestamp_gen_ptr timestamp_gen::monotonic_new()
-{
-    return timestamp_gen_ptr(timestamp_gen::ptr(
-                ::cass_timestamp_gen_monotonic_new()), true);
-}
 
 } // namespace cass
