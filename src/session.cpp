@@ -33,12 +33,12 @@ session * session::ptr(::CassSession *p)
 schema_meta_const_ptr session::get_schema_meta() const
 {
     return schema_meta_const_ptr(schema_meta::ptr(
-                ::cass_session_get_schema_meta(backend())), true);
+                ::cass_session_get_schema_meta(backend())));
 }
 
 session_ptr session::new_ptr()
 {
-    return session_ptr(ptr(::cass_session_new()), true);
+    return session_ptr(ptr(::cass_session_new()));
 }
 
 void session::free()
@@ -49,50 +49,50 @@ void session::free()
 future_ptr session::connect(cluster const *c)
 {
     return future_ptr(future::ptr(::cass_session_connect(
-                    backend(), c->backend())), true);
+                    backend(), c->backend())));
 }
 
 future_ptr session::connect_keyspace(cluster const *c,
         char const *keyspace)
 {
     return future_ptr(future::ptr(::cass_session_connect_keyspace(
-                    backend(), c->backend(), keyspace)), true);
+                    backend(), c->backend(), keyspace)));
 }
 
 future_ptr session::connect_keyspace_n(cluster const *c,
         char const *keyspace, size_t keyspace_length)
 {
     return future_ptr(future::ptr(::cass_session_connect_keyspace_n(
-                    backend(), c->backend(), keyspace, keyspace_length)), true);
+                    backend(), c->backend(), keyspace, keyspace_length)));
 }
 
 future_ptr session::close()
 {
-    return future_ptr(future::ptr(::cass_session_close(backend())), true);
+    return future_ptr(future::ptr(::cass_session_close(backend())));
 }
 
 future_ptr session::prepare(char const *query)
 {
     return future_ptr(future::ptr(::cass_session_prepare(
-                    backend(), query)), true);
+                    backend(), query)));
 }
 
 future_ptr session::prepare_n(char const *query, size_t query_length)
 {
     return future_ptr(future::ptr(::cass_session_prepare_n(
-                    backend(), query, query_length)), true);
+                    backend(), query, query_length)));
 }
 
 future_ptr session::execute(statement const *s)
 {
     return future_ptr(future::ptr(::cass_session_execute(
-                    backend(), s->backend())), true);
+                    backend(), s->backend())));
 }
 
 future_ptr session::execute_batch(batch const *b)
 {
     return future_ptr(future::ptr(::cass_session_execute_batch(
-                    backend(), b->backend())), true);
+                    backend(), b->backend())));
 }
 
 void session::get_metrics(metrics *output) const

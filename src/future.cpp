@@ -31,19 +31,19 @@ future * future::ptr(::CassFuture *p)
 result_const_ptr future::get_result()
 {
     ::CassResult const * res = ::cass_future_get_result(backend());
-    return result_const_ptr(result::ptr(res), res != nullptr);
+    return result_const_ptr(result::ptr(res));
 }
 
 error_result_const_ptr future::get_error_result()
 {
     ::CassErrorResult const * res = ::cass_future_get_error_result(backend());
-    return error_result_const_ptr(error_result::ptr(res), res != nullptr);
+    return error_result_const_ptr(error_result::ptr(res));
 }
 
 prepared_const_ptr future::get_prepared()
 {
     ::CassPrepared const * pr = ::cass_future_get_prepared(backend());
-    return prepared_const_ptr(prepared::ptr(pr), pr != nullptr);
+    return prepared_const_ptr(prepared::ptr(pr));
 }
 
 void future::free()

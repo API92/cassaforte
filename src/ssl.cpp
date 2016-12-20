@@ -27,7 +27,7 @@ ssl * ssl::ptr(::CassSsl *p)
 
 ssl_ptr ssl::new_ptr()
 {
-    return ssl_ptr(ssl::ptr(::cass_ssl_new()), true);
+    return ssl_ptr(ssl::ptr(::cass_ssl_new()));
 }
 
 void ssl::free()

@@ -39,7 +39,7 @@ void tuple::free()
 
 tuple_ptr tuple::new_ptr(size_t item_count)
 {
-    return tuple_ptr(tuple::ptr(::cass_tuple_new(item_count)), true);
+    return tuple_ptr(tuple::ptr(::cass_tuple_new(item_count)));
 }
 
 error tuple::set(size_t index, std::nullptr_t)
@@ -143,7 +143,7 @@ error tuple::set(size_t index, tuple const *value)
 tuple_ptr tuple::new_from_data_type(cass::data_type const *data_type)
 {
     return tuple_ptr(ptr(::cass_tuple_new_from_data_type(
-                    data_type->backend())), true);
+                    data_type->backend())));
 }
 
 data_type const * tuple::data_type() const

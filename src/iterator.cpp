@@ -40,51 +40,51 @@ iterator * iterator::ptr(::CassIterator *p)
 iterator_ptr iterator::from_result(cass::result const *result)
 {
     return iterator_ptr(iterator::ptr(::cass_iterator_from_result(
-                    result->backend())), true);
+                    result->backend())));
 }
 
 iterator_ptr iterator::from_row(cass::row const *row)
 {
-    return iterator_ptr(ptr(::cass_iterator_from_row(row->backend())), true);
+    return iterator_ptr(ptr(::cass_iterator_from_row(row->backend())));
 }
 
 iterator_ptr iterator::from_collection(cass::value const *value)
 {
     ::CassIterator *it = ::cass_iterator_from_collection(value->backend());
-    return iterator_ptr(ptr(it), it != nullptr);
+    return iterator_ptr(ptr(it));
 }
 
 iterator_ptr iterator::from_map(cass::value const *value)
 {
     ::CassIterator *it = ::cass_iterator_from_map(value->backend());
-    return iterator_ptr(ptr(it), it != nullptr);
+    return iterator_ptr(ptr(it));
 }
 
 iterator_ptr iterator::from_tuple(cass::value const *value)
 {
     ::CassIterator *it = ::cass_iterator_from_tuple(value->backend());
-    return iterator_ptr(ptr(it), it != nullptr);
+    return iterator_ptr(ptr(it));
 }
 
 iterator_ptr iterator::fields_from_user_type(cass::value const *value)
 {
     ::CassIterator *it = ::cass_iterator_fields_from_user_type(
             value->backend());
-    return iterator_ptr(ptr(it), it != nullptr);
+    return iterator_ptr(ptr(it));
 }
 
 iterator_ptr iterator::keyspaces_from_schema_meta(
         cass::schema_meta const *schema_meta)
 {
     return iterator_ptr(ptr(::cass_iterator_keyspaces_from_schema_meta(
-                    schema_meta->backend())), true);
+                    schema_meta->backend())));
 }
 
 iterator_ptr iterator::tables_from_keyspace_meta(
         cass::keyspace_meta const *keyspace_meta)
 {
     return iterator_ptr(ptr(::cass_iterator_tables_from_keyspace_meta(
-                    keyspace_meta->backend())), true);
+                    keyspace_meta->backend())));
 }
 
 iterator_ptr iterator::materialized_views_from_keyspace_meta(
@@ -92,49 +92,49 @@ iterator_ptr iterator::materialized_views_from_keyspace_meta(
 {
     return iterator_ptr(ptr(
                 ::cass_iterator_materialized_views_from_keyspace_meta(
-                    keyspace_meta->backend())), true);
+                    keyspace_meta->backend())));
 }
 
 iterator_ptr iterator::user_types_from_keyspace_meta(
         cass::keyspace_meta const *keyspace_meta)
 {
     return iterator_ptr(ptr(::cass_iterator_user_types_from_keyspace_meta(
-                    keyspace_meta->backend())), true);
+                    keyspace_meta->backend())));
 }
 
 iterator_ptr iterator::functions_from_keyspace_meta(
         cass::keyspace_meta const *keyspace_meta)
 {
     return iterator_ptr(ptr(::cass_iterator_functions_from_keyspace_meta(
-                    keyspace_meta->backend())), true);
+                    keyspace_meta->backend())));
 }
 
 iterator_ptr iterator::aggregates_from_keyspace_meta(
         cass::keyspace_meta const *keyspace_meta)
 {
     return iterator_ptr(ptr(::cass_iterator_aggregates_from_keyspace_meta(
-                    keyspace_meta->backend())), true);
+                    keyspace_meta->backend())));
 }
 
 iterator_ptr iterator::fields_from_keyspace_meta(
         cass::keyspace_meta const *keyspace_meta)
 {
     return iterator_ptr(ptr(::cass_iterator_fields_from_keyspace_meta(
-                    keyspace_meta->backend())), true);
+                    keyspace_meta->backend())));
 }
 
 iterator_ptr iterator::columns_from_table_meta(
         cass::table_meta const *table_meta)
 {
     return iterator_ptr(ptr(::cass_iterator_columns_from_table_meta(
-                    table_meta->backend())), true);
+                    table_meta->backend())));
 }
 
 iterator_ptr iterator::indexes_from_table_meta(
         cass::table_meta const *table_meta)
 {
     return iterator_ptr(ptr(::cass_iterator_indexes_from_table_meta(
-                    table_meta->backend())), true);
+                    table_meta->backend())));
 }
 
 iterator_ptr iterator::materialized_views_from_table_meta(
@@ -142,56 +142,56 @@ iterator_ptr iterator::materialized_views_from_table_meta(
 {
     return iterator_ptr(ptr(
                 ::cass_iterator_materialized_views_from_table_meta(
-                    table_meta->backend())), true);
+                    table_meta->backend())));
 }
 
 iterator_ptr iterator::fields_from_table_meta(
         cass::table_meta const *table_meta)
 {
     return iterator_ptr(ptr(::cass_iterator_fields_from_table_meta(
-                table_meta->backend())), true);
+                table_meta->backend())));
 }
 
 iterator_ptr iterator::columns_from_materialized_view_meta(
         materialized_view_meta const *view_meta)
 {
     return iterator_ptr(ptr(::cass_iterator_columns_from_materialized_view_meta(
-                view_meta->backend())), true);
+                view_meta->backend())));
 }
 
 iterator_ptr iterator::fields_from_materialized_view_meta(
         materialized_view_meta const *view_meta)
 {
     return iterator_ptr(ptr(::cass_iterator_fields_from_materialized_view_meta(
-                view_meta->backend())), true);
+                view_meta->backend())));
 }
 
 iterator_ptr iterator::fields_from_column_meta(
         cass::column_meta const *column_meta)
 {
     return iterator_ptr(ptr(::cass_iterator_fields_from_column_meta(
-                    column_meta->backend())), true);
+                    column_meta->backend())));
 }
 
 iterator_ptr iterator::fields_from_index_meta(
         cass::index_meta const *index_meta)
 {
     return iterator_ptr(ptr(::cass_iterator_fields_from_index_meta(
-                    index_meta->backend())), true);
+                    index_meta->backend())));
 }
 
 iterator_ptr iterator::fields_from_function_meta(
         cass::function_meta const *function_meta)
 {
     return iterator_ptr(ptr(::cass_iterator_fields_from_function_meta(
-                    function_meta->backend())), true);
+                    function_meta->backend())));
 }
 
 iterator_ptr iterator::fields_from_aggregate_meta(
         cass::aggregate_meta const *aggregate_meta)
 {
     return iterator_ptr(ptr(::cass_iterator_fields_from_aggregate_meta(
-                    aggregate_meta->backend())), true);
+                    aggregate_meta->backend())));
 }
 
 row const * iterator::get_row() const

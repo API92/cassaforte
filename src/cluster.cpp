@@ -111,7 +111,7 @@ void cluster::set_retry_policy(retry_policy *policy)
 
 cluster_ptr cluster::new_ptr()
 {
-    return cluster_ptr(cluster::ptr(cass_cluster_new()), true);
+    return cluster_ptr(cluster::ptr(cass_cluster_new()));
 }
 
 void cluster::free()

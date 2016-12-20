@@ -86,7 +86,6 @@ add_library(${PROJECT_NAME}
     src/uuid.cpp
     src/uuid_gen.cpp
     src/value.cpp
-    src/wrapper_ptr.cpp
 )
 
 include_directories(include)
@@ -96,12 +95,6 @@ if (NOT Cassandra_FOUND)
 endif()
 include_directories(${Cassandra_INCLUDE_DIR})
 target_link_libraries(${PROJECT_NAME} ${Cassandra_LIBRARY})
-
-if (NOT falloc_FOUND)
-    find_package(falloc REQUIRED)
-endif()
-include_directories(${falloc_INCLUDE_DIR})
-target_link_libraries(${PROJECT_NAME} ${falloc_LIBRARY})
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_EXTENSIONS OFF)
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 14)

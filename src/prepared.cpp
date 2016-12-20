@@ -37,7 +37,7 @@ error prepared::parameter_name(size_t index, char const **name,
 
 statement_ptr prepared::bind() const
 {
-    return statement_ptr(statement::ptr(::cass_prepared_bind(backend())), true);
+    return statement_ptr(statement::ptr(::cass_prepared_bind(backend())));
 }
 
 data_type const * prepared::parameter_data_type(size_t index) const

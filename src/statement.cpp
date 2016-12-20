@@ -44,14 +44,14 @@ statement_ptr statement::new_ptr(char const *query,
         size_t parameter_count)
 {
     return statement_ptr(statement::ptr(::cass_statement_new(
-                    query, parameter_count)), true);
+                    query, parameter_count)));
 }
 
 statement_ptr statement::new_n_ptr(char const *query,
         size_t query_length, size_t parameter_count)
 {
     return statement_ptr(statement::ptr(::cass_statement_new_n(
-                    query, query_length, parameter_count)), true);
+                    query, query_length, parameter_count)));
 }
 
 error statement::reset_parameters(size_t count)

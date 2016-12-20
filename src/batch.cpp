@@ -20,7 +20,7 @@ void batch::free()
 
 batch_ptr batch::new_ptr(batch_type type)
 {
-    return batch_ptr(batch::ptr(::cass_batch_new((::CassBatchType)type)), true);
+    return batch_ptr(batch::ptr(::cass_batch_new((::CassBatchType)type)));
 }
 
 batch * batch::ptr(::CassBatch *p)

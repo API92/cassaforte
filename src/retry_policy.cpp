@@ -28,19 +28,19 @@ void retry_policy::free()
 retry_policy_ptr retry_policy::default_new()
 {
     return retry_policy_ptr(retry_policy::ptr(
-                ::cass_retry_policy_default_new()), true);
+                ::cass_retry_policy_default_new()));
 }
 
 retry_policy_ptr retry_policy::downgrading_consistency_new()
 {
     return retry_policy_ptr(retry_policy::ptr(
-                ::cass_retry_policy_downgrading_consistency_new()), true);
+                ::cass_retry_policy_downgrading_consistency_new()));
 }
 
 retry_policy_ptr retry_policy::fallthrough_new()
 {
     return retry_policy_ptr(retry_policy::ptr(
-                ::cass_retry_policy_fallthrough_new()), true);
+                ::cass_retry_policy_fallthrough_new()));
 }
 
 retry_policy_ptr retry_policy::logging_new(
@@ -48,7 +48,7 @@ retry_policy_ptr retry_policy::logging_new(
 {
     ::CassRetryPolicy *p = ::cass_retry_policy_logging_new(
             child_retry_policy->backend());
-    return retry_policy_ptr(retry_policy::ptr(p), p != nullptr);
+    return retry_policy_ptr(retry_policy::ptr(p));
 }
 
 template class wrapper_ptr<retry_policy>;

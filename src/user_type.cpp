@@ -343,7 +343,7 @@ user_type_ptr user_type::new_from_data_type(cass::data_type const *data_type)
 {
     ::CassUserType * t = ::cass_user_type_new_from_data_type(
             data_type->backend());
-    return user_type_ptr(ptr(t), t != nullptr);
+    return user_type_ptr(ptr(t));
 }
 
 data_type const * user_type::data_type() const

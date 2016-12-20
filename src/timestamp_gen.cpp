@@ -33,13 +33,13 @@ inline void timestamp_gen::free()
 inline timestamp_gen_ptr timestamp_gen::server_side_new()
 {
     return timestamp_gen_ptr(timestamp_gen::ptr(
-                ::cass_timestamp_gen_server_side_new()), true);
+                ::cass_timestamp_gen_server_side_new()));
 }
 
 inline timestamp_gen_ptr timestamp_gen::monotonic_new()
 {
     return timestamp_gen_ptr(timestamp_gen::ptr(
-                ::cass_timestamp_gen_monotonic_new()), true);
+                ::cass_timestamp_gen_monotonic_new()));
 }
 
 template class wrapper_ptr<timestamp_gen>;

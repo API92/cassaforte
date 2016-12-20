@@ -21,7 +21,7 @@ collection_ptr collection::new_from_data_type(
         cass::data_type const *data_type, size_t item_count)
 {
     return collection_ptr(collection::ptr(::cass_collection_new_from_data_type(
-                    data_type->backend(), item_count)), true);
+                    data_type->backend(), item_count)));
 }
 
 data_type const * collection::data_type() const
@@ -64,7 +64,7 @@ collection_ptr collection::new_ptr(collection_type type,
         size_t item_count)
 {
     return collection_ptr(collection::ptr(::cass_collection_new(
-                static_cast<::CassCollectionType>(type), item_count)), true);
+                static_cast<::CassCollectionType>(type), item_count)));
 }
 
 error collection::append(int8_t value)

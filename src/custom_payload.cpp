@@ -32,8 +32,7 @@ void custom_payload::free()
 
 custom_payload_ptr custom_payload::new_ptr()
 {
-    return custom_payload_ptr(custom_payload::ptr(::cass_custom_payload_new()),
-            true);
+    return custom_payload_ptr(custom_payload::ptr(::cass_custom_payload_new()));
 }
 
 void custom_payload::set(char const *name, byte_t const *value,

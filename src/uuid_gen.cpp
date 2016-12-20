@@ -33,12 +33,12 @@ void uuid_gen::free()
 
 uuid_gen_ptr uuid_gen::new_ptr()
 {
-    return uuid_gen_ptr(ptr(::cass_uuid_gen_new()), true);
+    return uuid_gen_ptr(ptr(::cass_uuid_gen_new()));
 }
 
 uuid_gen_ptr uuid_gen::new_with_node(uint64_t node)
 {
-    return uuid_gen_ptr(ptr(::cass_uuid_gen_new_with_node(node)), true);
+    return uuid_gen_ptr(ptr(::cass_uuid_gen_new_with_node(node)));
 }
 
 void uuid_gen::time(uuid *output)

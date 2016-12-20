@@ -38,25 +38,24 @@ void data_type::free()
 data_type_ptr data_type::new_ptr(value_type type)
 {
     return data_type_ptr(data_type::ptr(
-            ::cass_data_type_new((::CassValueType)(type))), true);
+            ::cass_data_type_new((::CassValueType)(type))));
 }
 
 data_type_ptr data_type::new_from_existing() const
 {
     return data_type_ptr(data_type::ptr(::cass_data_type_new_from_existing(
-                    backend())), true);
+                    backend())));
 }
 
 data_type_ptr data_type::new_tuple(size_t item_count)
 {
-    return data_type_ptr(data_type::ptr(::cass_data_type_new_tuple(item_count)),
-            true);
+    return data_type_ptr(data_type::ptr(::cass_data_type_new_tuple(item_count))
+                         );
 }
 
 data_type_ptr data_type::new_udt(size_t field_count)
 {
-    return data_type_ptr(data_type::ptr(::cass_data_type_new_udt(field_count)),
-            true);
+    return data_type_ptr(data_type::ptr(::cass_data_type_new_udt(field_count)));
 }
 
 value_type data_type::type() const
