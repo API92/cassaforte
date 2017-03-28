@@ -24,7 +24,7 @@ find_path(Cassandra_INCLUDE_DIR
 find_library(Cassandra_LIBRARY
   NAMES cassandra libcassandra
   HINTS ${_CASS_ROOT_PATHS}
-  PATH_SUFFIXES lib lib64)
+  PATH_SUFFIXES lib lib64 "bin/${CMAKE_CXX_COMPILER_ID}/${CMAKE_BUILD_TYPE}" "build/${CMAKE_CXX_COMPILER_ID}/${CMAKE_BUILD_TYPE}")
 find_package_handle_standard_args(Cassandra "Could NOT find cassandra, try to set the path to the cassandra root folder in the system variable Cassandra_ROOT_DIR"
     Cassandra_LIBRARY
     Cassandra_INCLUDE_DIR)
