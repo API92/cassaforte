@@ -15,7 +15,7 @@ find_path(cassaforte_INCLUDE_DIR
     PATH_SUFFIXES include)
 
 find_library(cassaforte_LIBRARY
-    NAMES cassaforte libcassaforte
+    NAMES libcassaforte.so cassaforte libcassaforte
     PATHS ${CMAKE_CURRENT_LIST_DIR}
     PATH_SUFFIXES build/${CMAKE_CXX_COMPILER_ID}/${CMAKE_BUILD_TYPE})
 
