@@ -87,10 +87,11 @@ size_t future::custom_payload_item_count()
 }
 
 error future::custom_payload_item(size_t index, char const **name,
-        size_t *name_length, byte_t const **value, size_t *value_size)
+        size_t *name_length, std::byte const **value, size_t *value_size)
 {
     return (error)::cass_future_custom_payload_item(
-            backend(), index, name, name_length, value, value_size);
+            backend(), index, name, name_length,
+            (cass_byte_t const **)value, value_size);
 }
 
 template class wrapper_ptr<future>;

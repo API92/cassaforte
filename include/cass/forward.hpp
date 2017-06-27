@@ -6,7 +6,7 @@
 
 #include <cstddef>
 #include <cstdint>
-#include <experimental/string_view>
+#include <string_view>
 
 #include "impexp.hpp"
 #include "wrapper_ptr.hpp"
@@ -21,8 +21,7 @@ typedef void (*CassLogCallback)(CassLogMessage const *message, void *data);
 
 namespace cass {
 
-typedef uint8_t byte_t;
-typedef std::experimental::basic_string_view<byte_t> bytes_view;
+typedef std::basic_string_view<std::byte> bytes_view;
 
 typedef uint64_t duration_t;
 

@@ -38,7 +38,7 @@ public:
     error set(size_t index, double value);
     error set(size_t index, bool value);
     error set(size_t index, char const *value);
-    error set(size_t index, std::experimental::string_view value);
+    error set(size_t index, std::string_view value);
     error set(size_t index, bytes_view value);
     error set(size_t index, custom c);
     error set(size_t index, uuid const &value);
@@ -49,7 +49,7 @@ public:
     error set(size_t index, user_type const *value);
 
     error set_custom(size_t index, char const *class_name,
-            byte_t const *value, size_t value_size);
+            std::byte const *value, size_t value_size);
 };
 
 } // namespace cass

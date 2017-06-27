@@ -30,7 +30,7 @@ public:
     error get(bool *output) const;
     error get(uuid *output) const;
     error get(inet *output) const;
-    error get(std::experimental::string_view *output) const;
+    error get(std::string_view *output) const;
     error get(bytes_view *output) const;
     error get(decimal *output) const;
 

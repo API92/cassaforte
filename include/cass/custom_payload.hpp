@@ -21,8 +21,8 @@ public:
 
     static custom_payload_ptr new_ptr();
 
-    void set(char const *name, byte_t const *value, size_t value_size);
-    void set_n(char const *name, size_t name_length, byte_t const *value,
+    void set(char const *name, std::byte const *value, size_t value_size);
+    void set_n(char const *name, size_t name_length, std::byte const *value,
             size_t value_size);
 
     void remove(char const *name);

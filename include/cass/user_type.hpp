@@ -72,10 +72,10 @@ public:
             bool value);
 
     error set(size_t index, char const *value);
-    error set(size_t index, std::experimental::string_view value);
+    error set(size_t index, std::string_view value);
     error set_by_name(char const *name, char const *value);
-    error set_by_name_n(char const *name,
-            size_t name_length, std::experimental::string_view value);
+    error set_by_name_n(char const *name, size_t name_length,
+            std::string_view value);
 
     error set(size_t index, bytes_view value);
     error set_by_name(char const *name, bytes_view value);
@@ -116,15 +116,15 @@ public:
             char const *name, size_t name_length, tuple const *value);
 
     template<typename T>
-    error set_by_name(std::experimental::string_view name, T value)
+    error set_by_name(std::string_view name, T value)
     {
         return set_by_name_n(name.data(), name.size(), value);
     }
 
     error set_custom(size_t index, char const *class_name,
-            byte_t const *value, size_t value_size);
+            std::byte const *value, size_t value_size);
     error set_custom_by_name(char const *name, char const *class_name,
-            byte_t const *value, size_t value_size);
+            std::byte const *value, size_t value_size);
 };
 
 } // namespace cass

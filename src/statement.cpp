@@ -271,7 +271,7 @@ error statement::bind(size_t index, char const *value)
     return error(::cass_statement_bind_string(backend(), index, value));
 }
 
-error statement::bind(size_t index, std::experimental::string_view s)
+error statement::bind(size_t index, std::string_view s)
 {
     return error(::cass_statement_bind_string_n(
                 backend(), index, s.data(), s.size()));
@@ -283,7 +283,7 @@ error statement::bind_by_name(char const *name, char const *value)
 }
 
 error statement::bind_by_name_n(char const *name, size_t name_length,
-        std::experimental::string_view value)
+        std::string_view value)
 {
     return error(::cass_statement_bind_string_by_name_n(
                 backend(), name, name_length, value.data(), value.size()));
@@ -291,42 +291,43 @@ error statement::bind_by_name_n(char const *name, size_t name_length,
 
 error statement::bind(size_t index, bytes_view value)
 {
-    return error(::cass_statement_bind_bytes(
-                backend(), index, value.data(), value.size()));
+    return error(::cass_statement_bind_bytes(backend(), index,
+                (cass_byte_t const *)value.data(), value.size()));
 }
 
 error statement::bind_by_name(char const *name, bytes_view value)
 {
-    return error(::cass_statement_bind_bytes_by_name(
-                backend(), name, value.data(), value.size()));
+    return error(::cass_statement_bind_bytes_by_name(backend(), name,
+                (cass_byte_t const *)value.data(), value.size()));
 }
 
 error statement::bind_by_name_n(char const *name,
         size_t name_length, bytes_view value)
 {
     return error(::cass_statement_bind_bytes_by_name_n(
-                backend(), name, name_length, value.data(), value.size()));
+                backend(), name, name_length, (cass_byte_t const *)value.data(),
+                value.size()));
 }
 
 error statement::bind_custom(size_t index, char const *class_name,
-        byte_t const *value, size_t value_size)
+        std::byte const *value, size_t value_size)
 {
-    return error(::cass_statement_bind_custom(
-                backend(), index, class_name, value, value_size));
+    return error(::cass_statement_bind_custom(backend(), index, class_name,
+                (cass_byte_t const *)value, value_size));
 }
 
 error statement::bind(size_t index, custom c)
 {
     return error(::cass_statement_bind_custom_n(backend(), index,
                 c.class_name.data(), c.class_name.size(),
-                c.value.data(), c.value.size()));
+                (cass_byte_t const *)c.value.data(), c.value.size()));
 }
 
 error statement::bind_custom_by_name(char const *name,
-        char const *class_name, byte_t const *value, size_t value_size)
+        char const *class_name, std::byte const *value, size_t value_size)
 {
-    return error(::cass_statement_bind_custom_by_name(
-                backend(), name, class_name, value, value_size));
+    return error(::cass_statement_bind_custom_by_name(backend(), name,
+                class_name, (cass_byte_t const *)value, value_size));
 }
 
 error statement::bind_by_name_n(char const *name, size_t name_length,
@@ -335,7 +336,7 @@ error statement::bind_by_name_n(char const *name, size_t name_length,
     return error(::cass_statement_bind_custom_by_name_n(
                 backend(), name, name_length,
                 c.class_name.data(), c.class_name.size(),
-                c.value.data(), c.value.size()));
+                (cass_byte_t const *)c.value.data(), c.value.size()));
 }
 
 error statement::bind(size_t index, uuid const &value)
@@ -378,21 +379,22 @@ error statement::bind_by_name_n(char const *name,
 
 error statement::bind(size_t index, decimal d)
 {
-    return error(::cass_statement_bind_decimal(
-                backend(), index, d.varint, d.varint_size, d.scale));
+    return error(::cass_statement_bind_decimal(backend(), index,
+                (cass_byte_t const *)d.varint, d.varint_size, d.scale));
 }
 
 error statement::bind_by_name(char const *name, decimal d)
 {
-    return error(::cass_statement_bind_decimal_by_name(
-                backend(), name, d.varint, d.varint_size, d.scale));
+    return error(::cass_statement_bind_decimal_by_name(backend(), name,
+                (cass_byte_t const *)d.varint, d.varint_size, d.scale));
 }
 
 error statement::bind_by_name_n(char const *name, size_t name_length,
         decimal d)
 {
-    return error(::cass_statement_bind_decimal_by_name_n(
-            backend(), name, name_length, d.varint, d.varint_size, d.scale));
+    return error(::cass_statement_bind_decimal_by_name_n(backend(),
+                name, name_length, (cass_byte_t const *)d.varint, d.varint_size,
+                d.scale));
 }
 
 error statement::set_paging_state(cass::result const *result)

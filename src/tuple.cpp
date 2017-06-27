@@ -93,7 +93,7 @@ error tuple::set(size_t index, char const *value)
     return error(::cass_tuple_set_string(backend(), index, value));
 }
 
-error tuple::set(size_t index, std::experimental::string_view value)
+error tuple::set(size_t index, std::string_view value)
 {
     return error(::cass_tuple_set_string_n(
                 backend(), index, value.data(), value.size()));
@@ -101,22 +101,22 @@ error tuple::set(size_t index, std::experimental::string_view value)
 
 error tuple::set(size_t index, bytes_view value)
 {
-    return error(::cass_tuple_set_bytes(
-                backend(), index, value.data(), value.size()));
+    return error(::cass_tuple_set_bytes(backend(), index,
+                (cass_byte_t const *)value.data(), value.size()));
 }
 
 error tuple::set_custom(size_t index, char const *class_name,
-        byte_t const *value, size_t value_size)
+        std::byte const *value, size_t value_size)
 {
-    return error(::cass_tuple_set_custom(
-                backend(), index, class_name, value, value_size));
+    return error(::cass_tuple_set_custom(backend(), index, class_name,
+                (cass_byte_t const *)value, value_size));
 }
 
 error tuple::set(size_t index, custom c)
 {
     return error(::cass_tuple_set_custom_n(
                 backend(), index, c.class_name.data(), c.class_name.size(),
-                c.value.data(), c.value.size()));
+                (cass_byte_t const *)c.value.data(), c.value.size()));
 }
 
 error tuple::set(size_t index, uuid const &value)
@@ -131,8 +131,8 @@ error tuple::set(size_t index, inet const &value)
 
 error tuple::set(size_t index, decimal d)
 {
-    return error(::cass_tuple_set_decimal(
-                backend(), index, d.varint, d.varint_size, d.scale));
+    return error(::cass_tuple_set_decimal(backend(), index,
+                (cass_byte_t const *)d.varint, d.varint_size, d.scale));
 }
 
 error tuple::set(size_t index, tuple const *value)

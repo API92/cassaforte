@@ -113,7 +113,7 @@ error collection::append(char const *value)
     return error(::cass_collection_append_string(backend(), value));
 }
 
-error collection::append(std::experimental::string_view value)
+error collection::append(std::string_view value)
 {
     return error(::cass_collection_append_string_n(
                 backend(), value.data(), value.size()));
@@ -122,21 +122,21 @@ error collection::append(std::experimental::string_view value)
 error collection::append(bytes_view value)
 {
     return error(::cass_collection_append_bytes(
-                backend(), value.data(), value.size()));
+                backend(), (cass_byte_t const *)value.data(), value.size()));
 }
 
 error collection::append_custom(char const *class_name,
-        byte_t const *value, size_t value_size)
+        std::byte const *value, size_t value_size)
 {
     return error(::cass_collection_append_custom(
-                backend(), class_name, value, value_size));
+                backend(), class_name, (cass_byte_t const *)value, value_size));
 }
 
 error collection::append(custom c)
 {
     return error(::cass_collection_append_custom_n(
                 backend(), c.class_name.data(), c.class_name.size(),
-                c.value.data(), c.value.size()));
+                (cass_byte_t const *)c.value.data(), c.value.size()));
 }
 
 error collection::append(uuid const &value)
@@ -152,7 +152,8 @@ error collection::append(inet const &value)
 error collection::append(decimal d)
 {
     return error(::cass_collection_append_decimal(
-                backend(), d.varint, d.varint_size, d.scale));
+                backend(), (cass_byte_t const *)d.varint, d.varint_size,
+                d.scale));
 }
 
 error collection::append(collection const *value)

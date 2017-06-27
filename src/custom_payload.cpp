@@ -35,16 +35,18 @@ custom_payload_ptr custom_payload::new_ptr()
     return custom_payload_ptr(custom_payload::ptr(::cass_custom_payload_new()));
 }
 
-void custom_payload::set(char const *name, byte_t const *value,
+void custom_payload::set(char const *name, std::byte const *value,
         size_t value_size)
 {
-    ::cass_custom_payload_set(backend(), name, value, value_size);
+    ::cass_custom_payload_set(backend(), name,
+            (cass_byte_t const *)value, value_size);
 }
 
 void custom_payload::set_n(char const *name, size_t name_length,
-        byte_t const *value, size_t value_size)
+        std::byte const *value, size_t value_size)
 {
-    ::cass_custom_payload_set_n(backend(), name, name_length, value, value_size);
+    ::cass_custom_payload_set_n(backend(), name, name_length,
+            (cass_byte_t const *)value, value_size);
 }
 
 void custom_payload::remove(char const *name)

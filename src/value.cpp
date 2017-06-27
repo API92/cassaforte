@@ -77,30 +77,31 @@ error value::get(inet *output) const
     return error(::cass_value_get_inet(backend(), output->backend()));
 }
 
-error value::get(std::experimental::string_view *output) const
+error value::get(std::string_view *output) const
 {
     char const *output_s = nullptr;
     size_t size = 0;
     ::CassError res = ::cass_value_get_string(backend(), &output_s, &size);
     if (res == ::CASS_OK)
-        *output = std::experimental::string_view(output_s, size);
+        *output = std::string_view(output_s, size);
     return (error)res;
 }
 
 error value::get(bytes_view *output) const
 {
-    byte_t const *output_s = nullptr;
+    cass_byte_t const *output_s = nullptr;
     size_t size = 0;
     ::CassError res = ::cass_value_get_bytes(backend(), &output_s, &size);
     if (res == ::CASS_OK)
-        *output = bytes_view(output_s, size);
+        *output = bytes_view((std::byte const *)output_s, size);
     return (error)res;
 }
 
 error value::get(decimal *output) const
 {
-    return error(::cass_value_get_decimal(
-            backend(), &output->varint, &output->varint_size, &output->scale));
+    return error(::cass_value_get_decimal(backend(),
+                (cass_byte_t const **)&output->varint, &output->varint_size,
+                &output->scale));
 }
 
 value_type value::type() const

@@ -37,7 +37,7 @@ public:
     error append(double value);
     error append(bool value);
     error append(char const *value);
-    error append(std::experimental::string_view value);
+    error append(std::string_view value);
     error append(bytes_view value);
     error append(custom c);
     error append(uuid const &value);
@@ -47,7 +47,7 @@ public:
     error append(tuple const *value);
     error append(user_type const *value);
 
-    error append_custom(char const *class_name, byte_t const *value,
+    error append_custom(char const *class_name, std::byte const *value,
             size_t value_size);
 };
 

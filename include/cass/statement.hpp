@@ -98,10 +98,10 @@ public:
             bool value);
 
     error bind(size_t index, char const *value);
-    error bind(size_t index, std::experimental::string_view s);
+    error bind(size_t index, std::string_view s);
     error bind_by_name(char const *name, char const *value);
     error bind_by_name_n(char const *name, size_t name_length,
-            std::experimental::string_view value);
+            std::string_view value);
 
     error bind(size_t index, bytes_view value);
     error bind_by_name(char const *name, bytes_view value);
@@ -144,15 +144,15 @@ public:
             size_t name_length, cass::user_type const *user_type);
 
     template<typename T>
-    error bind_by_name(std::experimental::string_view name, T value)
+    error bind_by_name(std::string_view name, T value)
     {
         return bind_by_name_n(name.data(), name.size(), value);
     }
 
     error bind_custom(size_t index, char const *class_name,
-            byte_t const *value, size_t value_size);
+            std::byte const *value, size_t value_size);
     error bind_custom_by_name(char const *name, char const *class_name,
-            byte_t const *value, size_t value_size);
+            std::byte const *value, size_t value_size);
 };
 
 } // namespace cass
