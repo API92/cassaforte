@@ -22,7 +22,7 @@ enum class consistency : int {
 };
 
 enum class write_type : int {
-    UKNOWN,
+    UNKNOWN,
     SIMPLE,
     BATCH,
     UNLOGGED_BATCH,
